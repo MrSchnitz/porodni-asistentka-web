@@ -1,0 +1,82 @@
+services:
+  traefik:
+    image: traefik:v2.11
+    container_name: traefik
+    command:
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+      - '--log.level=INFO'
+    ports:
+      - '80:80'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    networks:
+      - payload-network
+    restart: unless-stopped
+    # Traefik is only needed for production deployment
+    # For local development, use: docker compose up -d mongo
+
+  mongo:
+    image: mongo:8
+    container_name: mongo
+    env_file: .env
+    ports:
+      - '27017:27017' # Expose MongoDB for local development
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      - payload-network
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  app:
+    # ============================================
+    # CHOOSE ONE OPTION BELOW:
+    # ============================================
+    
+    # Option 1: Use pre-built image (default for CI/CD)
+    # For CI/CD or manual image import: use this
+    image: porodni-asistentka-web:latest
+    # For Docker Hub: YOUR_USERNAME/porodni-asistentka-web:latest
+    # For specific version: porodni-asistentka-web:v1.0.0
+    
+    # Option 2: Build image on server (for traditional deployment)
+    # Uncomment the lines below and comment out 'image:' line above:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    
+    container_name: porodni-asistentka-app
+    env_file: .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    expose:
+      - '3000'
+    labels:
+      - 'traefik.enable=true'
+      # Catch-all rule - matches any request (works for IP addresses and domains)
+      - 'traefik.http.routers.app.rule=PathPrefix(`/`)'
+      - 'traefik.http.routers.app.entrypoints=web'
+      - 'traefik.http.services.app.loadbalancer.server.port=3000'
+      - 'traefik.http.routers.app.priority=1'
+    volumes:
+      - ./media:/app/public/media
+    networks:
+      - payload-network
+    depends_on:
+      - traefik
+      - mongo
+    restart: unless-stopped
+    # App service is only needed for production deployment
+    # For local development, run: pnpm dev (app runs locally, not in Docker)
+
+networks:
+  payload-network:
+    driver: bridge
