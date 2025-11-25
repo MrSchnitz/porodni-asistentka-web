@@ -48,7 +48,7 @@ next-env.d.ts
 /mongo-data
 /backups
 /docker-images
-/scripts
+/other-scripts
 /README
 
 # Playwright
