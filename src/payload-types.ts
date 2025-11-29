@@ -92,7 +92,7 @@ export interface Config {
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
   };
-  locale: null;
+  locale: 'cs' | 'en';
   user: User & {
     collection: 'users';
   };
