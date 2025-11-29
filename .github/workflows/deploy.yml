@@ -3,8 +3,8 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # Deploy when pushing to main branch
-  workflow_dispatch:  # Allow manual trigger
+      - main # Deploy when pushing to main branch
+  workflow_dispatch: # Allow manual trigger
   workflow_call:
     inputs:
       rollback_version:
@@ -55,8 +55,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT || 22 }}
-          source: "docker-images/${{ env.IMAGE_NAME }}-${{ steps.version.outputs.version }}.tar.gz,docker-images/${{ env.IMAGE_NAME }}-latest.tar.gz"
-          target: "${{ env.SERVER_PATH }}/docker-images/"
+          source: 'docker-images/${{ env.IMAGE_NAME }}-${{ steps.version.outputs.version }}.tar.gz,docker-images/${{ env.IMAGE_NAME }}-latest.tar.gz'
+          target: '${{ env.SERVER_PATH }}/docker-images/'
           strip_components: 0
 
   deploy:
@@ -97,7 +97,9 @@ jobs:
             IMAGE_VERSION="${{ steps.version.outputs.version }}"
             IMAGE_FILE="docker-images/${{ env.IMAGE_NAME }}-${IMAGE_VERSION}.tar.gz"
             COMPOSE_FILE="docker-compose.yml"
-            
+            DOMAIN_NAME="${{ secrets.DOMAIN_NAME }}"
+            DOMAIN_EMAIL="${{ secrets.DOMAIN_EMAIL }}"
+
             # Find and fix file location if needed
             if [ -d "$IMAGE_FILE" ]; then
               rm -rf "$IMAGE_FILE"
@@ -106,23 +108,28 @@ jobs:
             if [ -n "$FOUND_FILE" ] && [ "$FOUND_FILE" != "$IMAGE_FILE" ]; then
               mv "$FOUND_FILE" "$IMAGE_FILE"
             fi
-            
+
             # Load Docker image
             echo "Loading Docker image from $IMAGE_FILE (version: ${IMAGE_VERSION})"
             docker load -i "$IMAGE_FILE"
-            
+
             # Update docker-compose.yml with versioned image
             if [ -f "$COMPOSE_FILE" ]; then
               sed -i.bak "s|^[[:space:]]*# image: ${{ env.IMAGE_NAME }}|    image: ${{ env.IMAGE_NAME }}|g" "$COMPOSE_FILE"
               sed -i.bak "s|^[[:space:]]*image: ${{ env.IMAGE_NAME }}.*|    image: ${{ env.IMAGE_NAME }}:${IMAGE_VERSION}|g" "$COMPOSE_FILE"
               sed -i.bak "s|^[[:space:]]*build:|    # build:|g" "$COMPOSE_FILE"
             fi
-            
+
             # Deploy
             echo "Stopping existing containers..."
             docker compose -f "$COMPOSE_FILE" down || true
-            echo "Starting containers with image version ${IMAGE_VERSION}..."
-            docker compose -f "$COMPOSE_FILE" up -d
-            echo "Deployment completed! Image version: ${IMAGE_VERSION}"
-            docker compose -f "$COMPOSE_FILE" ps
 
+            if [ -n "$DOMAIN_NAME" ] && [ -n "$DOMAIN_EMAIL" ]; then
+              echo "Setting up SSL..."
+              ./setup-ssl.sh "$DOMAIN_NAME" "$DOMAIN_EMAIL"
+            else
+              echo "Starting containers with image version ${IMAGE_VERSION}..."
+              docker compose -f "$COMPOSE_FILE" up -d
+              echo "Deployment completed! Image version: ${IMAGE_VERSION}"
+              docker compose -f "$COMPOSE_FILE" ps
+            fi
