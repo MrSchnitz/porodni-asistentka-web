@@ -1,9 +1,10 @@
 import React from 'react'
-import './styles.css'
+import './globals.css'
+import { Header } from '@/globals/Header/Header'
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: 'Web for porodni asistentka',
+  title: 'Porodni asistentka web',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
@@ -12,6 +13,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
+        <Header />
         <main>{children}</main>
       </body>
     </html>
