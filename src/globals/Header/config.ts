@@ -19,16 +19,14 @@ export const Header: GlobalConfig = {
       type: 'text',
       label: 'Header title',
       required: true,
-      localized: true,
     },
     {
       name: 'headerSubTitle',
       type: 'text',
       label: 'Header subtitle',
-      localized: true,
     },
-    { name: 'phone', label: 'Phone', required: true, localized: true, type: 'text' },
-    { name: 'email', label: 'Email', required: true, localized: true, type: 'email' },
+    { name: 'phone', label: 'Phone', required: true, type: 'text' },
+    { name: 'email', label: 'Email', required: true, type: 'email' },
     {
       name: 'navItems',
       type: 'array',

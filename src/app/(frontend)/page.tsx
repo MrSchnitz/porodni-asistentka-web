@@ -4,6 +4,7 @@ import React from 'react'
 import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
+import { Home } from '@/globals/Home/Home'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -12,9 +13,8 @@ export default async function HomePage() {
   const { user } = await payload.auth({ headers })
 
   return (
-    <div className="home">
-      <div className="content">
-      </div>
-    </div>
+    <main>
+      <Home />
+    </main>
   )
 }

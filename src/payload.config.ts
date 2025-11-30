@@ -11,6 +11,7 @@ import { Header } from './globals/Header/config'
 import { defaultLexical } from './fields/defaultLexical'
 import { en } from '@payloadcms/translations/languages/en'
 import { cs } from '@payloadcms/translations/languages/cs'
+import { Home } from './globals/Home/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,7 +28,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media],
-  globals: [Header],
+  globals: [Header, Home],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

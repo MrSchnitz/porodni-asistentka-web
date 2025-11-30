@@ -39,8 +39,8 @@ export function HeaderClient({
               </span>
               {headerSubTitle && (
                 <span
-                  className="text-lg text-foreground"
-                  style={{ fontFamily: 'var(--font-display)' }}
+                  className="text-md text-foreground"
+                  style={{ fontFamily: 'var(--font-body)' }}
                 >
                   {headerSubTitle}
                 </span>
