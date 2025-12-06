@@ -8,10 +8,12 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Header } from './globals/Header/config'
-import { defaultLexical } from './fields/defaultLexical'
 import { en } from '@payloadcms/translations/languages/en'
 import { cs } from '@payloadcms/translations/languages/cs'
 import { Home } from './globals/Home/config'
+import { Services } from './collections/Services'
+import { defaultLexical } from './fields/defaultLexical'
+import { Reviews } from './collections/Reviews'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,7 +29,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Services, Reviews],
   globals: [Header, Home],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || '',

@@ -5,7 +5,7 @@ import { ServicesSection } from './ServicesSection'
 import { ReviewsSection } from './ReviewsSection'
 
 export async function Home() {
-  const homeData = (await getCachedGlobal('home', 1)()) as HomeType
+  const homeData = (await getCachedGlobal('home', 2)()) as HomeType
 
   return (
     <>

@@ -69,6 +69,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    services: Service;
+    reviews: Review;
     'payload-kv': PayloadKv;
     'payload-folders': FolderInterface;
     'payload-locked-documents': PayloadLockedDocument;
@@ -83,6 +85,8 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -199,6 +203,94 @@ export interface FolderInterface {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: string;
+  icon?: {
+    fileIcon?: (string | null) | Media;
+    lucideIcon?: string | null;
+  };
+  title: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  price: number;
+  place: string;
+  duration: string;
+  note?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: string;
+  rating: number;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  author?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -228,6 +320,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: string | Service;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: string | Review;
       } | null)
     | ({
         relationTo: 'payload-folders';
@@ -315,6 +415,38 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  icon?:
+    | T
+    | {
+        fileIcon?: T;
+        lucideIcon?: T;
+      };
+  title?: T;
+  description?: T;
+  content?: T;
+  price?: T;
+  place?: T;
+  duration?: T;
+  note?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  rating?: T;
+  content?: T;
+  author?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -433,6 +565,15 @@ export interface Hero {
 export interface Services {
   title: string;
   subtitle?: string | null;
+  services?:
+    | {
+        reference?: {
+          relationTo: 'services';
+          value: string | Service;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
   ctaButton?:
     | {
         link: {
@@ -452,6 +593,26 @@ export interface Services {
 export interface Reviews {
   title: string;
   subtitle?: string | null;
+  reviews?:
+    | {
+        reference?: {
+          relationTo: 'reviews';
+          value: string | Review;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaButton?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -486,8 +647,8 @@ export interface HeaderSelect<T extends boolean = true> {
  */
 export interface HomeSelect<T extends boolean = true> {
   hero?: T | HeroSelect<T>;
-  services?: T | ServicesSelect<T>;
-  reviews?: T | ReviewsSelect<T>;
+  services?: T | ServicesSelect1<T>;
+  reviews?: T | ReviewsSelect1<T>;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -519,9 +680,15 @@ export interface HeroSelect<T extends boolean = true> {
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "Services_select".
  */
-export interface ServicesSelect<T extends boolean = true> {
+export interface ServicesSelect1<T extends boolean = true> {
   title?: T;
   subtitle?: T;
+  services?:
+    | T
+    | {
+        reference?: T;
+        id?: T;
+      };
   ctaButton?:
     | T
     | {
@@ -540,9 +707,28 @@ export interface ServicesSelect<T extends boolean = true> {
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "Reviews_select".
  */
-export interface ReviewsSelect<T extends boolean = true> {
+export interface ReviewsSelect1<T extends boolean = true> {
   title?: T;
   subtitle?: T;
+  reviews?:
+    | T
+    | {
+        reference?: T;
+        id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

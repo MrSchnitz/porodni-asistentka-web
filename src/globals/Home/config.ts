@@ -65,6 +65,20 @@ export const Home: GlobalConfig = {
           label: 'Subtitle',
         },
         {
+          name: 'services',
+          type: 'array',
+          label: 'Sluzby',
+          maxRows: 6,
+          fields: [
+            {
+              name: 'reference',
+              type: 'relationship',
+              label: 'Choose displayed services',
+              relationTo: ['services'],
+            },
+          ],
+        },
+        {
           name: 'ctaButton',
           label: 'CTA button',
           type: 'array',
@@ -92,6 +106,29 @@ export const Home: GlobalConfig = {
           name: 'subtitle',
           type: 'text',
           label: 'Subtitle',
+        },
+        {
+          name: 'reviews',
+          type: 'array',
+          label: 'Recenze',
+          fields: [
+            {
+              name: 'reference',
+              type: 'relationship',
+              label: 'Choose displayed reviews',
+              relationTo: ['reviews'],
+            },
+          ],
+        },
+        {
+          name: 'ctaButton',
+          label: 'CTA button',
+          type: 'array',
+          fields: [link({ appearances: false })],
+          maxRows: 1,
+          admin: {
+            initCollapsed: true,
+          },
         },
       ],
     },

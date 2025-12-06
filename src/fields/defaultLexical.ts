@@ -1,47 +1,112 @@
 import type { TextFieldSingleValidation } from 'payload'
 import {
-  BoldFeature,
-  ItalicFeature,
-  LinkFeature,
-  ParagraphFeature,
+  FixedToolbarFeature,
+  InlineToolbarFeature,
   lexicalEditor,
-  UnderlineFeature,
-  type LinkFields,
+  TextStateFeature,
 } from '@payloadcms/richtext-lexical'
 
 export const defaultLexical = lexicalEditor({
-  features: [
-    ParagraphFeature(),
-    UnderlineFeature(),
-    BoldFeature(),
-    ItalicFeature(),
-    LinkFeature({
-      enabledCollections: [],
-      fields: ({ defaultFields }) => {
-        const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-          if ('name' in field && field.name === 'url') return false
-          return true
-        })
-
-        return [
-          ...defaultFieldsWithoutUrl,
-          {
-            name: 'url',
-            type: 'text',
-            admin: {
-              condition: (_data, siblingData) => siblingData?.linkType !== 'internal',
+  features: ({ rootFeatures, defaultFeatures }) => {
+    return [
+      ...rootFeatures,
+      ...defaultFeatures,
+      // Toolbars
+      FixedToolbarFeature(),
+      InlineToolbarFeature(),
+      // Font selection
+      TextStateFeature({
+        state: {
+          fontFamily: {
+            arial: {
+              label: 'Arial',
+              css: { 'font-family': 'Arial, sans-serif' },
             },
-            label: ({ t }) => t('fields:enterURL'),
-            required: true,
-            validate: ((value, options) => {
-              if ((options?.siblingData as LinkFields)?.linkType === 'internal') {
-                return true // no validation needed, as no url should exist for internal links
-              }
-              return value ? true : 'URL is required'
-            }) as TextFieldSingleValidation,
+            'times-new-roman': {
+              label: 'Times New Roman',
+              css: { 'font-family': '"Times New Roman", serif' },
+            },
+            georgia: {
+              label: 'Georgia',
+              css: { 'font-family': 'Georgia, serif' },
+            },
+            verdana: {
+              label: 'Verdana',
+              css: { 'font-family': 'Verdana, sans-serif' },
+            },
+            'courier-new': {
+              label: 'Courier New',
+              css: { 'font-family': '"Courier New", monospace' },
+            },
+            'comic-sans': {
+              label: 'Comic Sans MS',
+              css: { 'font-family': '"Comic Sans MS", cursive' },
+            },
+            impact: {
+              label: 'Impact',
+              css: { 'font-family': 'Impact, fantasy' },
+            },
           },
-        ]
-      },
-    }),
-  ],
+          fontSize: {
+            '8px': {
+              label: '8px',
+              css: { 'font-size': '8px' },
+            },
+            '10px': {
+              label: '10px',
+              css: { 'font-size': '10px' },
+            },
+            '12px': {
+              label: '12px',
+              css: { 'font-size': '12px' },
+            },
+            '14px': {
+              label: '14px',
+              css: { 'font-size': '14px' },
+            },
+            '16px': {
+              label: '16px',
+              css: { 'font-size': '16px' },
+            },
+            '18px': {
+              label: '18px',
+              css: { 'font-size': '18px' },
+            },
+            '20px': {
+              label: '20px',
+              css: { 'font-size': '20px' },
+            },
+            '24px': {
+              label: '24px',
+              css: { 'font-size': '24px' },
+            },
+            '28px': {
+              label: '28px',
+              css: { 'font-size': '28px' },
+            },
+            '32px': {
+              label: '32px',
+              css: { 'font-size': '32px' },
+            },
+            '36px': {
+              label: '36px',
+              css: { 'font-size': '36px' },
+            },
+            '48px': {
+              label: '48px',
+              css: { 'font-size': '48px' },
+            },
+          },
+        },
+      }),
+      // Media
+      // UploadFeature({
+      //   collections: {
+      //     media: {
+      //       fields: ({ defaultFields }: { defaultFields: any[] }) => defaultFields,
+      //     },
+      //   },
+      // }),
+    ]
+  },
 })
