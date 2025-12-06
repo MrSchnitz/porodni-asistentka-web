@@ -5,6 +5,9 @@ import { link } from '@/fields/link'
 
 export const Header: GlobalConfig = {
   slug: 'header',
+  admin: {
+    group: "Layout"
+  },
   access: {
     read: () => true,
   },
@@ -58,7 +61,7 @@ export const Header: GlobalConfig = {
       admin: {
         initCollapsed: true,
         components: {
-          RowLabel: '@/globals/Header/RowLabel#RowLabel',
+          RowLabel: '@/globals/Layout/components/RowLabel#RowLabel',
         },
       },
     },

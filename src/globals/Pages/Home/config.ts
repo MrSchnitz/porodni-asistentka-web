@@ -4,6 +4,9 @@ import { link } from '@/fields/link'
 
 export const Home: GlobalConfig = {
   slug: 'home',
+  admin: {
+    group: 'Pages',
+  },
   access: {
     read: () => true,
   },

@@ -3,6 +3,9 @@ import { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
+  admin: {
+    group: "Layout"
+  },
   access: {
     read: () => true,
   },
@@ -66,7 +69,7 @@ export const Footer: GlobalConfig = {
           admin: {
             initCollapsed: true,
             components: {
-              RowLabel: '@/globals/Header/RowLabel#RowLabel',
+              RowLabel: '@/globals/Layout/components/RowLabel#RowLabel',
             },
           },
           required: true,

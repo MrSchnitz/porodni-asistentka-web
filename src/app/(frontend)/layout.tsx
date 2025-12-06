@@ -1,11 +1,11 @@
 import React from 'react'
 import './globals.css'
-import { Header } from '@/globals/Header/Header'
+import { Header } from '@/globals/Layout/Header/Header'
 import { AdminBar } from '@/components/AdminBar'
 import { draftMode } from 'next/headers'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { Footer } from '@/globals/Footer/Footer'
+import { Footer } from '@/globals/Layout/Footer/Footer'
 
 export const metadata = {
   description: 'Web for porodni asistentka',
