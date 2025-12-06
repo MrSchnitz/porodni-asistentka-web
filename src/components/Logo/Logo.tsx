@@ -6,17 +6,18 @@ interface Props {
   loading?: 'lazy' | 'eager'
   priority?: 'auto' | 'high' | 'low'
   url: string
+  alt?: string
 }
 
 export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className, url } = props
+  const { loading: loadingFromProps, priority: priorityFromProps, className, url, alt } = props
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
 
   return (
     <img
-      alt="Payload Logo"
+      alt={alt}
       loading={loading}
       fetchPriority={priority}
       decoding="async"

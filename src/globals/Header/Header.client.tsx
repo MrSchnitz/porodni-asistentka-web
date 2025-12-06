@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Heart, Phone, Mail, X, Menu } from 'lucide-react'
+import { GlobalLogo } from '@/components/Logo/GlobalLogo'
 
 type Props = {
   data: Header
@@ -23,13 +24,7 @@ export function HeaderClient({
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            {logo ? (
-              <img className="w-12 h-12" src={typeof logo === 'string' ? logo : (logo.url ?? '')} />
-            ) : (
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
-                <Heart className="w-7 h-7 text-white fill-white" />
-              </div>
-            )}
+            {logo && <GlobalLogo logo={logo} className="w-12 h-12" />}
             <div className="flex flex-col justify-center">
               <span
                 className="text-2xl text-foreground"

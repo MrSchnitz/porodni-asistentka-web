@@ -14,6 +14,7 @@ import { Home } from './globals/Home/config'
 import { Services } from './collections/Services'
 import { defaultLexical } from './fields/defaultLexical'
 import { Reviews } from './collections/Reviews'
+import { Footer } from './globals/Footer/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,7 +31,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Services, Reviews],
-  globals: [Header, Home],
+  globals: [Header, Home, Footer],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

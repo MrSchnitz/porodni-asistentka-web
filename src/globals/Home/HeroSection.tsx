@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Home } from '@/payload-types'
 import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 type Props = {
   data: Home['hero']
@@ -19,7 +20,10 @@ export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButt
             {quote && (
               <div className="flex items-center gap-2 mb-6">
                 <Sparkles className="w-6 h-6 text-primary" />
-                <span className="text-primary text-2xl" style={{ fontFamily: 'var(--font-display)' }}>
+                <span
+                  className="text-primary text-2xl"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
                   {quote}
                 </span>
               </div>
@@ -43,7 +47,10 @@ export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButt
                     <Button
                       size="lg"
                       variant={index > 0 ? 'outline' : 'default'}
-                      className="bg-primary hover:bg-secondary text-foreground px-8 shadow-lg"
+                      className={cn({
+                        'bg-primary hover:bg-secondary text-foreground px-8 shadow-lg': index === 0,
+                        'border-primary text-primary hover:bg-primary/10': index > 0,
+                      })}
                     >
                       {button.link.label}
                     </Button>

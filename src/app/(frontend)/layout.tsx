@@ -5,6 +5,7 @@ import { AdminBar } from '@/components/AdminBar'
 import { draftMode } from 'next/headers'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { Footer } from '@/globals/Footer/Footer'
 
 export const metadata = {
   description: 'Web for porodni asistentka',
@@ -29,6 +30,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         />
         <Header />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   )

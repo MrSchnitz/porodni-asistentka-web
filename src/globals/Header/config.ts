@@ -11,8 +11,27 @@ export const Header: GlobalConfig = {
   fields: [
     {
       name: 'logo',
-      type: 'upload',
-      relationTo: 'media',
+      type: 'group',
+      label: 'Ikona',
+      required: true,
+      fields: [
+        {
+          name: 'img',
+          type: 'upload',
+          label: 'Obrázek ze souboru',
+          relationTo: 'media',
+        },
+        {
+          name: 'lucideIcon',
+          type: 'text',
+          label: 'Ikona z knihovny',
+          admin: {
+            components: {
+              Field: '@/components/admin/IconField',
+            },
+          },
+        },
+      ],
     },
     {
       name: 'headerTitle',

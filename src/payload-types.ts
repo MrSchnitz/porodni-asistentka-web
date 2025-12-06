@@ -99,10 +99,12 @@ export interface Config {
   globals: {
     header: Header;
     home: Home;
+    footer: Footer;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     home: HomeSelect<false> | HomeSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: 'cs' | 'en';
   user: User & {
@@ -506,7 +508,10 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: string;
-  logo?: (string | null) | Media;
+  logo: {
+    img?: (string | null) | Media;
+    lucideIcon?: string | null;
+  };
   headerTitle: string;
   headerSubTitle?: string | null;
   phone: string;
@@ -616,10 +621,49 @@ export interface Reviews {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  logo?: {
+    img?: (string | null) | Media;
+    lucideIcon?: string | null;
+  };
+  footerTitle: string;
+  footerSubTitle?: string | null;
+  quickLinks: {
+    title: string;
+    links: {
+      link: {
+        type?: ('reference' | 'custom') | null;
+        newTab?: boolean | null;
+        url?: string | null;
+        label: string;
+      };
+      id?: string | null;
+    }[];
+  };
+  contact: {
+    title: string;
+    phone?: string | null;
+    email?: string | null;
+    adress?: string | null;
+  };
+  bottomText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  logo?: T;
+  logo?:
+    | T
+    | {
+        img?: T;
+        lucideIcon?: T;
+      };
   headerTitle?: T;
   headerSubTitle?: T;
   phone?: T;
@@ -729,6 +773,50 @@ export interface ReviewsSelect1<T extends boolean = true> {
             };
         id?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?:
+    | T
+    | {
+        img?: T;
+        lucideIcon?: T;
+      };
+  footerTitle?: T;
+  footerSubTitle?: T;
+  quickLinks?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              id?: T;
+            };
+      };
+  contact?:
+    | T
+    | {
+        title?: T;
+        phone?: T;
+        email?: T;
+        adress?: T;
+      };
+  bottomText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
