@@ -1,10 +1,10 @@
 import RichText from '@/components/RichText'
 import { Card, CardContent } from '@/components/ui/card'
-import { Home } from '@/payload-types'
+import { HomePage } from '@/payload-types'
 import { Quote, Star } from 'lucide-react'
 
 type Props = {
-  review: NonNullable<Home['reviews']['reviews']>[number]
+  review: NonNullable<HomePage['reviews']['reviews']>[number]
 }
 
 export function ReviewCard({ review }: Props) {

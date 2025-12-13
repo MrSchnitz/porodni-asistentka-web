@@ -1,6 +1,7 @@
 import type { Field, GroupField } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
+import { PAGE_ROUTES } from '@/globals/Pages/pageRoutes'
 
 export type LinkAppearances = 'default' | 'outline'
 
@@ -15,13 +16,18 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
   },
 }
 
+const pageSelectOptions = Object.values(PAGE_ROUTES).map((route) => ({
+  label: route.label,
+  value: route.path,
+}))
+
 type LinkType = (options?: {
   appearances?: LinkAppearances[] | false
   disableLabel?: boolean
   overrides?: Partial<GroupField>
 }) => Field
 
-export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
+export const link: LinkType = ({ appearances, disableLabel = false, overrides = {}, defaultPage } = {}) => {
   const linkResult: GroupField = {
     name: 'link',
     type: 'group',
@@ -68,16 +74,17 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
   }
 
   const linkTypes: Field[] = [
-    // {
-    //   name: 'reference',
-    //   type: 'relationship',
-    //   admin: {
-    //     condition: (_, siblingData) => siblingData?.type === 'reference',
-    //   },
-    //   label: 'Document to link to',
-    //   relationTo: [],
-    //   required: true,
-    // },
+    {
+      name: 'reference',
+      type: 'select',
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === 'reference',
+      },
+      label: 'Vyberte stránku',
+      options: pageSelectOptions,
+      defaultValue: defaultPage ? PAGE_ROUTES[defaultPage].path : undefined,
+      required: true,
+    },
     {
       name: 'url',
       type: 'text',

@@ -1,10 +1,8 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { Home } from '@/payload-types'
-import { Quote } from 'lucide-react'
+import { HomePage } from '@/payload-types'
 import { ReviewCard } from './components/ReviewCard'
 
 type Props = {
-  data: Home['reviews']
+  data: HomePage['reviews']
 }
 
 export function ReviewsSection({ data: { title, subtitle, reviews } }: Props) {

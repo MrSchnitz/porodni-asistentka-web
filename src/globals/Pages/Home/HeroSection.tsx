@@ -1,12 +1,12 @@
 import { Media } from '@/components/Media'
 import { Button } from '@/components/ui/button'
-import { Home } from '@/payload-types'
+import { HomePage } from '@/payload-types'
 import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 type Props = {
-  data: Home['hero']
+  data: HomePage['hero']
 }
 
 export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButtons } }: Props) {

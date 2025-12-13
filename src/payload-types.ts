@@ -97,12 +97,14 @@ export interface Config {
     defaultIDType: string;
   };
   globals: {
-    home: Home;
+    homePage: HomePage;
+    servicesPage: ServicesPage;
     header: Header;
     footer: Footer;
   };
   globalsSelect: {
-    home: HomeSelect<false> | HomeSelect<true>;
+    homePage: HomePageSelect<false> | HomePageSelect<true>;
+    servicesPage: ServicesPageSelect<false> | ServicesPageSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
@@ -143,6 +145,10 @@ export interface Service {
     fileIcon?: (string | null) | Media;
     lucideIcon?: string | null;
   };
+  /**
+   * Automaticky generovaný z názvu. Lze upravit.
+   */
+  slug: string;
   title: string;
   description: {
     root: {
@@ -159,7 +165,7 @@ export interface Service {
     };
     [k: string]: unknown;
   };
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -173,10 +179,42 @@ export interface Service {
       version: number;
     };
     [k: string]: unknown;
+  } | null;
+  lessons?:
+    | {
+        item: {
+          title: string;
+          description: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+        };
+        id?: string | null;
+      }[]
+    | null;
+  price: {
+    title: string;
+    value: string;
   };
-  price: number;
-  place: string;
-  duration: string;
+  place: {
+    title: string;
+    value: string;
+  };
+  duration: {
+    title: string;
+    value: string;
+  };
   note?: {
     root: {
       type: string;
@@ -388,12 +426,39 @@ export interface ServicesSelect<T extends boolean = true> {
         fileIcon?: T;
         lucideIcon?: T;
       };
+  slug?: T;
   title?: T;
   description?: T;
   content?: T;
-  price?: T;
-  place?: T;
-  duration?: T;
+  lessons?:
+    | T
+    | {
+        item?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+            };
+        id?: T;
+      };
+  price?:
+    | T
+    | {
+        title?: T;
+        value?: T;
+      };
+  place?:
+    | T
+    | {
+        title?: T;
+        value?: T;
+      };
+  duration?:
+    | T
+    | {
+        title?: T;
+        value?: T;
+      };
   note?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -504,9 +569,9 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home".
+ * via the `definition` "homePage".
  */
-export interface Home {
+export interface HomePage {
   id: string;
   hero: Hero;
   services: Services;
@@ -528,6 +593,7 @@ export interface Hero {
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
+          reference?: ('/' | '/sluzby' | '/kontakt') | null;
           url?: string | null;
           label: string;
         };
@@ -544,7 +610,7 @@ export interface Services {
   subtitle?: string | null;
   services?:
     | {
-        reference?: {
+        item?: {
           relationTo: 'services';
           value: string | Service;
         } | null;
@@ -556,6 +622,7 @@ export interface Services {
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
+          reference?: ('/' | '/sluzby' | '/kontakt') | null;
           url?: string | null;
           label: string;
         };
@@ -584,12 +651,40 @@ export interface Reviews {
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
+          reference?: ('/' | '/sluzby' | '/kontakt') | null;
           url?: string | null;
           label: string;
         };
         id?: string | null;
       }[]
     | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "servicesPage".
+ */
+export interface ServicesPage {
+  id: string;
+  pageHeader: PageHeader;
+  services?:
+    | {
+        item: {
+          relationTo: 'services';
+          value: string | Service;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pageHeader".
+ */
+export interface PageHeader {
+  title: string;
+  subtitle?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -610,6 +705,7 @@ export interface Header {
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
+          reference?: ('/' | '/sluzby' | '/kontakt') | null;
           url?: string | null;
           label: string;
         };
@@ -637,6 +733,7 @@ export interface Footer {
       link: {
         type?: ('reference' | 'custom') | null;
         newTab?: boolean | null;
+        reference?: ('/' | '/sluzby' | '/kontakt') | null;
         url?: string | null;
         label: string;
       };
@@ -655,9 +752,9 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home_select".
+ * via the `definition` "homePage_select".
  */
-export interface HomeSelect<T extends boolean = true> {
+export interface HomePageSelect<T extends boolean = true> {
   hero?: T | HeroSelect<T>;
   services?: T | ServicesSelect1<T>;
   reviews?: T | ReviewsSelect1<T>;
@@ -682,6 +779,7 @@ export interface HeroSelect<T extends boolean = true> {
           | {
               type?: T;
               newTab?: T;
+              reference?: T;
               url?: T;
               label?: T;
             };
@@ -698,7 +796,7 @@ export interface ServicesSelect1<T extends boolean = true> {
   services?:
     | T
     | {
-        reference?: T;
+        item?: T;
         id?: T;
       };
   ctaButton?:
@@ -709,6 +807,7 @@ export interface ServicesSelect1<T extends boolean = true> {
           | {
               type?: T;
               newTab?: T;
+              reference?: T;
               url?: T;
               label?: T;
             };
@@ -736,11 +835,36 @@ export interface ReviewsSelect1<T extends boolean = true> {
           | {
               type?: T;
               newTab?: T;
+              reference?: T;
               url?: T;
               label?: T;
             };
         id?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "servicesPage_select".
+ */
+export interface ServicesPageSelect<T extends boolean = true> {
+  pageHeader?: T | PageHeaderSelect<T>;
+  services?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pageHeader_select".
+ */
+export interface PageHeaderSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -765,6 +889,7 @@ export interface HeaderSelect<T extends boolean = true> {
           | {
               type?: T;
               newTab?: T;
+              reference?: T;
               url?: T;
               label?: T;
             };
@@ -799,6 +924,7 @@ export interface FooterSelect<T extends boolean = true> {
                 | {
                     type?: T;
                     newTab?: T;
+                    reference?: T;
                     url?: T;
                     label?: T;
                   };

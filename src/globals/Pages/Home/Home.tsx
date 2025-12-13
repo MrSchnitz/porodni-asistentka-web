@@ -1,11 +1,11 @@
 import { HeroSection } from './HeroSection'
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import { Home as HomeType } from '@/payload-types'
+import { HomePage as HomePageType } from '@/payload-types'
 import { ServicesSection } from './ServicesSection'
 import { ReviewsSection } from './ReviewsSection'
 
 export async function Home() {
-  const homeData = (await getCachedGlobal('home', 2)()) as HomeType
+  const homeData = (await getCachedGlobal('homePage', 2)()) as HomePageType
 
   return (
     <>

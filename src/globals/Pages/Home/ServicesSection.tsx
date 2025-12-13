@@ -1,9 +1,9 @@
-import { Home } from '@/payload-types'
+import { HomePage } from '@/payload-types'
 import { ServiceCard } from './components/ServiceCard'
 import { ServiceLinkButton } from './components/ServiceLinkButton'
 
 type Props = {
-  data: Home['services']
+  data: HomePage['services']
 }
 
 export function ServicesSection({ data: { title, subtitle, ctaButton, services } }: Props) {

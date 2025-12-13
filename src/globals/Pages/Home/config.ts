@@ -2,8 +2,8 @@ import { GlobalConfig } from 'payload'
 import { revalidateHome } from './hooks/revalidateHome'
 import { link } from '@/fields/link'
 
-export const Home: GlobalConfig = {
-  slug: 'home',
+export const HomePage: GlobalConfig = {
+  slug: 'homePage',
   admin: {
     group: 'Pages',
   },
@@ -74,7 +74,7 @@ export const Home: GlobalConfig = {
           maxRows: 6,
           fields: [
             {
-              name: 'reference',
+              name: 'item',
               type: 'relationship',
               label: 'Choose displayed services',
               relationTo: ['services'],

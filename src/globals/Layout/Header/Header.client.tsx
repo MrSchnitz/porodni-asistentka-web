@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Heart, Phone, Mail, X, Menu } from 'lucide-react'
 import { GlobalLogo } from '@/components/Logo/GlobalLogo'
+import { NavItem } from './components/NavItem'
 
 type Props = {
   data: Header
@@ -14,9 +15,6 @@ export function HeaderClient({
   data: { headerTitle, headerSubTitle, logo, email, phone, navItems },
 }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const pathname = usePathname()
-
-  const isActive = (path: string) => pathname === path
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-primary/20">
@@ -45,17 +43,7 @@ export function HeaderClient({
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems?.map((item) => (
-              <Link
-                key={item.id}
-                href={item.link.url ?? ''}
-                className={`transition-colors ${
-                  isActive(item.link.url ?? '')
-                    ? 'text-primary'
-                    : 'text-foreground hover:text-primary'
-                }`}
-              >
-                {item.link.label}
-              </Link>
+              <NavItem key={item.id} item={item.link} />
             ))}
             {/* Contact Info */}
             <div className="flex items-center gap-6 ml-4 border-l border-primary/20 pl-6">
@@ -88,18 +76,7 @@ export function HeaderClient({
           <nav className="md:hidden py-4 border-t border-primary/20">
             <div className="flex flex-col gap-4">
               {navItems?.map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.link.url ?? ''}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`text-left transition-colors py-2 ${
-                    isActive(item.link.url ?? '')
-                      ? 'text-primary'
-                      : 'text-foreground hover:text-primary'
-                  }`}
-                >
-                  {item.link.label}
-                </Link>
+                <NavItem key={item.id} item={item.link} />
               ))}
 
               {/* Mobile Contact Info */}
