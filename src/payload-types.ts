@@ -7,6 +7,103 @@
  */
 
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lessons".
+ */
+export type Lessons =
+  | {
+      title: string;
+      description?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      id?: string | null;
+    }[]
+  | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export type Courses =
+  | {
+      name?: string | null;
+      description?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      additionalInfo?:
+        | {
+            icon?: string | null;
+            title: string;
+            value: string;
+            id?: string | null;
+          }[]
+        | null;
+      lessonsSection?: {
+        title?: string | null;
+        description?: string | null;
+        showLessonNumbers?: boolean | null;
+        lessons?: Lessons;
+      };
+      id?: string | null;
+    }[]
+  | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schedules".
+ */
+export type Schedules =
+  | {
+      title?: string | null;
+      description?: string | null;
+      /**
+       * Vyberte kurz - v termínech pak můžete vybírat lekce
+       */
+      courseIndex?: string | null;
+      status?: ('scheduled' | 'open' | 'booked' | 'cancelled') | null;
+      hasLimitedSpots?: boolean | null;
+      numberOfSpots?: number | null;
+      scheduleItems?:
+        | {
+            startDate: string;
+            endDate: string;
+            /**
+             * Vyberte lekci nebo zadejte vlastní název
+             */
+            lesson: string;
+            notes?: string | null;
+            status?: ('scheduled' | 'open' | 'booked' | 'cancelled') | null;
+            hasLimitedSpots?: boolean | null;
+            numberOfSpots?: number | null;
+            id?: string | null;
+          }[]
+        | null;
+      id?: string | null;
+    }[]
+  | null;
+/**
  * Supported timezones in IANA format.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -141,14 +238,14 @@ export interface UserAuthOperations {
  */
 export interface Service {
   id: string;
-  icon?: {
-    fileIcon?: (string | null) | Media;
-    lucideIcon?: string | null;
-  };
   /**
    * Automaticky generovaný z názvu. Lze upravit.
    */
   slug: string;
+  icon?: {
+    fileIcon?: (string | null) | Media;
+    lucideIcon?: string | null;
+  };
   title: string;
   description: {
     root: {
@@ -180,41 +277,17 @@ export interface Service {
     };
     [k: string]: unknown;
   } | null;
-  lessons?:
+  duration?: string | null;
+  price?: string | null;
+  location?: string | null;
+  additionalInfo?:
     | {
-        item: {
-          title: string;
-          description: {
-            root: {
-              type: string;
-              children: {
-                type: any;
-                version: number;
-                [k: string]: unknown;
-              }[];
-              direction: ('ltr' | 'rtl') | null;
-              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-              indent: number;
-              version: number;
-            };
-            [k: string]: unknown;
-          };
-        };
+        icon?: string | null;
+        title: string;
+        value: string;
         id?: string | null;
       }[]
     | null;
-  price: {
-    title: string;
-    value: string;
-  };
-  place: {
-    title: string;
-    value: string;
-  };
-  duration: {
-    title: string;
-    value: string;
-  };
   note?: {
     root: {
       type: string;
@@ -230,6 +303,15 @@ export interface Service {
     };
     [k: string]: unknown;
   } | null;
+  serviceType?: ('courses' | 'lessons') | null;
+  lessonsSection?: {
+    title?: string | null;
+    description?: string | null;
+    showLessonNumbers?: boolean | null;
+    lessons?: Lessons;
+  };
+  courses?: Courses;
+  schedules?: Schedules;
   updatedAt: string;
   createdAt: string;
 }
@@ -420,48 +502,100 @@ export interface PayloadMigration {
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
+  slug?: T;
   icon?:
     | T
     | {
         fileIcon?: T;
         lucideIcon?: T;
       };
-  slug?: T;
   title?: T;
   description?: T;
   content?: T;
-  lessons?:
+  duration?: T;
+  price?: T;
+  location?: T;
+  additionalInfo?:
     | T
     | {
-        item?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-            };
+        icon?: T;
+        title?: T;
+        value?: T;
         id?: T;
       };
-  price?:
-    | T
-    | {
-        title?: T;
-        value?: T;
-      };
-  place?:
-    | T
-    | {
-        title?: T;
-        value?: T;
-      };
-  duration?:
-    | T
-    | {
-        title?: T;
-        value?: T;
-      };
   note?: T;
+  serviceType?: T;
+  lessonsSection?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        showLessonNumbers?: T;
+        lessons?: T | LessonsSelect<T>;
+      };
+  courses?: T | CoursesSelect<T>;
+  schedules?: T | SchedulesSelect<T>;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lessons_select".
+ */
+export interface LessonsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses_select".
+ */
+export interface CoursesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  additionalInfo?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        value?: T;
+        id?: T;
+      };
+  lessonsSection?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        showLessonNumbers?: T;
+        lessons?: T | LessonsSelect<T>;
+      };
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schedules_select".
+ */
+export interface SchedulesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  courseIndex?: T;
+  status?: T;
+  hasLimitedSpots?: T;
+  numberOfSpots?: T;
+  scheduleItems?:
+    | T
+    | {
+        startDate?: T;
+        endDate?: T;
+        lesson?: T;
+        notes?: T;
+        status?: T;
+        hasLimitedSpots?: T;
+        numberOfSpots?: T;
+        id?: T;
+      };
+  id?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -590,16 +724,21 @@ export interface Hero {
   heroImage?: (string | null) | Media;
   ctaButtons?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?: ('/' | '/sluzby' | '/kontakt') | null;
-          url?: string | null;
-          label: string;
-        };
+        link: Link;
         id?: string | null;
       }[]
     | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "link".
+ */
+export interface Link {
+  type?: ('reference' | 'custom') | null;
+  newTab?: boolean | null;
+  reference?: ('/' | '/sluzby' | '/kontakt') | null;
+  url?: string | null;
+  label: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -619,13 +758,7 @@ export interface Services {
     | null;
   ctaButton?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?: ('/' | '/sluzby' | '/kontakt') | null;
-          url?: string | null;
-          label: string;
-        };
+        link: Link;
         id?: string | null;
       }[]
     | null;
@@ -648,13 +781,7 @@ export interface Reviews {
     | null;
   ctaButton?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?: ('/' | '/sluzby' | '/kontakt') | null;
-          url?: string | null;
-          label: string;
-        };
+        link: Link;
         id?: string | null;
       }[]
     | null;
@@ -666,11 +793,21 @@ export interface Reviews {
 export interface ServicesPage {
   id: string;
   pageHeader: PageHeader;
-  services?:
+  serviceSections?:
     | {
-        item: {
-          relationTo: 'services';
-          value: string | Service;
+        servicesSection?: {
+          icon?: string | null;
+          title?: string | null;
+          description?: string | null;
+          serviceSectionItems?:
+            | {
+                item: {
+                  relationTo: 'services';
+                  value: string | Service;
+                };
+                id?: string | null;
+              }[]
+            | null;
         };
         id?: string | null;
       }[]
@@ -702,13 +839,7 @@ export interface Header {
   email: string;
   navItems?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?: ('/' | '/sluzby' | '/kontakt') | null;
-          url?: string | null;
-          label: string;
-        };
+        link: Link;
         id?: string | null;
       }[]
     | null;
@@ -730,13 +861,7 @@ export interface Footer {
   quickLinks: {
     title: string;
     links: {
-      link: {
-        type?: ('reference' | 'custom') | null;
-        newTab?: boolean | null;
-        reference?: ('/' | '/sluzby' | '/kontakt') | null;
-        url?: string | null;
-        label: string;
-      };
+      link: Link;
       id?: string | null;
     }[];
   };
@@ -774,17 +899,20 @@ export interface HeroSelect<T extends boolean = true> {
   ctaButtons?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        link?: T | LinkSelect<T>;
         id?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "link_select".
+ */
+export interface LinkSelect<T extends boolean = true> {
+  type?: T;
+  newTab?: T;
+  reference?: T;
+  url?: T;
+  label?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -802,15 +930,7 @@ export interface ServicesSelect1<T extends boolean = true> {
   ctaButton?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        link?: T | LinkSelect<T>;
         id?: T;
       };
 }
@@ -830,15 +950,7 @@ export interface ReviewsSelect1<T extends boolean = true> {
   ctaButton?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        link?: T | LinkSelect<T>;
         id?: T;
       };
 }
@@ -848,10 +960,22 @@ export interface ReviewsSelect1<T extends boolean = true> {
  */
 export interface ServicesPageSelect<T extends boolean = true> {
   pageHeader?: T | PageHeaderSelect<T>;
-  services?:
+  serviceSections?:
     | T
     | {
-        item?: T;
+        servicesSection?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              serviceSectionItems?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+            };
         id?: T;
       };
   updatedAt?: T;
@@ -884,15 +1008,7 @@ export interface HeaderSelect<T extends boolean = true> {
   navItems?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        link?: T | LinkSelect<T>;
         id?: T;
       };
   updatedAt?: T;
@@ -919,15 +1035,7 @@ export interface FooterSelect<T extends boolean = true> {
         links?:
           | T
           | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                  };
+              link?: T | LinkSelect<T>;
               id?: T;
             };
       };

@@ -2,7 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import { Service } from '@/payload-types'
-import { ServiceModal } from '@/globals/Pages/Services/components/ServiceModal'
+import { ServiceDetailModal } from '@/globals/Pages/Services/ServiceDetailModal'
 
 type Props = {
   params: Promise<{
@@ -29,6 +29,6 @@ export default async function InterceptedServicePage({ params }: Props) {
     return notFound()
   }
 
-  return <ServiceModal service={service} />
+  return <ServiceDetailModal service={service} />
 }
 

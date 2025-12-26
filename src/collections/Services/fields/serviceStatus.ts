@@ -1,0 +1,14 @@
+import { Field } from 'payload'
+
+export const serviceStatus: Field = {
+  name: 'status',
+  type: 'select',
+  label: 'Stav',
+  defaultValue: 'scheduled',
+  options: [
+    { label: 'Naplánováno', value: 'scheduled' },
+    { label: 'Otevřeno', value: 'open' },
+    { label: 'Obsazeno', value: 'booked' },
+    { label: 'Zrušeno', value: 'cancelled' },
+  ],
+}

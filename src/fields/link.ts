@@ -27,10 +27,11 @@ type LinkType = (options?: {
   overrides?: Partial<GroupField>
 }) => Field
 
-export const link: LinkType = ({ appearances, disableLabel = false, overrides = {}, defaultPage } = {}) => {
+export const link: LinkType = ({ appearances, disableLabel = false, overrides = {} } = {}) => {
   const linkResult: GroupField = {
     name: 'link',
     type: 'group',
+    interfaceName: 'link',
     admin: {
       hideGutter: true,
     },
@@ -82,7 +83,6 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       },
       label: 'Vyberte stránku',
       options: pageSelectOptions,
-      defaultValue: defaultPage ? PAGE_ROUTES[defaultPage].path : undefined,
       required: true,
     },
     {

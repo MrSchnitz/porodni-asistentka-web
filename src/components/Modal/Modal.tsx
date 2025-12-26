@@ -1,17 +1,20 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { X } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Service } from '@/payload-types'
-import { ServiceContent } from './ServiceContent'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useImperativeHandle } from 'react'
 
-type Props = {
-  service: Service
+export type ModalImperativeHandle = {
+  handleClose: () => void
 }
 
-export function ServiceModal({ service }: Props) {
+type Props = {
+  children: React.ReactNode
+  ref?: React.RefObject<ModalImperativeHandle | null>
+}
+
+export function Modal({ children, ref }: Props) {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(true)
 
@@ -25,6 +28,10 @@ export function ServiceModal({ service }: Props) {
       router.back()
     }
   }
+
+  useImperativeHandle(ref, () => ({
+    handleClose,
+  }))
 
   // Close on escape key
   useEffect(() => {
@@ -65,20 +72,9 @@ export function ServiceModal({ service }: Props) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="relative z-50 w-full max-w-4xl max-h-[90vh] overflow-y-auto mx-4"
+            className="relative z-50 w-full max-w-4xl max-h-[95dvh] overflow-y-auto rounded-2xl"
           >
-            <div className="bg-card rounded-2xl shadow-2xl border border-primary/30">
-              <button
-                onClick={handleClose}
-                className="absolute top-4 right-4 p-2 rounded-full hover:bg-primary/10 transition-colors z-10"
-              >
-                <X className="w-6 h-6 text-foreground" />
-              </button>
-
-              <div className="p-6">
-                <ServiceContent service={service} />
-              </div>
-            </div>
+            {children}
           </motion.div>
         </div>
       )}

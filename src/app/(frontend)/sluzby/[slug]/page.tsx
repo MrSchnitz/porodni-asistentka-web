@@ -2,7 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import { Service } from '@/payload-types'
-import { ServiceDetailPage } from '@/globals/Pages/Services/components/ServiceDetailPage'
+import { ServiceDetailPage } from '@/globals/Pages/Services/ServiceDetailPage'
 
 type Props = {
   params: Promise<{

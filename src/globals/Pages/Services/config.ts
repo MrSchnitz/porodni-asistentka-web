@@ -9,16 +9,50 @@ export const ServicesPage: GlobalConfig = {
   fields: [
     pageHeader,
     {
-      name: 'services',
+      name: 'serviceSections',
       type: 'array',
-      label: 'Vybrane služby',
+      label: 'Sekce služeb',
       fields: [
         {
-          name: 'item',
-          type: 'relationship',
-          label: 'Vyberte služby pro zobrazení na stránce',
-          relationTo: ['services'],
-          required: true,
+          name: 'servicesSection',
+          type: 'group',
+          label: 'Služby sekce',
+          fields: [
+            {
+              name: 'icon',
+              type: 'text',
+              label: 'Ikona',
+              admin: {
+                components: {
+                  Field: '@/components/admin/IconField',
+                },
+              },
+            },
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Nadpis',
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Popis',
+            },
+            {
+              name: 'serviceSectionItems',
+              type: 'array',
+              label: 'Vyberte služby pro zobrazení na stránce',
+              fields: [
+                {
+                  name: 'item',
+                  type: 'relationship',
+                  label: '',
+                  relationTo: ['services'],
+                  required: true,
+                },
+              ],
+            },
+          ],
         },
       ],
     },

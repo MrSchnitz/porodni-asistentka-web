@@ -19,20 +19,20 @@ export function HeaderClient({
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-primary/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-18 sm:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            {logo && <GlobalLogo logo={logo} className="w-12 h-12" />}
+            {logo && <GlobalLogo logo={logo} className="w-10 h-10 sm:w-12 sm:h-12" />}
             <div className="flex flex-col justify-center">
               <span
-                className="text-2xl text-foreground"
+                className="text-lg sm:text-2xl text-foreground"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 {headerTitle}
               </span>
               {headerSubTitle && (
                 <span
-                  className="text-md text-foreground"
+                  className="text-sm sm:text-md text-foreground"
                   style={{ fontFamily: 'var(--font-body)' }}
                 >
                   {headerSubTitle}
@@ -67,7 +67,7 @@ export function HeaderClient({
             className="md:hidden p-2 text-foreground"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
