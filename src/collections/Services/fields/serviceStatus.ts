@@ -2,6 +2,7 @@ import { Field } from 'payload'
 
 export const serviceStatus: Field = {
   name: 'status',
+  interfaceName: 'serviceStatus',
   type: 'select',
   label: 'Stav',
   defaultValue: 'scheduled',

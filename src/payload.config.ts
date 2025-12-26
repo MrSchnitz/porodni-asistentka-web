@@ -16,11 +16,12 @@ import { defaultLexical } from './fields/defaultLexical'
 import { Reviews } from './collections/Reviews'
 import { Footer } from './globals/Layout/Footer/config'
 import { ServicesPage } from './globals/Pages/Services/config'
+import { WeeklyScheduledServicesPage } from './globals/Pages/WeeklyScheduledServices/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const pagesGlobalsConfig: GlobalConfig[] = [HomePage, ServicesPage]
+const pagesGlobalsConfig: GlobalConfig[] = [HomePage, ServicesPage, WeeklyScheduledServicesPage]
 
 export default buildConfig({
   admin: {

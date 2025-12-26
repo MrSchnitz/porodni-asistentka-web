@@ -82,7 +82,7 @@ export type Schedules =
        * Vyberte kurz - v termínech pak můžete vybírat lekce
        */
       courseIndex?: string | null;
-      status?: ('scheduled' | 'open' | 'booked' | 'cancelled') | null;
+      status?: ServiceStatus;
       hasLimitedSpots?: boolean | null;
       numberOfSpots?: number | null;
       scheduleItems?:
@@ -94,7 +94,7 @@ export type Schedules =
              */
             lesson: string;
             notes?: string | null;
-            status?: ('scheduled' | 'open' | 'booked' | 'cancelled') | null;
+            status?: ServiceStatus;
             hasLimitedSpots?: boolean | null;
             numberOfSpots?: number | null;
             id?: string | null;
@@ -103,6 +103,11 @@ export type Schedules =
       id?: string | null;
     }[]
   | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "serviceStatus".
+ */
+export type ServiceStatus = ('scheduled' | 'open' | 'booked' | 'cancelled') | null;
 /**
  * Supported timezones in IANA format.
  *
@@ -196,12 +201,14 @@ export interface Config {
   globals: {
     homePage: HomePage;
     servicesPage: ServicesPage;
+    weeklyScheduledServicesPage: WeeklyScheduledServicesPage;
     header: Header;
     footer: Footer;
   };
   globalsSelect: {
     homePage: HomePageSelect<false> | HomePageSelect<true>;
     servicesPage: ServicesPageSelect<false> | ServicesPageSelect<true>;
+    weeklyScheduledServicesPage: WeeklyScheduledServicesPageSelect<false> | WeeklyScheduledServicesPageSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
@@ -736,7 +743,7 @@ export interface Hero {
 export interface Link {
   type?: ('reference' | 'custom') | null;
   newTab?: boolean | null;
-  reference?: ('/' | '/sluzby' | '/kontakt') | null;
+  reference?: ('/' | '/aktualni-sluzby' | '/sluzby' | '/kontakt') | null;
   url?: string | null;
   label: string;
 }
@@ -822,6 +829,16 @@ export interface ServicesPage {
 export interface PageHeader {
   title: string;
   subtitle?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "weeklyScheduledServicesPage".
+ */
+export interface WeeklyScheduledServicesPage {
+  id: string;
+  pageHeader: PageHeader;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -989,6 +1006,16 @@ export interface ServicesPageSelect<T extends boolean = true> {
 export interface PageHeaderSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "weeklyScheduledServicesPage_select".
+ */
+export interface WeeklyScheduledServicesPageSelect<T extends boolean = true> {
+  pageHeader?: T | PageHeaderSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

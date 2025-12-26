@@ -36,10 +36,8 @@ import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } f
 import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
 import { RowLabel as RowLabel_4699d459aa16a2d49e3f0ff5fadd5e0f } from '@/globals/Layout/components/RowLabel'
-import { default as default_7c0704ad3183f55e869cd961fd436c80 } from '@/components/admin/CalendarNavLink/CalendarNavLink'
 import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/components/BeforeDashboard'
 import { default as default_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/BeforeLogin'
-import { default as default_ac439e15041ced473b7569ed7c7a1514 } from '@/components/admin/Calendar/CalendarView'
 
 export const importMap = {
   "@/components/admin/IconField#default": default_ef1a0a1df905d7e27b9ceed86573ae89,
@@ -80,8 +78,6 @@ export const importMap = {
   "@payloadcms/ui/rsc#FolderField": FolderField_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui#FolderTypeField": FolderTypeField_3817bf644402e67bfe6577f60ef982de,
   "@/globals/Layout/components/RowLabel#RowLabel": RowLabel_4699d459aa16a2d49e3f0ff5fadd5e0f,
-  "@/components/admin/CalendarNavLink/CalendarNavLink#default": default_7c0704ad3183f55e869cd961fd436c80,
   "@/components/BeforeDashboard#default": default_1a7510af427896d367a49dbf838d2de6,
-  "@/components/BeforeLogin#default": default_8a7ab0eb7ab5c511aba12e68480bfe5e,
-  "@/components/admin/Calendar/CalendarView#default": default_ac439e15041ced473b7569ed7c7a1514
+  "@/components/BeforeLogin#default": default_8a7ab0eb7ab5c511aba12e68480bfe5e
 }

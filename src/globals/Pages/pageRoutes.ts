@@ -11,6 +11,10 @@ export const PAGE_ROUTES = {
     label: 'Úvod',
     path: '/',
   },
+  weeklyScheduledServicesPage: {
+    label: 'Aktuální služby',
+    path: '/aktualni-sluzby',
+  },
   servicesPage: {
     label: 'Služby',
     path: '/sluzby',
