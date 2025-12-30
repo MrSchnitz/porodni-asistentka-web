@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import RichText from '@/components/RichText'
 import { ServiceLessons } from './ServiceLessons'
 import { ServiceCourseInfoItem } from './components/ServiceCourseInfoItem'
-import { Course } from '../../../../types'
+import { Course } from '../../../../../types'
 
 interface CourseScheduleProps {
   course: Course

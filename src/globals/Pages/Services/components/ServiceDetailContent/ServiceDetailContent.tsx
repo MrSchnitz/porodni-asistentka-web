@@ -6,7 +6,7 @@ import { ServiceContentSection } from './components/ServiceContentSection'
 import { ServiceSchedule } from './components/ServiceSchedule/ServiceSchedule'
 import { useMemo } from 'react'
 import { ServiceInfoItem } from './components/ServiceInfoItem'
-import { AdditionalInfo } from '../../types'
+import { AdditionalInfo } from '../../../types'
 import { ServiceLessons } from './components/ServiceCourse/ServiceLessons'
 
 type Props = {

@@ -10,7 +10,7 @@ import {
 import { formatServiceDateTime } from '@/utilities/formatServiceDateTime'
 import clsx from 'clsx'
 import { Calendar, Clock } from 'lucide-react'
-import { ScheduleItems, ScheduleStatus } from '../../../../../types'
+import { ScheduleItems, ScheduleStatus } from '../../../../../../types'
 import { ServiceStatusBadge } from './ServiceStatusBadge'
 
 const getIsAvailable = (status: ScheduleStatus) => {

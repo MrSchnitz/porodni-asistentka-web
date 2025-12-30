@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { StickyHeader } from '../../../components/StickyNavbar'
 import { useBreakpoint } from '@/hooks/useMediaQuery'
 import { useScrollToSection } from '@/hooks/useScrollToSection'
-import { ServicePageSections } from '../../types'
+import { ServicePageSections } from '../../../types'
 
 type Props = {
   serviceSections: ServicePageSections

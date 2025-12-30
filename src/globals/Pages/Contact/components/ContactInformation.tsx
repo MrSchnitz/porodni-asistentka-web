@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card'
-import { ContactPageInfo, ContactPageNote } from '../../Services/types'
+import { ContactPageInfo, ContactPageNote } from '../../types'
 import { DynamicIcon, IconName } from 'lucide-react/dynamic'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 

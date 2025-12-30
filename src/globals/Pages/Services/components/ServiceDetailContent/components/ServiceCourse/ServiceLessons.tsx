@@ -6,7 +6,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
-import { LessonsSection } from '@/globals/Pages/Services/types'
+import { LessonsSection } from '@/globals/Pages/types'
 import { ChevronsDown, ChevronsUp } from 'lucide-react'
 import { useState } from 'react'
 

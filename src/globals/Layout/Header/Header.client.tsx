@@ -82,7 +82,7 @@ export function HeaderClient({
               {/* Mobile Contact Info */}
               <div className="flex flex-col gap-3 pt-4 border-t border-primary/20">
                 <a
-                  href="tel:+420777123456"
+                  href={`tel:${phone}`}
                   className="flex items-center gap-3 text-foreground hover:text-primary transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >

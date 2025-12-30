@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { ServiceScheduleTable } from './components/ServiceScheduleTable'
-import { Schedule } from '../../../../types'
+import { Schedule } from '../../../../../types'
 import { ServiceAvailableSpotsBadge } from './components/ServiceAvailableSpotsBadge'
 import { ServiceStatusBadge } from './components/ServiceStatusBadge'
 

@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge'
 
-import { ScheduleStatus } from '../../../../../types'
+import { ScheduleStatus } from '../../../../../../types'
 
 export const ServiceStatusBadge = ({ status }: { status: ScheduleStatus }) => {
   switch (status) {
