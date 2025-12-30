@@ -19,6 +19,7 @@ import { ServicesPage } from './globals/Pages/Services/config'
 import { WeeklyScheduledServicesPage } from './globals/Pages/WeeklyScheduledServices/config'
 import { AboutPage } from './globals/Pages/About/config'
 import { ContactPage } from './globals/Pages/Contact/config'
+import { Announcement } from './globals/Layout/Announcement/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -42,7 +43,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  globals: [...pagesGlobalsConfig, Header, Footer],
+  globals: [...pagesGlobalsConfig, Header, Footer, Announcement],
   collections: [Services, Reviews, Users, Media],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || '',

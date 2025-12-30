@@ -1,8 +1,6 @@
 'use client'
-
-import { useRouter } from 'next/navigation'
+import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'motion/react'
-import { Service } from '@/payload-types'
 import { useEffect, useState, useCallback, useImperativeHandle } from 'react'
 
 export type ModalImperativeHandle = {
@@ -11,12 +9,24 @@ export type ModalImperativeHandle = {
 
 type Props = {
   children: React.ReactNode
+  onCloseComplete?: () => void
+  isVisible?: boolean
   ref?: React.RefObject<ModalImperativeHandle | null>
+  className?: string
+  backdropClassName?: string
+  modalClassName?: string
 }
 
-export function Modal({ children, ref }: Props) {
-  const router = useRouter()
-  const [isOpen, setIsOpen] = useState(true)
+export function Modal({
+  children,
+  onCloseComplete,
+  isVisible = true,
+  ref,
+  className,
+  backdropClassName,
+  modalClassName,
+}: Props) {
+  const [isOpen, setIsOpen] = useState(isVisible)
 
   const handleClose = useCallback(() => {
     setIsOpen(false)
@@ -25,7 +35,7 @@ export function Modal({ children, ref }: Props) {
   // Navigate back after exit animation completes
   const handleAnimationComplete = () => {
     if (!isOpen) {
-      router.back()
+      onCloseComplete?.()
     }
   }
 
@@ -33,7 +43,11 @@ export function Modal({ children, ref }: Props) {
     handleClose,
   }))
 
-  // Close on escape key
+  useEffect(() => {
+    setIsOpen(isVisible)
+  }, [isVisible])
+
+  // Prevent body scroll when modal is open
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -41,13 +55,10 @@ export function Modal({ children, ref }: Props) {
       }
     }
     document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [handleClose])
 
-  // Prevent body scroll when modal is open
-  useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => {
+      document.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = 'unset'
     }
   }, [])
@@ -55,14 +66,14 @@ export function Modal({ children, ref }: Props) {
   return (
     <AnimatePresence onExitComplete={handleAnimationComplete}>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div className={cn('fixed inset-0 z-60 flex items-center justify-center', className)}>
           {/* Animated backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            className={cn('fixed inset-0 bg-black/50 backdrop-blur-sm', backdropClassName)}
             onClick={handleClose}
           />
 
@@ -72,7 +83,10 @@ export function Modal({ children, ref }: Props) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="relative z-50 w-full max-w-4xl max-h-[95dvh] overflow-y-auto rounded-2xl"
+            className={cn(
+              'relative z-60 w-full max-w-4xl max-h-[95dvh] overflow-y-auto rounded-2xl',
+              modalClassName,
+            )}
           >
             {children}
           </motion.div>

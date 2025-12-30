@@ -3,17 +3,15 @@ import './globals.css'
 import { Header } from '@/globals/Layout/Header/Header'
 import { AdminBar } from '@/components/AdminBar'
 import { draftMode } from 'next/headers'
-import { getServerSideURL } from '@/utilities/getURL'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { Footer } from '@/globals/Layout/Footer/Footer'
+import { Announcement } from '@/globals/Layout/Announcement/Announcement'
 
 export const metadata = {
-  description: 'Web for porodni asistentka',
+  description: 'Web pro porodni asistentku',
   title: 'Porodni asistentka web',
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
   return (
@@ -28,6 +26,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             preview: isEnabled,
           }}
         />
+        <Announcement />
         <Header />
         <main>{children}</main>
         <Footer />

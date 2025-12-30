@@ -206,6 +206,7 @@ export interface Config {
     contactPage: ContactPage;
     header: Header;
     footer: Footer;
+    announcement: Announcement;
   };
   globalsSelect: {
     homePage: HomePageSelect<false> | HomePageSelect<true>;
@@ -215,6 +216,7 @@ export interface Config {
     contactPage: ContactPageSelect<false> | ContactPageSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    announcement: AnnouncementSelect<false> | AnnouncementSelect<true>;
   };
   locale: 'cs' | 'en';
   user: User & {
@@ -984,6 +986,69 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcement".
+ */
+export interface Announcement {
+  id: string;
+  bannerEnabled?: boolean | null;
+  modalEnabled?: boolean | null;
+  banner?: AnnouncementBanner;
+  modal?: AnnouncementModal;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcementBanner".
+ */
+export interface AnnouncementBanner {
+  message: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  type: 'info' | 'warning' | 'success' | 'error';
+  dismissible?: boolean | null;
+  showOnce?: boolean | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcementModal".
+ */
+export interface AnnouncementModal {
+  title?: string | null;
+  message: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  type: 'info' | 'warning' | 'success' | 'error';
+  dismissible?: boolean | null;
+  showOnce?: boolean | null;
+  buttonText?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homePage_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
@@ -1214,6 +1279,41 @@ export interface FooterSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcement_select".
+ */
+export interface AnnouncementSelect<T extends boolean = true> {
+  bannerEnabled?: T;
+  modalEnabled?: T;
+  banner?: T | AnnouncementBannerSelect<T>;
+  modal?: T | AnnouncementModalSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcementBanner_select".
+ */
+export interface AnnouncementBannerSelect<T extends boolean = true> {
+  message?: T;
+  type?: T;
+  dismissible?: T;
+  showOnce?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcementModal_select".
+ */
+export interface AnnouncementModalSelect<T extends boolean = true> {
+  title?: T;
+  message?: T;
+  type?: T;
+  dismissible?: T;
+  showOnce?: T;
+  buttonText?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

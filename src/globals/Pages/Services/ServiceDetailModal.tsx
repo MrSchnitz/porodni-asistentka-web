@@ -8,12 +8,14 @@ import Link from 'next/link'
 import { PAGE_ROUTES } from '../pageRoutes'
 import { Modal, ModalImperativeHandle } from '@/components/Modal/Modal'
 import { useRef } from 'react'
+import { useRouter } from 'next/navigation'
 
 type ServiceDetailModalProps = {
   service: Service
 }
 
 export const ServiceDetailModal = ({ service }: ServiceDetailModalProps) => {
+  const router = useRouter()
   const modalRef = useRef<ModalImperativeHandle | null>(null)
 
   const handleClose = () => {
@@ -21,7 +23,7 @@ export const ServiceDetailModal = ({ service }: ServiceDetailModalProps) => {
   }
 
   return (
-    <Modal ref={modalRef}>
+    <Modal ref={modalRef} onCloseComplete={() => router.back()}>
       <div className="relative mx-4 bg-card rounded-2xl shadow-2xl border border-primary/30">
         {/* Header */}
         <div className="flex items-center gap-4 px-6 pt-6 pb-3 mb-3 sticky top-0 bg-card rounded-t-2xl">
