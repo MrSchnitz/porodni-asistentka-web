@@ -19,6 +19,10 @@ export const PAGE_ROUTES = {
     label: 'Služby',
     path: '/sluzby',
   },
+  aboutPage: {
+    label: 'O mně',
+    path: '/o-mne',
+  },
   contactPage: {
     label: 'Kontakt',
     path: '/kontakt',

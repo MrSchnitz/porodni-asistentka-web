@@ -202,6 +202,7 @@ export interface Config {
     homePage: HomePage;
     servicesPage: ServicesPage;
     weeklyScheduledServicesPage: WeeklyScheduledServicesPage;
+    aboutPage: AboutPage;
     header: Header;
     footer: Footer;
   };
@@ -209,6 +210,7 @@ export interface Config {
     homePage: HomePageSelect<false> | HomePageSelect<true>;
     servicesPage: ServicesPageSelect<false> | ServicesPageSelect<true>;
     weeklyScheduledServicesPage: WeeklyScheduledServicesPageSelect<false> | WeeklyScheduledServicesPageSelect<true>;
+    aboutPage: AboutPageSelect<false> | AboutPageSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
@@ -743,7 +745,7 @@ export interface Hero {
 export interface Link {
   type?: ('reference' | 'custom') | null;
   newTab?: boolean | null;
-  reference?: ('/' | '/aktualni-sluzby' | '/sluzby' | '/kontakt') | null;
+  reference?: ('/' | '/aktualni-sluzby' | '/sluzby' | '/o-mne' | '/kontakt') | null;
   url?: string | null;
   label: string;
 }
@@ -837,6 +839,43 @@ export interface PageHeader {
 export interface WeeklyScheduledServicesPage {
   id: string;
   pageHeader: PageHeader;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutPage".
+ */
+export interface AboutPage {
+  id: string;
+  pageHeader: PageHeader;
+  image?: (string | null) | Media;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  ctaSection: {
+    title: string;
+    subtitle?: string | null;
+    ctaButtons?:
+      | {
+          link: Link;
+          id?: string | null;
+        }[]
+      | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1013,6 +1052,31 @@ export interface PageHeaderSelect<T extends boolean = true> {
  */
 export interface WeeklyScheduledServicesPageSelect<T extends boolean = true> {
   pageHeader?: T | PageHeaderSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aboutPage_select".
+ */
+export interface AboutPageSelect<T extends boolean = true> {
+  pageHeader?: T | PageHeaderSelect<T>;
+  image?: T;
+  title?: T;
+  content?: T;
+  ctaSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        ctaButtons?:
+          | T
+          | {
+              link?: T | LinkSelect<T>;
+              id?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
