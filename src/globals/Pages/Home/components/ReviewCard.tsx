@@ -1,20 +1,14 @@
 import RichText from '@/components/RichText'
 import { Card, CardContent } from '@/components/ui/card'
-import { HomePage } from '@/payload-types'
+import { Review } from '@/payload-types'
 import { Quote, Star } from 'lucide-react'
 
 type Props = {
-  review: NonNullable<HomePage['reviews']['reviews']>[number]
+  review: Review
 }
 
 export function ReviewCard({ review }: Props) {
-  const value = review.reference?.value
-
-  if (!value || typeof value === 'string') {
-    return null
-  }
-
-  const numberOfStarsArray = [...Array(value.rating)]
+  const numberOfStarsArray = [...Array(review.rating)]
 
   return (
     <Card className="border-primary/30 relative hover:shadow-xl transition-all bg-card">
@@ -28,12 +22,12 @@ export function ReviewCard({ review }: Props) {
         </div>
 
         <div className="text-foreground/80 mb-6 italic">
-          <RichText data={value.content} />
+          <RichText data={review.content} />
         </div>
 
-        {value.author && (
+        {review.author && (
           <div className="border-t border-primary/20 pt-4">
-            <p className="text-foreground">{value.author}</p>
+            <p className="text-foreground">{review.author}</p>
           </div>
         )}
       </CardContent>

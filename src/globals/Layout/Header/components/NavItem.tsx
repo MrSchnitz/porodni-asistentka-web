@@ -6,9 +6,10 @@ import { usePathname } from 'next/navigation'
 
 type Props = {
   item: LinkType
+  className?: string
 }
 
-export function NavItem({ item }: Props) {
+export function NavItem({ item, className }: Props) {
   const pathname = usePathname()
 
   const isActive = (path: string) => pathname === path
@@ -19,6 +20,7 @@ export function NavItem({ item }: Props) {
       href={href}
       className={cn(
         'transition-colors cursor-pointer',
+        className,
         isActive(href) ? 'text-primary' : 'text-foreground hover:text-primary',
       )}
     >

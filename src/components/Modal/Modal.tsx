@@ -28,8 +28,14 @@ export function Modal({
 }: Props) {
   const [isOpen, setIsOpen] = useState(isVisible)
 
+  const handleOpen = useCallback(() => {
+    setIsOpen(true)
+    document.body.style.overflow = 'hidden'
+  }, [])
+
   const handleClose = useCallback(() => {
     setIsOpen(false)
+    document.body.style.overflow = 'unset'
   }, [])
 
   // Navigate back after exit animation completes
@@ -44,10 +50,13 @@ export function Modal({
   }))
 
   useEffect(() => {
-    setIsOpen(isVisible)
+    if (isVisible) {
+      handleOpen()
+    } else {
+      handleClose()
+    }
   }, [isVisible])
 
-  // Prevent body scroll when modal is open
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -56,10 +65,8 @@ export function Modal({
     }
     document.addEventListener('keydown', handleEscape)
 
-    document.body.style.overflow = 'hidden'
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'unset'
     }
   }, [])
 

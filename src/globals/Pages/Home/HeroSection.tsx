@@ -1,9 +1,12 @@
+'use client'
+
 import { Media } from '@/components/Media'
 import { Button } from '@/components/ui/button'
 import { HomePage } from '@/payload-types'
 import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { motion } from 'motion/react'
 
 type Props = {
   data: HomePage['hero']
@@ -16,9 +19,19 @@ export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButt
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <div className="max-w-2xl">
+          <motion.div
+            className="max-w-2xl"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          >
             {quote && (
-              <div className="flex items-center gap-2 mb-6">
+              <motion.div
+                className="flex items-center gap-2 mb-6"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
                 <Sparkles className="w-6 h-6 text-primary" />
                 <span
                   className="text-primary text-2xl"
@@ -26,22 +39,37 @@ export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButt
                 >
                   {quote}
                 </span>
-              </div>
+              </motion.div>
             )}
 
-            <h1
+            <motion.h1
               className="text-5xl sm:text-6xl lg:text-7xl mb-6 text-foreground"
               style={{ fontFamily: 'var(--font-display)' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
             >
               {title}
-            </h1>
+            </motion.h1>
 
             {subtitle && (
-              <p className="text-xl sm:text-2xl mb-8 text-foreground/80 max-w-xl">{subtitle}</p>
+              <motion.p
+                className="text-xl sm:text-2xl mb-8 text-foreground/80 max-w-xl"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              >
+                {subtitle}
+              </motion.p>
             )}
 
             {ctaButtons && (
-              <div className="flex flex-col sm:flex-row gap-4">
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+              >
                 {ctaButtons.map((button, index) => (
                   <Link key={button.id} href={button.link.url ?? ''}>
                     <Button
@@ -56,42 +84,17 @@ export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButt
                     </Button>
                   </Link>
                 ))}
-              </div>
+              </motion.div>
             )}
-
-            {/* <div className="mt-12 grid grid-cols-3 gap-6 max-w-md">
-              <div className="text-center">
-                <div
-                  className="text-3xl text-primary mb-1"
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  15+
-                </div>
-                <div className="text-sm text-foreground/70">Let zkušeností</div>
-              </div>
-              <div className="text-center">
-                <div
-                  className="text-3xl text-primary mb-1"
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  500+
-                </div>
-                <div className="text-sm text-foreground/70">Spokojených rodin</div>
-              </div>
-              <div className="text-center">
-                <div
-                  className="text-3xl text-primary mb-1"
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  24/7
-                </div>
-                <div className="text-sm text-foreground/70">Dostupnost</div>
-              </div>
-            </div> */}
-          </div>
+          </motion.div>
 
           {/* Image */}
-          <div className="relative hidden lg:block">
+          <motion.div
+            className="relative hidden lg:block"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <Media resource={heroImage} />
               {/* Subtle overlay */}
@@ -100,7 +103,7 @@ export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButt
             {/* Decorative element */}
             <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-primary/20 rounded-full blur-3xl -z-10"></div>
             <div className="absolute -top-6 -left-6 w-48 h-48 bg-secondary/20 rounded-full blur-3xl -z-10"></div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
