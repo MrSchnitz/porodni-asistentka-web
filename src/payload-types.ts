@@ -203,6 +203,7 @@ export interface Config {
     servicesPage: ServicesPage;
     weeklyScheduledServicesPage: WeeklyScheduledServicesPage;
     aboutPage: AboutPage;
+    contactPage: ContactPage;
     header: Header;
     footer: Footer;
   };
@@ -211,6 +212,7 @@ export interface Config {
     servicesPage: ServicesPageSelect<false> | ServicesPageSelect<true>;
     weeklyScheduledServicesPage: WeeklyScheduledServicesPageSelect<false> | WeeklyScheduledServicesPageSelect<true>;
     aboutPage: AboutPageSelect<false> | AboutPageSelect<true>;
+    contactPage: ContactPageSelect<false> | ContactPageSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
@@ -881,6 +883,55 @@ export interface AboutPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contactPage".
+ */
+export interface ContactPage {
+  id: string;
+  pageHeader: PageHeader;
+  contactInfo?:
+    | {
+        icon?: string | null;
+        title?: string | null;
+        value?: string | null;
+        formattedValue?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        valueType?: ('text' | 'formattedText' | 'email' | 'phone' | 'link') | null;
+        id?: string | null;
+      }[]
+    | null;
+  note?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
@@ -1077,6 +1128,27 @@ export interface AboutPageSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contactPage_select".
+ */
+export interface ContactPageSelect<T extends boolean = true> {
+  pageHeader?: T | PageHeaderSelect<T>;
+  contactInfo?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        value?: T;
+        formattedValue?: T;
+        valueType?: T;
+        id?: T;
+      };
+  note?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

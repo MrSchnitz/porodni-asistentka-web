@@ -1,13 +1,15 @@
+import { cn } from '@/lib/utils'
 import { PageHeader as PageHeaderType } from '@/payload-types'
 
 type Props = {
   data: PageHeaderType
   navbar?: React.ReactNode
+  className?: string
 }
 
-export const PageHeader = ({ data: { title, subtitle }, navbar }: Props) => {
+export const PageHeader = ({ data: { title, subtitle }, navbar, className }: Props) => {
   return (
-    <section className="py-10 sm:py-20 bg-linear-to-br from-background to-muted">
+    <section className={cn('py-10 sm:py-20 bg-linear-to-br from-background to-muted', className)}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
           <h1
