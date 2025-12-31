@@ -35,4 +35,3 @@ export function ServicePageSection({ id, icon, title, description, children }: P
     </section>
   )
 }
-

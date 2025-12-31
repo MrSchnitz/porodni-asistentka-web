@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { X, Info, AlertCircle, CheckCircle, AlertTriangle } from 'lucide-react'
-import { motion, AnimatePresence } from 'motion/react'
 import type { AnnouncementModal as AnnouncementModalType } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { Modal } from '@/components/Modal/Modal'

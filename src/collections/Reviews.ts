@@ -4,7 +4,7 @@ export const Reviews: CollectionConfig = {
   slug: 'reviews',
   admin: {
     useAsTitle: 'content',
-    group: "Content"
+    group: 'Content',
   },
   fields: [
     {

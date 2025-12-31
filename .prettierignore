@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+dist/
+
+# Generated files
+src/payload-types.ts
+src/app/(payload)/admin/importMap.js
+
+# Package manager
+pnpm-lock.yaml
+
+# Other
+*.md
+

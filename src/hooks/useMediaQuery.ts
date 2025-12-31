@@ -69,4 +69,3 @@ export function useCurrentBreakpoint(): Breakpoint | 'xs' {
   if (isSm) return 'sm'
   return 'xs'
 }
-

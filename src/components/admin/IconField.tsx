@@ -19,7 +19,9 @@ export default function CustomIconField({ field: { label } }: TextFieldClientPro
           value={value as IconName}
           onValueChange={setValue}
         />
-        <Button className="m-0" onClick={() => setValue(null)}>Odstranit</Button>
+        <Button className="m-0" onClick={() => setValue(null)}>
+          Odstranit
+        </Button>
       </div>
     </div>
   )

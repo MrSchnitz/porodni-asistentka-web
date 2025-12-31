@@ -3,7 +3,9 @@
 import { RowLabelProps, useRowLabel } from '@payloadcms/ui'
 import { Service } from '@/payload-types'
 
-type Lesson = NonNullable<NonNullable<NonNullable<Service['courses']>[number]>['lessons']>[number]
+type Lesson = NonNullable<
+  NonNullable<NonNullable<NonNullable<Service['courses']>[number]>['lessonsSection']>['lessons']
+>[number]
 
 export const LessonRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<Lesson>()

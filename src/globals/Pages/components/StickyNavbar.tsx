@@ -42,7 +42,7 @@ export function StickyHeader({
       {
         rootMargin: `-${NAVBAR_HEIGHT}px 0px 0px 0px`,
         threshold: 0,
-      }
+      },
     )
 
     observer.observe(headerRef.current)
@@ -68,7 +68,7 @@ export function StickyHeader({
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className={cn(
               'fixed top-18 sm:top-20 left-0 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-primary/10 py-3',
-              fixedClassName
+              fixedClassName,
             )}
           >
             {fixedContainer ? (
@@ -84,4 +84,3 @@ export function StickyHeader({
     </>
   )
 }
-

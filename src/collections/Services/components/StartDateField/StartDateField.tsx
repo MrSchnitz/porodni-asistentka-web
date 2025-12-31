@@ -21,11 +21,7 @@ const StartDateField: React.FC<DateFieldClientProps> = (props) => {
     // Only auto-set endDate if:
     // 1. startDate has a value
     // 2. startDate actually changed (not just on mount)
-    if (
-      value &&
-      previousStartDate.current !== value &&
-      previousStartDate.current !== undefined
-    ) {
+    if (value && previousStartDate.current !== value && previousStartDate.current !== undefined) {
       const startDate = parseISO(value)
 
       if (isValid(startDate)) {

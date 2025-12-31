@@ -30,4 +30,3 @@ export const PlanningRowLabel: React.FC<RowLabelProps> = () => {
 }
 
 export default PlanningRowLabel
-

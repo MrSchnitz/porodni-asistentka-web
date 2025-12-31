@@ -10,13 +10,8 @@ export async function Announcement() {
 
   return (
     <>
-      {data.bannerEnabled && data.banner && (
-        <AnnouncementBanner id={data.id} {...data.banner} />
-      )}
-      {data.modalEnabled && data.modal && (
-        <AnnouncementModal id={data.id} {...data.modal} />
-      )}
+      {data.bannerEnabled && data.banner && <AnnouncementBanner id={data.id} {...data.banner} />}
+      {data.modalEnabled && data.modal && <AnnouncementModal id={data.id} {...data.modal} />}
     </>
   )
 }
-

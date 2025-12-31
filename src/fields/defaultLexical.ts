@@ -1,4 +1,3 @@
-import type { TextFieldSingleValidation } from 'payload'
 import {
   FixedToolbarFeature,
   InlineToolbarFeature,

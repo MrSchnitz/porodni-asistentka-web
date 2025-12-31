@@ -26,9 +26,7 @@ type DocWithMeta = {
   slug?: string | string[] | null
 }
 
-export const generateMeta = async (args: {
-  doc: DocWithMeta | null
-}): Promise<Metadata> => {
+export const generateMeta = async (args: { doc: DocWithMeta | null }): Promise<Metadata> => {
   const { doc } = args
 
   const ogImage = getImageURL(doc?.meta?.image)

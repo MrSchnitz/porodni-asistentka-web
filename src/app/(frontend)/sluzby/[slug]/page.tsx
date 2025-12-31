@@ -30,4 +30,3 @@ export default async function ServicePage({ params }: Props) {
 
   return <ServiceDetailPage service={service} />
 }
-

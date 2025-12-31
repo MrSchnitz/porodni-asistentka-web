@@ -62,7 +62,9 @@ export const ServiceLessons = ({
           <AccordionItem key={lesson.id ?? index} value={lesson.id ?? `lesson-${index}`}>
             <AccordionTrigger className="text-left hover:text-primary py-2">
               <div className="flex items-start gap-2">
-                {showLessonNumbers && <span className="text-primary shrink-0 text-sm">{index + 1}.</span>}
+                {showLessonNumbers && (
+                  <span className="text-primary shrink-0 text-sm">{index + 1}.</span>
+                )}
                 <p className="text-sm font-medium">{lesson.title}</p>
               </div>
             </AccordionTrigger>

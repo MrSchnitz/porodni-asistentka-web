@@ -8,9 +8,7 @@
  * [Author1, Author2, Author3] becomes 'Author1, Author2, and Author3'
  *
  */
-export const formatAuthors = (
-  authors: Array<{ name?: string | null }>,
-) => {
+export const formatAuthors = (authors: Array<{ name?: string | null }>) => {
   // Ensure we don't have any authors without a name
   const authorNames = authors.map((author) => author.name).filter(Boolean)
 

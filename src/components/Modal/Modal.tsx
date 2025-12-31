@@ -55,7 +55,7 @@ export function Modal({
     } else {
       handleClose()
     }
-  }, [isVisible])
+  }, [isVisible, handleOpen, handleClose])
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -68,7 +68,7 @@ export function Modal({
     return () => {
       document.removeEventListener('keydown', handleEscape)
     }
-  }, [])
+  }, [handleClose])
 
   return (
     <AnimatePresence onExitComplete={handleAnimationComplete}>

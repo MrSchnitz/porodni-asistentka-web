@@ -31,4 +31,3 @@ export default async function InterceptedServicePage({ params }: Props) {
 
   return <ServiceDetailModal service={service} />
 }
-

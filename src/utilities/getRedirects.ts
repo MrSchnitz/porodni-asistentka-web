@@ -2,6 +2,7 @@ import { unstable_cache } from 'next/cache'
 
 // Redirects collection doesn't exist in this project
 // This function is kept for compatibility but returns empty array
+// eslint-disable-next-line
 export async function getRedirects(depth = 1) {
   return []
 }

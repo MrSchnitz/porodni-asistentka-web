@@ -12,23 +12,25 @@ export function useScrollToSection() {
   const mainNavbarHeight = isSmOrLarger ? MAIN_NAVBAR_HEIGHT.desktop : MAIN_NAVBAR_HEIGHT.mobile
   const totalOffset = mainNavbarHeight + STICKY_NAVBAR_HEIGHT
 
-  const scrollToSection = useCallback((id?: string | null) => {
-    if (typeof window === 'undefined' || !id) {
-      return
-    }
+  const scrollToSection = useCallback(
+    (id?: string | null) => {
+      if (typeof window === 'undefined' || !id) {
+        return
+      }
 
-    const section = document.getElementById(id)
-    if (section) {
-      const elementPosition = section.getBoundingClientRect().top + window.scrollY
-      const offsetPosition = elementPosition - totalOffset
+      const section = document.getElementById(id)
+      if (section) {
+        const elementPosition = section.getBoundingClientRect().top + window.scrollY
+        const offsetPosition = elementPosition - totalOffset
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      })
-    }
-  }, [totalOffset])
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        })
+      }
+    },
+    [totalOffset],
+  )
 
   return { scrollToSection, totalOffset, mainNavbarHeight }
 }
-

@@ -23,7 +23,7 @@ function BackButton({ compact }: { compact?: boolean }) {
         size={compact ? 'sm' : 'default'}
         className={cn(
           'text-foreground/70 hover:text-foreground hover:bg-muted',
-          compact ? 'h-8 px-2' : 'w-fit'
+          compact ? 'h-8 px-2' : 'w-fit',
         )}
       >
         <ArrowLeft className={cn('mr-2', compact ? 'w-3 h-3' : 'w-4 h-4')} />
@@ -45,7 +45,7 @@ function TitleWithIcon({ title, icon, compact }: HeaderContentProps) {
         className={cn(
           'bg-primary/10 rounded-full flex items-center justify-center shrink-0',
           iconSize,
-          compact && 'hidden sm:flex'
+          compact && 'hidden sm:flex',
         )}
       >
         <DynamicIcon name={icon as IconName} className={cn('text-primary', iconInnerSize)} />
@@ -82,4 +82,3 @@ export function ServiceDetailHeader({ title, icon }: Props) {
     </StickyHeader>
   )
 }
-

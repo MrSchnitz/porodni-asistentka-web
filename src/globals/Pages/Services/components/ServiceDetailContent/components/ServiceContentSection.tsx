@@ -1,4 +1,4 @@
-import { DynamicIcon, IconName } from "lucide-react/dynamic"
+import { DynamicIcon, IconName } from 'lucide-react/dynamic'
 
 type ContentSectionProps = {
   icon: IconName

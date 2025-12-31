@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+/* eslint-disable */
 import React from 'react'
 
 interface Props {
