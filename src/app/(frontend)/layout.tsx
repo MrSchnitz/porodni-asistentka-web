@@ -6,6 +6,8 @@ import { draftMode } from 'next/headers'
 import { Footer } from '@/globals/Layout/Footer/Footer'
 import { Announcement } from '@/globals/Layout/Announcement/Announcement'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   description: 'Web pro porodni asistentku',
   title: 'Porodni asistentka web',
