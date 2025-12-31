@@ -109,9 +109,15 @@ const IconPicker = React.forwardRef<
   
   const iconsToUse = useMemo(() => iconsList || icons, [iconsList, icons]);
   
+  const getIconLabel = useCallback((iconName: IconName | undefined) => {
+    if (!iconName) return undefined;
+    const icon = iconsToUse.find(i => i.name === iconName);
+    return icon?.label || iconName;
+  }, [iconsToUse]);
+  
   const fuseInstance = useMemo(() => {
     return new Fuse(iconsToUse, {
-      keys: ['name', 'tags', 'categories'],
+      keys: ['name', 'label', 'tags', 'categories'],
       threshold: 0.3,
       ignoreLocation: true,
       includeScore: true,
@@ -291,7 +297,7 @@ const IconPicker = React.forwardRef<
           <IconRenderer name={icon.name as IconName} />
         </TooltipTrigger>
         <TooltipContent>
-          <p>{icon.name}</p>
+          <p>{icon.label || icon.name}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -388,7 +394,7 @@ const IconPicker = React.forwardRef<
           <Button variant="outline">
             {(value || selectedIcon) ? (
               <>
-                <Icon name={(value || selectedIcon)!} /> {value || selectedIcon}
+                <Icon name={(value || selectedIcon)!} /> {getIconLabel(value || selectedIcon)}
               </>
             ) : (
               triggerPlaceholder
