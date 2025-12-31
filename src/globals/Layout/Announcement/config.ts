@@ -48,8 +48,9 @@ const announcementFields: Field[] = [
 
 export const Announcement: GlobalConfig = {
   slug: 'announcement',
+  label: 'Oznámení',
   admin: {
-    group: 'Layout',
+    group: 'Rozložení',
   },
   access: {
     read: () => true,

@@ -18,10 +18,14 @@ const generateSlug = (title: string): string => {
 
 export const Services: CollectionConfig = {
   slug: 'services',
+  labels: {
+    singular: 'Služba',
+    plural: 'Služby',
+  },
   admin: {
     defaultColumns: ['title', 'description'],
     useAsTitle: 'title',
-    group: 'Content',
+    group: 'Obsah',
   },
   hooks: {
     beforeChange: [
@@ -125,16 +129,19 @@ export const Services: CollectionConfig = {
             {
               name: 'title',
               type: 'text',
+              label: 'Název',
               required: true,
             },
             {
               name: 'description',
               type: 'richText',
+              label: 'Popis',
               required: true,
             },
             {
               name: 'content',
               type: 'richText',
+              label: 'Obsah',
             },
             {
               type: 'group',
@@ -166,7 +173,7 @@ export const Services: CollectionConfig = {
                 serviceAdditionalInfo(),
               ],
             },
-            { name: 'note', type: 'richText' },
+            { name: 'note', type: 'richText', label: 'Poznámka' },
           ],
         },
         {
@@ -207,10 +214,12 @@ export const Services: CollectionConfig = {
                     {
                       name: 'name',
                       type: 'text',
+                      label: 'Název',
                     },
                     {
                       name: 'description',
                       type: 'richText',
+                      label: 'Popis',
                     },
                     serviceAdditionalInfo({
                       maxRows: 3,

@@ -4,8 +4,9 @@ import { GlobalConfig } from 'payload'
 
 export const AboutPage: GlobalConfig = {
   slug: 'aboutPage',
+  label: 'O mně',
   admin: {
-    group: 'Pages',
+    group: 'Stránky',
   },
   fields: [
     pageHeader,
@@ -35,15 +36,17 @@ export const AboutPage: GlobalConfig = {
         {
           name: 'title',
           type: 'text',
+          label: 'Nadpis',
           required: true,
         },
         {
           name: 'subtitle',
           type: 'text',
+          label: 'Podnadpis',
         },
         {
           name: 'ctaButtons',
-          label: 'CTA button',
+          label: 'CTA tlačítka',
           type: 'array',
           fields: [link({ appearances: false })],
           maxRows: 2,

@@ -2,9 +2,13 @@ import { CollectionConfig } from 'payload'
 
 export const Reviews: CollectionConfig = {
   slug: 'reviews',
+  labels: {
+    singular: 'Recenze',
+    plural: 'Recenze',
+  },
   admin: {
     useAsTitle: 'content',
-    group: 'Content',
+    group: 'Obsah',
   },
   fields: [
     {

@@ -5,8 +5,9 @@ import { link } from '@/fields/link'
 
 export const Header: GlobalConfig = {
   slug: 'header',
+  label: 'Záhlaví',
   admin: {
-    group: 'Layout',
+    group: 'Rozložení',
   },
   access: {
     read: () => true,
@@ -39,19 +40,20 @@ export const Header: GlobalConfig = {
     {
       name: 'headerTitle',
       type: 'text',
-      label: 'Header title',
+      label: 'Nadpis záhlaví',
       required: true,
     },
     {
       name: 'headerSubTitle',
       type: 'text',
-      label: 'Header subtitle',
+      label: 'Podnadpis záhlaví',
     },
-    { name: 'phone', label: 'Phone', required: true, type: 'text' },
-    { name: 'email', label: 'Email', required: true, type: 'email' },
+    { name: 'phone', label: 'Telefon', required: true, type: 'text' },
+    { name: 'email', label: 'E-mail', required: true, type: 'email' },
     {
       name: 'navItems',
       type: 'array',
+      label: 'Navigační položky',
       fields: [
         link({
           appearances: false,

@@ -3,14 +3,16 @@ import { GlobalConfig } from 'payload'
 
 export const ContactPage: GlobalConfig = {
   slug: 'contactPage',
+  label: 'Kontakt',
   admin: {
-    group: 'Pages',
+    group: 'Stránky',
   },
   fields: [
     pageHeader,
     {
       name: 'contactInfo',
       type: 'array',
+      label: 'Kontaktní informace',
       fields: [
         {
           name: 'icon',

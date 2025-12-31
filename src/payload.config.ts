@@ -59,7 +59,7 @@ export default buildConfig({
   ],
   i18n: {
     supportedLanguages: { en, cs },
-    fallbackLanguage: 'en',
+    fallbackLanguage: 'cs',
   },
   localization: {
     locales: ['cs', 'en'],

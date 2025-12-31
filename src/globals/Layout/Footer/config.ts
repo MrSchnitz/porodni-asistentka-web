@@ -3,8 +3,9 @@ import { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
+  label: 'Zápatí',
   admin: {
-    group: 'Layout',
+    group: 'Rozložení',
   },
   access: {
     read: () => true,
@@ -36,13 +37,13 @@ export const Footer: GlobalConfig = {
     {
       name: 'footerTitle',
       type: 'text',
-      label: 'Footer title',
+      label: 'Nadpis zápatí',
       required: true,
     },
     {
       name: 'footerSubTitle',
       type: 'text',
-      label: 'Footer subtitle',
+      label: 'Podnadpis zápatí',
     },
     {
       name: 'quickLinks',
@@ -96,12 +97,12 @@ export const Footer: GlobalConfig = {
         {
           name: 'email',
           type: 'text',
-          label: 'Email',
+          label: 'E-mail',
         },
         {
           name: 'adress',
           type: 'text',
-          label: 'Adressa',
+          label: 'Adresa',
         },
       ],
     },

@@ -4,8 +4,9 @@ import { link } from '@/fields/link'
 
 export const HomePage: GlobalConfig = {
   slug: 'homePage',
+  label: 'Domů',
   admin: {
-    group: 'Pages',
+    group: 'Stránky',
   },
   access: {
     read: () => true,
@@ -20,27 +21,28 @@ export const HomePage: GlobalConfig = {
         {
           name: 'title',
           type: 'text',
-          label: 'Title',
+          label: 'Nadpis',
           required: true,
         },
         {
           name: 'quote',
           type: 'text',
-          label: 'Quote',
+          label: 'Citát',
         },
         {
           name: 'subtitle',
           type: 'text',
-          label: 'Subtitle',
+          label: 'Podnadpis',
         },
         {
           name: 'heroImage',
           type: 'upload',
+          label: 'Hero obrázek',
           relationTo: 'media',
         },
         {
           name: 'ctaButtons',
-          label: 'CTA button',
+          label: 'CTA tlačítka',
           type: 'array',
           fields: [link({ appearances: false })],
           maxRows: 2,
@@ -54,36 +56,36 @@ export const HomePage: GlobalConfig = {
       name: 'services',
       type: 'group',
       interfaceName: 'Services',
-      label: 'Sluzby sekce',
+      label: 'Sekce služby',
       fields: [
         {
           name: 'title',
           type: 'text',
-          label: 'Title',
+          label: 'Nadpis',
           required: true,
         },
         {
           name: 'subtitle',
           type: 'text',
-          label: 'Subtitle',
+          label: 'Podnadpis',
         },
         {
           name: 'services',
           type: 'array',
-          label: 'Sluzby',
+          label: 'Služby',
           maxRows: 6,
           fields: [
             {
               name: 'item',
               type: 'relationship',
-              label: 'Choose displayed services',
+              label: 'Vyberte zobrazené služby',
               relationTo: ['services'],
             },
           ],
         },
         {
           name: 'ctaButton',
-          label: 'CTA button',
+          label: 'CTA tlačítko',
           type: 'array',
           fields: [link({ appearances: false })],
           maxRows: 1,
@@ -97,18 +99,18 @@ export const HomePage: GlobalConfig = {
       name: 'reviews',
       type: 'group',
       interfaceName: 'Reviews',
-      label: 'Recenze sekce',
+      label: 'Sekce recenze',
       fields: [
         {
           name: 'title',
           type: 'text',
-          label: 'Title',
+          label: 'Nadpis',
           required: true,
         },
         {
           name: 'subtitle',
           type: 'text',
-          label: 'Subtitle',
+          label: 'Podnadpis',
         },
         {
           name: 'reviews',
@@ -118,14 +120,14 @@ export const HomePage: GlobalConfig = {
             {
               name: 'reference',
               type: 'relationship',
-              label: 'Choose displayed reviews',
+              label: 'Vyberte zobrazené recenze',
               relationTo: ['reviews'],
             },
           ],
         },
         {
           name: 'ctaButton',
-          label: 'CTA button',
+          label: 'CTA tlačítko',
           type: 'array',
           fields: [link({ appearances: false })],
           maxRows: 1,
