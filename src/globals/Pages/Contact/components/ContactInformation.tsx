@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { ContactPageInfo, ContactPageNote } from '../../types'
 import { DynamicIcon, IconName } from 'lucide-react/dynamic'
-import { RichText } from '@payloadcms/richtext-lexical/react'
+import RichText from '@/components/RichText'
 
 const InfoContent = ({ info }: { info: ContactPageInfo }) => {
   if (info.valueType === 'formattedText' && info.formattedValue) {

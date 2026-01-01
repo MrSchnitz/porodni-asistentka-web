@@ -7,9 +7,10 @@ import { usePathname } from 'next/navigation'
 type Props = {
   item: LinkType
   className?: string
+  onClick?: () => void
 }
 
-export function NavItem({ item, className }: Props) {
+export function NavItem({ item, className, onClick }: Props) {
   const pathname = usePathname()
 
   const isActive = (path: string) => pathname === path
@@ -23,6 +24,7 @@ export function NavItem({ item, className }: Props) {
         className,
         isActive(href) ? 'text-primary' : 'text-foreground hover:text-primary',
       )}
+      onClick={onClick}
     >
       {item.label}
     </Link>

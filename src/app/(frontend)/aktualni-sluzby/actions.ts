@@ -91,8 +91,6 @@ export async function getWeeklyScheduleItems(): Promise<{
     },
   })
 
-  console.log('SERVICES', services.docs)
-
   const weeklySchedule: WeeklyScheduleByDay = {
     monday: [],
     tuesday: [],

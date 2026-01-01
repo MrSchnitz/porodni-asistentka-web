@@ -1,12 +1,12 @@
 import { getGlobal } from '@/utilities/getGlobals'
 import { AboutPage } from '@/payload-types'
 import { PageHeader } from '@/globals/Pages/components/PageHeader'
-import { RichText } from '@payloadcms/richtext-lexical/react'
 import { Media } from '@/components/Media'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Link } from '@payloadcms/ui'
 import { cn } from '@/utilities/ui'
+import RichText from '@/components/RichText'
 
 export default async function Page() {
   const data = (await getGlobal('aboutPage', 1)) as AboutPage

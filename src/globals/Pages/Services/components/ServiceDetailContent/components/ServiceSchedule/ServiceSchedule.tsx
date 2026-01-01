@@ -23,7 +23,7 @@ export const ServiceSchedule = ({ schedule }: Props) => {
                 <h5 className="text-lg font-medium text-foreground">{schedule.title}</h5>
               </div>
               {schedule.description && (
-                <p className="mt-2 text-sm text-foreground/60">{schedule.description}</p>
+                <p className="mt-2 text-sm text-foreground/90">{schedule.description}</p>
               )}
             </div>
             <div className="text-right flex flex-col items-end gap-2">

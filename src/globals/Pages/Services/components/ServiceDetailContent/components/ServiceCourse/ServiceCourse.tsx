@@ -13,14 +13,14 @@ export function ServiceCourse({
   course: { name, description, additionalInfo, lessonsSection },
 }: CourseScheduleProps) {
   return (
-    <Card className="border-primary/20 bg-muted">
+    <Card className="border-primary/20 bg-card">
       <CardContent className="p-4">
         {/* Course Overview */}
         <div className="mb-4">
-          <h4 className="text-lg font-medium mb-2 text-foreground">{name}</h4>
+          <h4 className="text-lg font-medium mb-4 text-foreground">{name}</h4>
 
           {description && (
-            <div className="text-sm text-foreground/80 mb-3">
+            <div className="text-sm text-foreground/90 mb-3">
               <RichText data={description} />
             </div>
           )}

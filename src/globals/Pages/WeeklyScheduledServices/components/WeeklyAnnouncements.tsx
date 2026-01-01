@@ -1,13 +1,13 @@
 'use client'
 import { WeeklyScheduledServicesInfoSection } from '../../types'
 import { Card, CardContent } from '@/components/ui/card'
-import { RichText } from '@payloadcms/richtext-lexical/react'
 import { ZoomIn } from 'lucide-react'
 import { Media } from '@/components/Media'
 import { useState } from 'react'
 import { Props as MediaProps } from '@/components/Media/types'
 import { LightBox } from '@/components/Lightbox/LightBox'
 import { formatServiceDateTime } from '@/utilities/formatServiceDateTime'
+import RichText from '@/components/RichText'
 
 type Props = {
   infoSection: WeeklyScheduledServicesInfoSection
