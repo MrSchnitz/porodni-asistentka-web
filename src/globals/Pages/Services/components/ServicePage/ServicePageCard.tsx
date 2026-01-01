@@ -26,7 +26,7 @@ export const ServicePageCard = ({
   const isInfoAvailable = price || duration
 
   return (
-    <Link href={`/${pageName}/${slug}`} scroll={false}>
+    <Link href={`/${pageName}/${slug}`}>
       <Card className="border-primary/30 hover:shadow-xl transition-all duration-300 bg-background cursor-pointer h-full">
         <CardContent className="p-6 flex flex-col h-full">
           {icon && <ServiceIcon icon={icon} className="mb-4" />}
