@@ -10,7 +10,7 @@ type Props = {
 
 export const ServiceIcon = ({ icon: { fileIcon, lucideIcon }, className }: Props) => {
   if (fileIcon) {
-    return <Media className={cn('w-32 h-32 rounded-full', className)} resource={fileIcon} />
+    return <Media className={cn('w-24 h-24 rounded-full', className)} resource={fileIcon} />
   }
 
   if (lucideIcon) {
