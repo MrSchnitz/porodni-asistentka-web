@@ -9,7 +9,10 @@ type Props = {
 
 export function ServiceCard({ service }: Props) {
   return (
-    <Card key={service.id} className="border-primary/30 transition-all duration-300 bg-background">
+    <Card
+      key={service.id}
+      className="border-primary/30 transition-all duration-300 bg-background h-full"
+    >
       <CardContent className="p-6">
         {service.icon && <ServiceIcon icon={service.icon} className="mb-4" />}
         <h3 className="text-xl mb-3 text-foreground font-medium">{service.title}</h3>

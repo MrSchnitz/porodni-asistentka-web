@@ -8,14 +8,14 @@ type Props = {
 export function formatServiceDateTime({ startDate, endDate }: Props) {
   const isSameDate = endDate ? isSameDay(startDate, endDate) : false
 
-  const completeFormattedStartDate = startDate ? format(startDate, 'd. M. yyyy hh:mm') : ''
+  const completeFormattedStartDate = startDate ? format(startDate, 'd. M. yyyy HH:mm') : ''
   const completeFormattedEndDate = endDate
-    ? format(endDate, isSameDate ? 'hh:mm' : 'd. M. yyyy hh:mm')
+    ? format(endDate, isSameDate ? 'HH:mm' : 'd. M. yyyy HH:mm')
     : ''
   const formattedStartDate = startDate ? format(startDate, 'd. M. yyyy') : ''
   const formattedEndDate = endDate ? format(endDate, 'd. M. yyyy') : ''
-  const formattedStartTime = startDate ? format(startDate, 'hh:mm') : ''
-  const formattedEndTime = endDate ? format(endDate, 'hh:mm') : ''
+  const formattedStartTime = startDate ? format(startDate, 'HH:mm') : ''
+  const formattedEndTime = endDate ? format(endDate, 'HH:mm') : ''
 
   const completeDateString = `${completeFormattedStartDate} ${completeFormattedEndDate ? ` - ${completeFormattedEndDate}` : ''}`
   const dateString = `${formattedStartDate} ${endDate && !isSameDate ? ` - ${formattedEndDate}` : ''}`
