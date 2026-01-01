@@ -1,0 +1,70 @@
+# SSL/HTTPS with DuckDNS (Free Dynamic DNS)
+# ============================================
+# USAGE
+# ============================================
+# docker compose -f docker-compose.yml -f docker-compose.ssl-duckdns.yml up -d
+#
+# ============================================
+# REQUIRED .env VARIABLES
+# ============================================
+# DOMAIN_NAME=yourname.duckdns.org
+# DOMAIN_EMAIL=your-email@example.com
+# DUCKDNS_TOKEN=your_duckdns_token
+#
+# ============================================
+# SETUP STEPS
+# ============================================
+# 1. Create account at https://www.duckdns.org/
+# 2. Create a subdomain (e.g., yourname.duckdns.org)
+# 3. Copy your token from the DuckDNS dashboard
+# 4. Add the token to your .env file
+# 5. Run: mkdir -p letsencrypt && chmod 600 letsencrypt
+# 6. Deploy with the command above
+#
+
+services:
+  traefik:
+    environment:
+      - DUCKDNS_TOKEN=${DUCKDNS_TOKEN}
+    command:
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+      - '--entrypoints.websecure.address=:443'
+      - '--log.level=INFO'
+      # SSL/HTTPS with DuckDNS DNS Challenge
+      - '--certificatesresolvers.letsencrypt.acme.dnschallenge=true'
+      - '--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=duckdns'
+      - '--certificatesresolvers.letsencrypt.acme.email=${DOMAIN_EMAIL}'
+      - '--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json'
+      # DuckDNS Fix: Use public DNS resolvers (faster than DuckDNS nameservers)
+      - '--certificatesresolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53'
+      # Wait 90 seconds for DNS propagation before checking
+      - '--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=90'
+      # Uncomment for testing (uses Let's Encrypt staging, no rate limits)
+      # - '--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory'
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - './letsencrypt:/letsencrypt'
+
+  app:
+    depends_on:
+      - traefik
+      - mongo
+    labels:
+      - 'traefik.enable=true'
+      # HTTPS Router
+      - 'traefik.http.routers.app.rule=Host(`${DOMAIN_NAME}`)'
+      - 'traefik.http.routers.app.entrypoints=websecure'
+      - 'traefik.http.routers.app.tls.certresolver=letsencrypt'
+      - 'traefik.http.services.app.loadbalancer.server.port=3000'
+      # HTTP to HTTPS Redirect
+      - 'traefik.http.routers.app-http.rule=Host(`${DOMAIN_NAME}`)'
+      - 'traefik.http.routers.app-http.entrypoints=web'
+      - 'traefik.http.routers.app-http.middlewares=redirect-to-https'
+      - 'traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true'
+

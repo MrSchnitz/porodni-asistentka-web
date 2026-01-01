@@ -124,12 +124,12 @@ jobs:
             echo "Stopping existing containers..."
             docker compose -f "$COMPOSE_FILE" down || true
 
-            if [ -n "$DOMAIN_NAME" ] && [ -n "$DOMAIN_EMAIL" ]; then
-              echo "Setting up SSL..."
-              ./setup-ssl.sh "$DOMAIN_NAME" "$DOMAIN_EMAIL"
-            else
-              echo "Starting containers with image version ${IMAGE_VERSION}..."
-              docker compose -f "$COMPOSE_FILE" up -d
-              echo "Deployment completed! Image version: ${IMAGE_VERSION}"
-              docker compose -f "$COMPOSE_FILE" ps
-            fi
+            # if [ -n "$DOMAIN_NAME" ] && [ -n "$DOMAIN_EMAIL" ]; then
+            #   echo "Setting up SSL..."
+            #   ./setup-ssl.sh "$DOMAIN_NAME" "$DOMAIN_EMAIL"
+            # else
+            #   echo "Starting containers with image version ${IMAGE_VERSION}..."
+            #   docker compose -f "$COMPOSE_FILE" up -d
+            #   echo "Deployment completed! Image version: ${IMAGE_VERSION}"
+            #   docker compose -f "$COMPOSE_FILE" ps
+            # fi

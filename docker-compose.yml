@@ -8,29 +8,18 @@ services:
       - '--providers.docker.exposedbydefault=false'
       - '--entrypoints.web.address=:80'
       - '--log.level=INFO'
-      # ============================================
-      # SSL/HTTPS Configuration (uncomment when you have a domain)
-      # IMPORTANT: Docker Compose variable substitution (${VAR}) does NOT work
-      # in command arrays. You have two options:
-      # 1. Use setup-ssl.sh script (recommended) - it replaces ${DOMAIN_EMAIL} automatically
-      # 2. Manually replace ${DOMAIN_EMAIL} with your actual email address
-      # ============================================
-      # - '--entrypoints.websecure.address=:443'
-      # - '--certificatesresolvers.letsencrypt.acme.tlschallenge=true'
-      # - '--certificatesresolvers.letsencrypt.acme.email=${DOMAIN_EMAIL}'
-      # - '--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json'
     ports:
       - '80:80'
-      # - '443:443'  # Uncomment for HTTPS
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
-      # - './letsencrypt:/letsencrypt'  # Uncomment for SSL certificates
     networks:
       - payload-network
     restart: unless-stopped
     # Traefik is only needed for production deployment
     # For local development, use: docker compose up -d mongo
-    # For SSL setup instructions, see: README/SSL-SETUP.md
+    # For SSL/HTTPS, use one of:
+    #   docker compose -f docker-compose.yml -f docker-compose.ssl-duckdns.yml up -d
+    #   docker compose -f docker-compose.yml -f docker-compose.ssl-cloudflare.yml up -d
 
   mongo:
     image: mongo:8
@@ -81,21 +70,6 @@ services:
       - 'traefik.http.routers.app.entrypoints=web'
       - 'traefik.http.services.app.loadbalancer.server.port=3000'
       - 'traefik.http.routers.app.priority=1'
-      # ============================================
-      # SSL/HTTPS Labels (uncomment when you have a domain)
-      # IMPORTANT: Docker Compose variable substitution (${VAR}) does NOT work
-      # in labels. You have two options:
-      # 1. Use setup-ssl.sh script (recommended) - it replaces ${DOMAIN_NAME} automatically
-      # 2. Manually replace ${DOMAIN_NAME} with your actual domain
-      # ============================================
-      # - 'traefik.http.routers.app.rule=Host(`${DOMAIN_NAME}`) || Host(`www.${DOMAIN_NAME}`)'
-      # - 'traefik.http.routers.app.entrypoints=websecure'
-      # - 'traefik.http.routers.app.tls.certresolver=letsencrypt'
-      # # HTTP to HTTPS redirect
-      # - 'traefik.http.routers.app-http.rule=Host(`${DOMAIN_NAME}`) || Host(`www.${DOMAIN_NAME}`)'
-      # - 'traefik.http.routers.app-http.entrypoints=web'
-      # - 'traefik.http.routers.app-http.middlewares=redirect-to-https'
-      # - 'traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https'
     volumes:
       - ./media:/app/media
     networks:

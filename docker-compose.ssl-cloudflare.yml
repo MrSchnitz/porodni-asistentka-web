@@ -1,0 +1,71 @@
+# SSL/HTTPS with Cloudflare DNS
+# ============================================
+# USAGE
+# ============================================
+# docker compose -f docker-compose.yml -f docker-compose.ssl-cloudflare.yml up -d
+#
+# ============================================
+# REQUIRED .env VARIABLES
+# ============================================
+# DOMAIN_NAME=yourdomain.com
+# DOMAIN_EMAIL=your-email@example.com
+# CF_DNS_API_TOKEN=your_cloudflare_api_token
+#
+# ============================================
+# SETUP STEPS
+# ============================================
+# 1. Add your domain to Cloudflare (https://dash.cloudflare.com)
+# 2. Update nameservers at your domain registrar to Cloudflare's
+# 3. Create API Token: Profile → API Tokens → Create Token
+#    - Use template "Edit zone DNS" OR
+#    - Custom: Zone:DNS:Edit permission for your domain
+# 4. Add the token to your .env file
+# 5. Run: mkdir -p letsencrypt && chmod 600 letsencrypt
+# 6. Deploy with the command above
+#
+
+services:
+  traefik:
+    environment:
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
+    command:
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+      - '--entrypoints.websecure.address=:443'
+      - '--log.level=INFO'
+      # SSL/HTTPS with Cloudflare DNS Challenge
+      - '--certificatesresolvers.letsencrypt.acme.dnschallenge=true'
+      - '--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare'
+      - '--certificatesresolvers.letsencrypt.acme.email=${DOMAIN_EMAIL}'
+      - '--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json'
+      # Uncomment for testing (uses Let's Encrypt staging, no rate limits)
+      # - '--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory'
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - './letsencrypt:/letsencrypt'
+
+  app:
+    depends_on:
+      - traefik
+      - mongo
+    labels:
+      - 'traefik.enable=true'
+      # HTTPS Router
+      - 'traefik.http.routers.app.rule=Host(`${DOMAIN_NAME}`)'
+      - 'traefik.http.routers.app.entrypoints=websecure'
+      - 'traefik.http.routers.app.tls.certresolver=letsencrypt'
+      - 'traefik.http.services.app.loadbalancer.server.port=3000'
+      # HTTP to HTTPS Redirect
+      - 'traefik.http.routers.app-http.rule=Host(`${DOMAIN_NAME}`)'
+      - 'traefik.http.routers.app-http.entrypoints=web'
+      - 'traefik.http.routers.app-http.middlewares=redirect-to-https'
+      - 'traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true'
+      # Optional: www subdomain (uncomment if needed)
+      # - 'traefik.http.routers.app.rule=Host(`${DOMAIN_NAME}`) || Host(`www.${DOMAIN_NAME}`)'
+      # - 'traefik.http.routers.app-http.rule=Host(`${DOMAIN_NAME}`) || Host(`www.${DOMAIN_NAME}`)'
+
