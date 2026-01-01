@@ -38,9 +38,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --platform linux/amd64 \
-            --build-arg PAYLOAD_SECRET="${{ secrets.PAYLOAD_SECRET }}" \
-            -t ${{ env.IMAGE_NAME }}:latest .
+          docker build --platform linux/amd64 -t ${{ env.IMAGE_NAME }}:latest .
           docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
 
       - name: Save image
