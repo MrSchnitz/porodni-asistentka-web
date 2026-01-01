@@ -14,9 +14,9 @@ export const ServiceSchedule = ({ schedule }: Props) => {
   const showStatusBadge = schedule.status !== 'scheduled'
 
   return (
-    <Card className={`border-primary/30 ${schedule.status !== 'scheduled' ? 'opacity-60' : ''}`}>
+    <Card className={`border-primary/20 ${schedule.status !== 'scheduled' ? 'opacity-60' : ''}`}>
       <CardContent className="p-4">
-        <div className="bg-primary/10 rounded-t-lg p-4 -m-4 mb-3">
+        <div className="bg-muted rounded-t-lg p-4 -m-4 mb-3">
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2">

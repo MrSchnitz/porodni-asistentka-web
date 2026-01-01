@@ -4,6 +4,7 @@ import { PageHeader } from '@/globals/Pages/components/PageHeader'
 import { WeeklyDaySection } from '@/globals/Pages/WeeklyScheduledServices/components/WeeklyDaySection'
 import { WeeklyScheduleCard } from '@/globals/Pages/WeeklyScheduledServices/components/WeeklyScheduledCard'
 import { dayNames, getWeeklyScheduleItems, WeeklyScheduleByDay } from './actions'
+import { WeeklyInfoSection } from '@/globals/Pages/WeeklyScheduledServices/components/WeeklyAnnouncements'
 
 const ORDERED_DAYS: (keyof WeeklyScheduleByDay)[] = [
   'monday',
@@ -19,10 +20,10 @@ export default async function Page() {
     getGlobal('weeklyScheduledServicesPage', 2),
     getWeeklyScheduleItems(),
   ])
-  const { pageHeader } = pageData as WeeklyScheduledServicesPage
+  const { pageHeader, infoSection } = pageData as WeeklyScheduledServicesPage
 
   return (
-    <main>
+    <main className="min-h-dvh">
       <PageHeader data={pageHeader} />
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,6 +56,7 @@ export default async function Page() {
           </div>
         </div>
       </section>
+      {infoSection && <WeeklyInfoSection infoSection={infoSection} />}
     </main>
   )
 }

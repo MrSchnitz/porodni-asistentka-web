@@ -1,3 +1,4 @@
+import { iconField } from '@/fields/iconField'
 import { pageHeader } from '@/fields/pageHeader'
 import { GlobalConfig } from 'payload'
 
@@ -14,16 +15,7 @@ export const ContactPage: GlobalConfig = {
       type: 'array',
       label: 'Kontaktní informace',
       fields: [
-        {
-          name: 'icon',
-          type: 'text',
-          label: 'Ikona',
-          admin: {
-            components: {
-              Field: '@/components/admin/IconField',
-            },
-          },
-        },
+        iconField,
         { name: 'title', type: 'text', label: 'Nadpis' },
         {
           name: 'value',

@@ -13,7 +13,7 @@ export function ServiceCourse({
   course: { name, description, additionalInfo, lessonsSection },
 }: CourseScheduleProps) {
   return (
-    <Card className="border-primary/30 bg-muted/50">
+    <Card className="border-primary/20 bg-muted">
       <CardContent className="p-4">
         {/* Course Overview */}
         <div className="mb-4">

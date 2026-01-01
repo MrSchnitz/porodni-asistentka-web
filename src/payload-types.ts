@@ -8,6 +8,33 @@
 
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcements".
+ */
+export type Announcements =
+  | {
+      title?: string | null;
+      description?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      date?: string | null;
+      image?: (string | null) | Media;
+      id?: string | null;
+    }[]
+  | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "lessons".
  */
 export type Lessons =
@@ -316,6 +343,7 @@ export interface Service {
     };
     [k: string]: unknown;
   } | null;
+  announcements?: Announcements;
   serviceType?: ('courses' | 'lessons') | null;
   lessonsSection?: {
     title?: string | null;
@@ -537,6 +565,7 @@ export interface ServicesSelect<T extends boolean = true> {
         id?: T;
       };
   note?: T;
+  announcements?: T | AnnouncementsSelect<T>;
   serviceType?: T;
   lessonsSection?:
     | T
@@ -550,6 +579,17 @@ export interface ServicesSelect<T extends boolean = true> {
   schedules?: T | SchedulesSelect<T>;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcements_select".
+ */
+export interface AnnouncementsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  date?: T;
+  image?: T;
+  id?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -843,6 +883,11 @@ export interface PageHeader {
 export interface WeeklyScheduledServicesPage {
   id: string;
   pageHeader: PageHeader;
+  infoSection: {
+    title: string;
+    description?: string | null;
+    announcements?: Announcements;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1168,6 +1213,13 @@ export interface PageHeaderSelect<T extends boolean = true> {
  */
 export interface WeeklyScheduledServicesPageSelect<T extends boolean = true> {
   pageHeader?: T | PageHeaderSelect<T>;
+  infoSection?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        announcements?: T | AnnouncementsSelect<T>;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

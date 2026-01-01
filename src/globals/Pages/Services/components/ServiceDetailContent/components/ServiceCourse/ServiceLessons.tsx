@@ -33,7 +33,7 @@ export const ServiceLessons = ({
   }
 
   return (
-    <div className="bg-background rounded-lg p-4 border border-primary/20">
+    <div className="bg-card rounded-lg p-4 border border-primary/20">
       <div className="flex items-center justify-between mb-2">
         {title && <h5 className="text-md font-medium text-foreground">{title}</h5>}
         <Button

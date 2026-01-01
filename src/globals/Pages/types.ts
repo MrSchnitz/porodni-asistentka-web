@@ -1,4 +1,11 @@
-import { ContactPage, Courses, Schedules, Service, ServicesPage } from '@/payload-types'
+import {
+  ContactPage,
+  Courses,
+  Schedules,
+  Service,
+  ServicesPage,
+  WeeklyScheduledServicesPage,
+} from '@/payload-types'
 
 export type Course = NonNullable<Courses>[number]
 
@@ -17,3 +24,7 @@ export type ServicePageSections = NonNullable<ServicesPage['serviceSections']>
 export type ContactPageInfo = NonNullable<ContactPage['contactInfo']>[number]
 
 export type ContactPageNote = NonNullable<ContactPage['note']>
+
+export type WeeklyScheduledServicesInfoSection = NonNullable<
+  WeeklyScheduledServicesPage['infoSection']
+>

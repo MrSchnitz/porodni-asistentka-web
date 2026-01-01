@@ -4,6 +4,7 @@ import { CollectionConfig } from 'payload'
 import { serviceScheduleItems } from './fields/serviceScheduleItems'
 import { serviceLessonSection } from './fields/serviceLessonSection'
 import { serviceAdditionalInfo } from './fields/serviceAdditionalInfo'
+import { serviceAnnouncements } from './fields/serviceAnnouncements'
 
 const generateSlug = (title: string): string => {
   return title
@@ -174,6 +175,7 @@ export const Services: CollectionConfig = {
               ],
             },
             { name: 'note', type: 'richText', label: 'Poznámka' },
+            serviceAnnouncements(),
           ],
         },
         {

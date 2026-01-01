@@ -2,11 +2,11 @@ import { format, isSameDay } from 'date-fns'
 
 type Props = {
   startDate: string | Date
-  endDate: string | Date
+  endDate?: string | Date
 }
 
 export function formatServiceDateTime({ startDate, endDate }: Props) {
-  const isSameDate = isSameDay(startDate, endDate)
+  const isSameDate = endDate ? isSameDay(startDate, endDate) : false
 
   const completeFormattedStartDate = startDate ? format(startDate, 'd. M. yyyy hh:mm') : ''
   const completeFormattedEndDate = endDate
@@ -18,8 +18,8 @@ export function formatServiceDateTime({ startDate, endDate }: Props) {
   const formattedEndTime = endDate ? format(endDate, 'hh:mm') : ''
 
   const completeDateString = `${completeFormattedStartDate} ${completeFormattedEndDate ? ` - ${completeFormattedEndDate}` : ''}`
-  const dateString = `${formattedStartDate} ${!isSameDate ? ` - ${formattedEndDate}` : ''}`
-  const timeString = `${formattedStartTime} ${` - ${formattedEndTime}`}`
+  const dateString = `${formattedStartDate} ${endDate && !isSameDate ? ` - ${formattedEndDate}` : ''}`
+  const timeString = `${formattedStartTime} ${endDate ? ` - ${formattedEndTime}` : ''}`
 
   return { completeDateString, dateString, timeString }
 }
