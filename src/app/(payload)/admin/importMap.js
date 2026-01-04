@@ -38,6 +38,7 @@ import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } f
 import { RowLabel as RowLabel_4699d459aa16a2d49e3f0ff5fadd5e0f } from '@/globals/Layout/components/RowLabel'
 import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/components/BeforeDashboard'
 import { default as default_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/BeforeLogin'
+import { default as default_7fcf195037406fe0b64b31c9e9270aec } from '@/components/admin/DateInputProvider'
 
 export const importMap = {
   "@/components/admin/IconField#default": default_ef1a0a1df905d7e27b9ceed86573ae89,
@@ -79,5 +80,6 @@ export const importMap = {
   "@payloadcms/ui#FolderTypeField": FolderTypeField_3817bf644402e67bfe6577f60ef982de,
   "@/globals/Layout/components/RowLabel#RowLabel": RowLabel_4699d459aa16a2d49e3f0ff5fadd5e0f,
   "@/components/BeforeDashboard#default": default_1a7510af427896d367a49dbf838d2de6,
-  "@/components/BeforeLogin#default": default_8a7ab0eb7ab5c511aba12e68480bfe5e
+  "@/components/BeforeLogin#default": default_8a7ab0eb7ab5c511aba12e68480bfe5e,
+  "@/components/admin/DateInputProvider#default": default_7fcf195037406fe0b64b31c9e9270aec
 }

@@ -1,0 +1,27 @@
+// Disable input zooming on mobile (iOS Safari zooms when font-size < 16px)
+@media screen and (max-width: 768px) {
+  input[type='text'],
+  input[type='number'],
+  input[type='email'],
+  input[type='password'],
+  input[type='url'],
+  input[type='tel'],
+  input[type='search'],
+  input[type='date'],
+  input[type='datetime-local'],
+  input[type='time'],
+  textarea,
+  select {
+    font-size: max(16px, 1em) !important;
+  }
+
+  // Payload CMS specific input styling
+  .field-type,
+  .form-field {
+    input,
+    textarea,
+    select {
+      font-size: max(16px, 1em) !important;
+    }
+  }
+}

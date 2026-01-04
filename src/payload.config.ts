@@ -37,10 +37,14 @@ export default buildConfig({
     components: {
       beforeLogin: ['@/components/BeforeLogin'],
       beforeDashboard: ['@/components/BeforeDashboard'],
+      providers: ['@/components/admin/DateInputProvider'],
     },
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    meta: {
+      viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
     },
   },
   globals: [...pagesGlobalsConfig, Header, Footer, Announcement],
