@@ -1,6 +1,7 @@
 import { GlobalLogo } from '@/components/Logo/GlobalLogo'
+import { PAGE_ROUTES } from '@/globals/Pages/pageRoutes'
 import { Footer } from '@/payload-types'
-import { Mail, MapPin, Phone } from 'lucide-react'
+import { Mail, MapPin, Phone, Lock } from 'lucide-react'
 import Link from 'next/link'
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
 }
 
 export const FooterClient = ({
-  data: { logo, footerTitle, footerSubTitle, quickLinks, contact, bottomText },
+  data: { logo, footerTitle, footerSubTitle, downloadsSection, contact, bottomText },
 }: Props) => {
   const currentYear = new Date().getFullYear()
 
@@ -27,29 +28,30 @@ export const FooterClient = ({
             <p className="text-background/70">{footerSubTitle}</p>
           </div>
 
-          {/* Quick Links */}
-          {quickLinks?.links && (
+          {/* Documents Section */}
+          {downloadsSection?.enabled && (
             <div>
-              {quickLinks.title && <h3 className="text-lg mb-4">{quickLinks.title}</h3>}
-              <ul className="space-y-2">
-                {quickLinks.links.map(({ link, id }) => (
-                  <li key={id}>
-                    <Link
-                      href={link.url ?? ''}
-                      className="text-background/70 hover:text-primary transition-colors"
-                      target={link.newTab ? '_blank' : undefined}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+              <h3 className="mb-3">{downloadsSection.title}</h3>
+              <ul className="space-y-1.5 text-sm">
+                <li>
+                  <Link
+                    href={PAGE_ROUTES.downloadsPage.path}
+                    className="text-background/70 hover:text-primary transition-colors flex items-center gap-2"
+                  >
+                    <Lock className="w-3.5 h-3.5 text-primary" />
+                    {downloadsSection.link}
+                  </Link>
+                </li>
               </ul>
+              {downloadsSection.description && (
+                <p className="text-background/60 text-xs mt-3">{downloadsSection.description}</p>
+              )}
             </div>
           )}
 
           {/* Contact Info */}
           {contact && (
-            <div>
+            <div className="md:col-start-3 md:col-end-3">
               {contact.title && <h3 className="text-lg mb-4">{contact.title}</h3>}
               <ul className="space-y-3">
                 {contact.phone && (

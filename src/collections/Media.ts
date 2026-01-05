@@ -7,6 +7,9 @@ export const Media: CollectionConfig = {
     plural: 'Média',
   },
   folders: true,
+  admin: {
+    group: 'Obsah',
+  },
   access: {
     read: () => true,
   },

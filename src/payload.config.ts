@@ -14,12 +14,14 @@ import { HomePage } from './globals/Pages/Home/config'
 import { Services } from './collections/Services/Services'
 import { defaultLexical } from './fields/defaultLexical'
 import { Reviews } from './collections/Reviews'
+import { Downloads } from './collections/Downloads'
 import { Footer } from './globals/Layout/Footer/config'
 import { ServicesPage } from './globals/Pages/Services/config'
 import { WeeklyScheduledServicesPage } from './globals/Pages/WeeklyScheduledServices/config'
 import { AboutPage } from './globals/Pages/About/config'
 import { ContactPage } from './globals/Pages/Contact/config'
 import { Announcement } from './globals/Layout/Announcement/config'
+import { DownloadsPage } from './globals/Pages/Downloads/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,6 +32,7 @@ const pagesGlobalsConfig: GlobalConfig[] = [
   WeeklyScheduledServicesPage,
   AboutPage,
   ContactPage,
+  DownloadsPage,
 ]
 
 export default buildConfig({
@@ -48,7 +51,7 @@ export default buildConfig({
     },
   },
   globals: [...pagesGlobalsConfig, Header, Footer, Announcement],
-  collections: [Services, Reviews, Users, Media],
+  collections: [Services, Reviews, Downloads, Users, Media],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

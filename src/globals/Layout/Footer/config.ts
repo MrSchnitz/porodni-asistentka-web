@@ -1,4 +1,3 @@
-import { link } from '@/fields/link'
 import { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
@@ -46,34 +45,44 @@ export const Footer: GlobalConfig = {
       label: 'Podnadpis zápatí',
     },
     {
-      name: 'quickLinks',
+      name: 'downloadsSection',
       type: 'group',
-      label: 'Rychlé odkazy',
+      label: 'Sekce ke stažení',
       fields: [
+        {
+          name: 'enabled',
+          type: 'checkbox',
+          label: 'Povolit sekci ke stažení',
+          defaultValue: true,
+        },
         {
           name: 'title',
           type: 'text',
           label: 'Nadpis',
-          defaultValue: 'Rychlé odkazy',
+          defaultValue: 'Pro klienty',
           required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.enabled,
+          },
         },
         {
-          name: 'links',
-          type: 'array',
-          label: 'Rychlé odkazy',
-          fields: [
-            link({
-              appearances: false,
-            }),
-          ],
-          maxRows: 6,
-          admin: {
-            initCollapsed: true,
-            components: {
-              RowLabel: '@/globals/Layout/components/RowLabel#RowLabel',
-            },
-          },
+          name: 'link',
+          type: 'text',
+          label: 'Text odkazu',
+          defaultValue: 'Dokumenty ke stažení',
           required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.enabled,
+          },
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Popis',
+          defaultValue: 'Přístup k užitečným materiálům a dokumentům pro mé klientky.',
+          admin: {
+            condition: (_, siblingData) => siblingData?.enabled,
+          },
         },
       ],
     },

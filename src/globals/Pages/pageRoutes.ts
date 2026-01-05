@@ -27,4 +27,8 @@ export const PAGE_ROUTES = {
     label: 'Kontakt',
     path: '/kontakt',
   },
+  downloadsPage: {
+    label: 'Ke stažení',
+    path: '/ke-stazeni',
+  },
 } satisfies PageRoute

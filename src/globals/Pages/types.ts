@@ -1,6 +1,7 @@
 import {
   ContactPage,
   Courses,
+  DownloadsPage,
   Schedules,
   Service,
   ServicesPage,
@@ -38,3 +39,5 @@ export type ServicePackageSection = NonNullable<Service['detail']['packageSectio
 export type ServicePackage = NonNullable<ServicePackageSection['packages']>[number]
 
 export type ServicePackageOffer = NonNullable<ServicePackage['includedOffers']>[number]
+
+export type ImportantItemsSection = NonNullable<DownloadsPage['important']>

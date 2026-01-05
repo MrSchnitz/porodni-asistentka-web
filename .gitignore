@@ -44,6 +44,8 @@ next-env.d.ts
 
 /media
 
+/downloads
+
 /minio-data
 /mongo-data
 /backups

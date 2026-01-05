@@ -198,6 +198,7 @@ export interface Config {
   collections: {
     services: Service;
     reviews: Review;
+    downloads: Download;
     users: User;
     media: Media;
     'payload-kv': PayloadKv;
@@ -208,12 +209,13 @@ export interface Config {
   };
   collectionsJoins: {
     'payload-folders': {
-      documentsAndFolders: 'payload-folders' | 'media';
+      documentsAndFolders: 'payload-folders' | 'downloads' | 'media';
     };
   };
   collectionsSelect: {
     services: ServicesSelect<false> | ServicesSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
+    downloads: DownloadsSelect<false> | DownloadsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -231,6 +233,7 @@ export interface Config {
     weeklyScheduledServicesPage: WeeklyScheduledServicesPage;
     aboutPage: AboutPage;
     contactPage: ContactPage;
+    downloadsPage: DownloadsPage;
     header: Header;
     footer: Footer;
     announcement: Announcement;
@@ -241,6 +244,7 @@ export interface Config {
     weeklyScheduledServicesPage: WeeklyScheduledServicesPageSelect<false> | WeeklyScheduledServicesPageSelect<true>;
     aboutPage: AboutPageSelect<false> | AboutPageSelect<true>;
     contactPage: ContactPageSelect<false> | ContactPageSelect<true>;
+    downloadsPage: DownloadsPageSelect<false> | DownloadsPageSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     announcement: AnnouncementSelect<false> | AnnouncementSelect<true>;
@@ -430,6 +434,10 @@ export interface FolderInterface {
           value: string | FolderInterface;
         }
       | {
+          relationTo?: 'downloads';
+          value: string | Download;
+        }
+      | {
           relationTo?: 'media';
           value: string | Media;
         }
@@ -437,9 +445,30 @@ export interface FolderInterface {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
-  folderType?: 'media'[] | null;
+  folderType?: ('downloads' | 'media')[] | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads".
+ */
+export interface Download {
+  id: string;
+  title: string;
+  description?: string | null;
+  folder?: (string | null) | FolderInterface;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -522,6 +551,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'reviews';
         value: string | Review;
+      } | null)
+    | ({
+        relationTo: 'downloads';
+        value: string | Download;
       } | null)
     | ({
         relationTo: 'users';
@@ -751,6 +784,26 @@ export interface ReviewsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads_select".
+ */
+export interface DownloadsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  folder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -877,7 +930,7 @@ export interface Hero {
 export interface Link {
   type?: ('reference' | 'custom') | null;
   newTab?: boolean | null;
-  reference?: ('/' | '/aktualni-sluzby' | '/sluzby' | '/o-mne' | '/kontakt') | null;
+  reference?: ('/' | '/aktualni-sluzby' | '/sluzby' | '/o-mne' | '/kontakt' | '/ke-stazeni') | null;
   url?: string | null;
   label: string;
 }
@@ -1064,6 +1117,36 @@ export interface ContactPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloadsPage".
+ */
+export interface DownloadsPage {
+  id: string;
+  pageHeader: PageHeader;
+  passwordHash?: string | null;
+  /**
+   * Zadejte heslo a uložte. Po uložení se pole vyprázdní.
+   */
+  newPassword?: string | null;
+  downloads?:
+    | {
+        file?: (string | null) | Download;
+        id?: string | null;
+      }[]
+    | null;
+  important?: {
+    title?: string | null;
+    infoItems?:
+      | {
+          item: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
@@ -1097,12 +1180,11 @@ export interface Footer {
   };
   footerTitle: string;
   footerSubTitle?: string | null;
-  quickLinks: {
-    title: string;
-    links: {
-      link: Link;
-      id?: string | null;
-    }[];
+  downloadsSection?: {
+    enabled?: boolean | null;
+    title?: string | null;
+    link?: string | null;
+    description?: string | null;
   };
   contact: {
     title: string;
@@ -1356,6 +1438,35 @@ export interface ContactPageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloadsPage_select".
+ */
+export interface DownloadsPageSelect<T extends boolean = true> {
+  pageHeader?: T | PageHeaderSelect<T>;
+  passwordHash?: T;
+  newPassword?: T;
+  downloads?:
+    | T
+    | {
+        file?: T;
+        id?: T;
+      };
+  important?:
+    | T
+    | {
+        title?: T;
+        infoItems?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1392,16 +1503,13 @@ export interface FooterSelect<T extends boolean = true> {
       };
   footerTitle?: T;
   footerSubTitle?: T;
-  quickLinks?:
+  downloadsSection?:
     | T
     | {
+        enabled?: T;
         title?: T;
-        links?:
-          | T
-          | {
-              link?: T | LinkSelect<T>;
-              id?: T;
-            };
+        link?: T;
+        description?: T;
       };
   contact?:
     | T
