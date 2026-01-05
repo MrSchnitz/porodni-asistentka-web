@@ -14,11 +14,15 @@ type Props = {
 }
 
 export const WeeklyInfoSection = ({
-  infoSection: { title, description, announcements },
+  infoSection: { title, description, announcementsSection },
 }: Props) => {
   const [lightboxImage, setLightboxImage] = useState<MediaProps['resource'] | null>(null)
 
-  if (!announcements || announcements.length === 0) {
+  if (
+    !announcementsSection?.enabled ||
+    !announcementsSection.announcements ||
+    announcementsSection.announcements.length === 0
+  ) {
     return null
   }
 
@@ -39,7 +43,7 @@ export const WeeklyInfoSection = ({
           )}
 
           <div className="max-w-3xl mx-auto space-y-6">
-            {announcements.map((announcement, index) => {
+            {announcementsSection.announcements.map((announcement, index) => {
               const formatedDate = announcement.date
                 ? formatServiceDateTime({
                     startDate: announcement.date,

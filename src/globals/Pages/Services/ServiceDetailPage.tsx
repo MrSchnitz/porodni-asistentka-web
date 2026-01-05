@@ -17,11 +17,7 @@ export function ServiceDetailPage({ service }: Props) {
 
   return (
     <main className="min-h-dvh bg-background">
-      <ServiceDetailHeader
-        title={service.title}
-        icon={service.icon?.lucideIcon ?? undefined}
-        description={service.card.description}
-      />
+      <ServiceDetailHeader title={service.title} icon={service.icon?.lucideIcon ?? undefined} />
       <section className="pb-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <ServiceDetailContent service={service} isPageDetail />

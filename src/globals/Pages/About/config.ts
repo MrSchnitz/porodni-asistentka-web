@@ -4,7 +4,7 @@ import { GlobalConfig } from 'payload'
 
 export const AboutPage: GlobalConfig = {
   slug: 'aboutPage',
-  label: 'O mně',
+  label: 'Stránka o mně',
   admin: {
     group: 'Stránky',
   },
@@ -46,8 +46,12 @@ export const AboutPage: GlobalConfig = {
         },
         {
           name: 'ctaButtons',
-          label: 'CTA tlačítka',
+          label: 'Tlačítka pro přesměrování',
           type: 'array',
+          labels: {
+            singular: 'Tlačítko pro přesměrování',
+            plural: 'Tlačítka pro přesměrování',
+          },
           fields: [link({ appearances: false })],
           maxRows: 2,
           admin: {

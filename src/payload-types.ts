@@ -279,14 +279,14 @@ export interface UserAuthOperations {
 export interface Service {
   id: string;
   /**
-   * Automaticky generovaný z názvu. Lze upravit.
+   * Automaticky generovaný z názvu služby. Lze upravit.
    */
   slug: string;
+  title: string;
   icon?: {
     fileIcon?: (string | null) | Media;
     lucideIcon?: string | null;
   };
-  title: string;
   card: {
     description: {
       root: {
@@ -350,7 +350,38 @@ export interface Service {
       };
       [k: string]: unknown;
     } | null;
-    announcements?: Announcements;
+    benefitsSection?: {
+      enabled?: boolean | null;
+      title?: string | null;
+      benefits?:
+        | {
+            title: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    packageSection?: {
+      enabled?: boolean | null;
+      title?: string | null;
+      description?: string | null;
+      packages?:
+        | {
+            title: string;
+            price?: string | null;
+            includedOffers?:
+              | {
+                  item: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    announcementsSection?: {
+      enabled?: boolean | null;
+      announcements?: Announcements;
+    };
   };
   serviceType?: ('courses' | 'lessons') | null;
   lessonsSection?: {
@@ -552,13 +583,13 @@ export interface PayloadMigration {
  */
 export interface ServicesSelect<T extends boolean = true> {
   slug?: T;
+  title?: T;
   icon?:
     | T
     | {
         fileIcon?: T;
         lucideIcon?: T;
       };
-  title?: T;
   card?:
     | T
     | {
@@ -584,7 +615,44 @@ export interface ServicesSelect<T extends boolean = true> {
               id?: T;
             };
         note?: T;
-        announcements?: T | AnnouncementsSelect<T>;
+        benefitsSection?:
+          | T
+          | {
+              enabled?: T;
+              title?: T;
+              benefits?:
+                | T
+                | {
+                    title?: T;
+                    id?: T;
+                  };
+            };
+        packageSection?:
+          | T
+          | {
+              enabled?: T;
+              title?: T;
+              description?: T;
+              packages?:
+                | T
+                | {
+                    title?: T;
+                    price?: T;
+                    includedOffers?:
+                      | T
+                      | {
+                          item?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+            };
+        announcementsSection?:
+          | T
+          | {
+              enabled?: T;
+              announcements?: T | AnnouncementsSelect<T>;
+            };
       };
   serviceType?: T;
   lessonsSection?:
@@ -900,7 +968,10 @@ export interface WeeklyScheduledServicesPage {
   infoSection: {
     title: string;
     description?: string | null;
-    announcements?: Announcements;
+    announcementsSection?: {
+      enabled?: boolean | null;
+      announcements?: Announcements;
+    };
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1226,7 +1297,12 @@ export interface WeeklyScheduledServicesPageSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
-        announcements?: T | AnnouncementsSelect<T>;
+        announcementsSection?:
+          | T
+          | {
+              enabled?: T;
+              announcements?: T | AnnouncementsSelect<T>;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

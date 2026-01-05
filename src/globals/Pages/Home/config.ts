@@ -4,7 +4,7 @@ import { link } from '@/fields/link'
 
 export const HomePage: GlobalConfig = {
   slug: 'homePage',
-  label: 'Domů',
+  label: 'Úvodní stránka',
   admin: {
     group: 'Stránky',
   },

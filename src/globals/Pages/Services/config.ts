@@ -4,7 +4,7 @@ import { GlobalConfig } from 'payload'
 
 export const ServicesPage: GlobalConfig = {
   slug: 'servicesPage',
-  label: 'Služby',
+  label: 'Stránka služeb',
   admin: {
     group: 'Stránky',
   },

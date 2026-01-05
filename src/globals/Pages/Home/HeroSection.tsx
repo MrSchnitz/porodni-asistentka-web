@@ -14,7 +14,6 @@ type Props = {
 }
 
 export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButtons } }: Props) {
-  console.log(ctaButtons)
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-linear-to-br from-accent via-background to-accent/30">
       {/* Content */}

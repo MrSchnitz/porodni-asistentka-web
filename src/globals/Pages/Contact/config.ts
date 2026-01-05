@@ -4,7 +4,7 @@ import { GlobalConfig } from 'payload'
 
 export const ContactPage: GlobalConfig = {
   slug: 'contactPage',
-  label: 'Kontakt',
+  label: 'Stránka kontaktu',
   admin: {
     group: 'Stránky',
   },

@@ -4,8 +4,10 @@ import { CollectionConfig } from 'payload'
 import { serviceScheduleItems } from './fields/serviceScheduleItems'
 import { serviceLessonSection } from './fields/serviceLessonSection'
 import { serviceAdditionalInfo } from './fields/serviceAdditionalInfo'
-import { serviceAnnouncements } from './fields/serviceAnnouncements'
+import { serviceAnnouncementsSection } from './fields/serviceAnnouncementsSection'
 import { iconImageField } from '@/fields/iconField'
+import { servicePackagesSection } from './fields/servicePackagesSection'
+import { serviceBenefitsSection } from './fields/serviceBenefitsSection'
 
 const generateSlug = (title: string): string => {
   return title
@@ -90,11 +92,11 @@ export const Services: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
-      label: 'Slug',
+      label: 'URL zkratka služby (Slug)',
       admin: {
         position: 'sidebar',
         placeholder: 'slug-z-nazvu',
-        description: 'Automaticky generovaný z názvu. Lze upravit.',
+        description: 'Automaticky generovaný z názvu služby. Lze upravit.',
       },
       required: true,
       unique: true,
@@ -105,13 +107,13 @@ export const Services: CollectionConfig = {
         {
           label: 'Základní informace',
           fields: [
-            iconImageField,
             {
               name: 'title',
               type: 'text',
               label: 'Název',
               required: true,
             },
+            iconImageField,
             {
               type: 'tabs',
               tabs: [
@@ -181,7 +183,9 @@ export const Services: CollectionConfig = {
                           ],
                         }),
                         { name: 'note', type: 'richText', label: 'Poznámka' },
-                        serviceAnnouncements(),
+                        serviceBenefitsSection(),
+                        servicePackagesSection(),
+                        serviceAnnouncementsSection(),
                       ],
                     },
                   ],

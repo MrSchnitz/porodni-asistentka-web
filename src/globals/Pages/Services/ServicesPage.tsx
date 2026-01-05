@@ -30,6 +30,8 @@ export default function ServicesPage({ data: { pageHeader, serviceSections } }: 
         if (!servicesSection?.serviceSectionItems?.length) {
           return null
         }
+        const showThreeColumns = servicesSection.serviceSectionItems.length > 2
+
         return (
           <ServicePageSection
             key={id}
@@ -37,11 +39,13 @@ export default function ServicesPage({ data: { pageHeader, serviceSections } }: 
             icon={servicesSection.icon}
             title={servicesSection.title}
             description={servicesSection.description}
+            showThreeColumns={showThreeColumns}
           >
             {servicesSection.serviceSectionItems.map(({ item, id }) => {
               if (!hasData(item.value)) {
                 return null
               }
+
               return <ServicePageCard key={id} pageName={pageName} data={item.value} />
             })}
           </ServicePageSection>

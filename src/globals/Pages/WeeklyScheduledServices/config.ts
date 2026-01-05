@@ -1,4 +1,4 @@
-import { serviceAnnouncements } from '@/collections/Services/fields/serviceAnnouncements'
+import { serviceAnnouncementsSection } from '@/collections/Services/fields/serviceAnnouncementsSection'
 import { pageHeader } from '@/fields/pageHeader'
 import { GlobalConfig } from 'payload'
 
@@ -23,7 +23,7 @@ export const WeeklyScheduledServicesPage: GlobalConfig = {
           required: true,
         },
         { name: 'description', type: 'textarea', label: 'Popis' },
-        serviceAnnouncements(),
+        serviceAnnouncementsSection(),
       ],
     },
   ],

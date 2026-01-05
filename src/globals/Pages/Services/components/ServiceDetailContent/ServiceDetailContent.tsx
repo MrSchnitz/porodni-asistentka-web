@@ -8,6 +8,8 @@ import { ServiceInfoItem } from './components/ServiceInfoItem'
 import { ServiceLessons } from './components/ServiceCourse/ServiceLessons'
 import { ServiceAnnouncements } from './components/ServiceAnnouncements'
 import { cn } from '@/lib/utils'
+import { ServiceBenefitsSection } from './components/ServiceBenefitsSection'
+import { ServicePackagesSection } from './components/ServicePackagesSection'
 
 type Props = {
   service: Service
@@ -20,12 +22,16 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
   }
 
   const { serviceType, lessonsSection, courses, schedules } = service
-  const { content, additionalInfo, note, announcements } = service.detail
+  const { content, additionalInfo, note, announcementsSection, benefitsSection, packageSection } =
+    service.detail
 
   return (
     <div className="space-y-6">
       {/* Content */}
       {content && <RichText className="text-base md:text-lg text-foreground/90" data={content} />}
+
+      {/* Benefits */}
+      {benefitsSection?.enabled && <ServiceBenefitsSection benefitsSection={benefitsSection} />}
 
       {/* Info */}
       {additionalInfo && additionalInfo.length > 0 && (
@@ -54,19 +60,24 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
         />
       )}
 
+      {/* Packages */}
+      {packageSection?.enabled && <ServicePackagesSection packageSection={packageSection} />}
+
       {/* Lessons */}
       {serviceType === 'lessons' && lessonsSection && (
         <ServiceLessons lessonsSection={lessonsSection} />
       )}
 
       {/* Announcements */}
-      {announcements && announcements.length > 0 && (
-        <ServiceContentSection icon="megaphone" title="Aktuality a oznámení">
-          <div className="space-y-4">
-            <ServiceAnnouncements announcements={announcements} />
-          </div>
-        </ServiceContentSection>
-      )}
+      {announcementsSection?.enabled &&
+        announcementsSection.announcements &&
+        announcementsSection.announcements.length > 0 && (
+          <ServiceContentSection icon="megaphone" title="Aktuality a oznámení">
+            <div className="space-y-4">
+              <ServiceAnnouncements announcements={announcementsSection.announcements} />
+            </div>
+          </ServiceContentSection>
+        )}
 
       {/* Courses */}
       {serviceType === 'courses' && courses && courses.length > 0 && (

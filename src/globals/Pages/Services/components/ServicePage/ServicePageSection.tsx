@@ -1,3 +1,4 @@
+import { cn } from '@/utilities/ui'
 import { DynamicIcon, IconName } from 'lucide-react/dynamic'
 
 type Props = {
@@ -6,9 +7,17 @@ type Props = {
   title?: string | null
   description?: string | null
   children: React.ReactNode
+  showThreeColumns?: boolean
 }
 
-export function ServicePageSection({ id, icon, title, description, children }: Props) {
+export function ServicePageSection({
+  id,
+  icon,
+  title,
+  description,
+  children,
+  showThreeColumns = false,
+}: Props) {
   return (
     <section id={id ?? undefined} className="py-10 sm:py-20 even:bg-card odd:bg-muted">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -30,7 +39,14 @@ export function ServicePageSection({ id, icon, title, description, children }: P
             <p className="text-lg text-foreground/70 max-w-2xl mx-auto">{description}</p>
           )}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">{children}</div>
+        <div
+          className={cn(
+            'grid grid-cols-1 md:grid-cols-2 gap-6',
+            showThreeColumns && 'lg:grid-cols-3',
+          )}
+        >
+          {children}
+        </div>
       </div>
     </section>
   )

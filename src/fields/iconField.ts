@@ -17,7 +17,7 @@ export const iconField: Field = {
 export const iconImageField: Field = {
   name: 'icon',
   type: 'group',
-  label: 'Ikona',
+  label: '',
   fields: [
     {
       name: 'fileIcon',
