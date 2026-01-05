@@ -12,7 +12,6 @@ const ORDERED_DAYS: (keyof WeeklyScheduleByDay)[] = [
   'wednesday',
   'thursday',
   'friday',
-  'saturday',
 ]
 
 export default async function Page() {

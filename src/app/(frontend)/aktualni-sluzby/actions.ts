@@ -30,7 +30,6 @@ export type WeeklyScheduleByDay = {
   wednesday: WeeklyScheduleItem[]
   thursday: WeeklyScheduleItem[]
   friday: WeeklyScheduleItem[]
-  saturday: WeeklyScheduleItem[]
 }
 
 export const dayIndexToName: Record<number, keyof WeeklyScheduleByDay> = {
@@ -39,7 +38,6 @@ export const dayIndexToName: Record<number, keyof WeeklyScheduleByDay> = {
   3: 'wednesday',
   4: 'thursday',
   5: 'friday',
-  6: 'saturday',
 }
 
 export const dayNames: Record<keyof WeeklyScheduleByDay, string> = {
@@ -48,7 +46,6 @@ export const dayNames: Record<keyof WeeklyScheduleByDay, string> = {
   wednesday: 'Středa',
   thursday: 'Čtvrtek',
   friday: 'Pátek',
-  saturday: 'Sobota',
 }
 
 export async function getWeeklyScheduleItems(): Promise<{
@@ -67,7 +64,6 @@ export async function getWeeklyScheduleItems(): Promise<{
     wednesday: format(addDays(weekStart, 2), 'd.M.', { locale: cs }),
     thursday: format(addDays(weekStart, 3), 'd.M.', { locale: cs }),
     friday: format(addDays(weekStart, 4), 'd.M.', { locale: cs }),
-    saturday: format(addDays(weekStart, 5), 'd.M.', { locale: cs }),
   }
 
   // Query only services that have schedule items within the current week
@@ -97,7 +93,6 @@ export async function getWeeklyScheduleItems(): Promise<{
     wednesday: [],
     thursday: [],
     friday: [],
-    saturday: [],
   }
 
   // Still need to filter individual items since DB query returns services
@@ -115,7 +110,7 @@ export async function getWeeklyScheduleItems(): Promise<{
           const dayIndex = getDay(startDate)
           const dayName = dayIndexToName[dayIndex]
 
-          const isWholeScheduleCancelled = ['cancelled', 'booked'].includes(schedule.status ?? '')
+          const isWholeScheduleCancelled = schedule.status === 'cancelled'
 
           weeklySchedule[dayName].push({
             serviceName: service.title,
@@ -125,7 +120,8 @@ export async function getWeeklyScheduleItems(): Promise<{
               startDate: scheduleItem.startDate,
               endDate: scheduleItem.endDate,
             }).timeString,
-            location: service.location ?? '',
+            location:
+              service.detail?.additionalInfo?.find((info) => info.title === 'Místo')?.value ?? '',
             status: isWholeScheduleCancelled ? schedule.status : scheduleItem.status,
             notes: scheduleItem.notes ?? '',
             slug: service.slug,

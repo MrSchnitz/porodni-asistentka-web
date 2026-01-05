@@ -10,9 +10,9 @@ export const ServiceAvailableSpotsBadge = ({ numberOfSpots }: Props) => {
   }
 
   return (
-    <div className="flex items-center gap-2 bg-muted rounded-full px-3 py-1.5">
-      <Users className="w-3 h-3 text-primary" />
-      <span className="text-xs">
+    <div className="flex items-center gap-2 bg-muted rounded-full px-3 py-1.5 text-sm">
+      <Users className="w-4 h-4 text-primary" />
+      <span className="text-sm">
         {numberOfSpots > 0
           ? `${numberOfSpots} ${numberOfSpots === 1 ? 'volné místo' : numberOfSpots < 5 ? 'volná místa' : 'volných míst'}`
           : 'Obsazeno'}

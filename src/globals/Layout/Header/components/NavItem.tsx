@@ -1,6 +1,7 @@
 'use client'
 import { cn } from '@/lib/utils'
 import { Link as LinkType } from '@/payload-types'
+import { getLinkUrl } from '@/utilities/getLinkUrl'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -14,7 +15,7 @@ export function NavItem({ item, className, onClick }: Props) {
   const pathname = usePathname()
 
   const isActive = (path: string) => pathname === path
-  const href = item.type === 'reference' ? (item.reference ?? '') : (item.url ?? '')
+  const href = getLinkUrl(item)
 
   return (
     <Link

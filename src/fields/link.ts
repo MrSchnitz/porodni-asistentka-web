@@ -31,6 +31,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
   const linkResult: GroupField = {
     name: 'link',
     type: 'group',
+    label: '',
     interfaceName: 'link',
     admin: {
       hideGutter: true,

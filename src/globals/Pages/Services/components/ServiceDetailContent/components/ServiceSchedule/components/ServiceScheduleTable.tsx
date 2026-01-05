@@ -10,12 +10,8 @@ import {
 import { formatServiceDateTime } from '@/utilities/formatServiceDateTime'
 import clsx from 'clsx'
 import { Calendar, Clock } from 'lucide-react'
-import { ScheduleItems, ScheduleStatus } from '../../../../../../types'
+import { ScheduleItems } from '../../../../../../types'
 import { ServiceStatusBadge } from './ServiceStatusBadge'
-
-const getIsAvailable = (status: ScheduleStatus) => {
-  return !['cancelled', 'booked'].includes(status ?? '')
-}
 
 type Props = {
   scheduleItems: ScheduleItems
@@ -37,19 +33,19 @@ export const ServiceScheduleTable = ({ scheduleItems }: Props) => {
           </TableHeader>
           <TableBody>
             {scheduleItems.map(({ id, startDate, endDate, lesson, notes, status }) => {
-              const isAvailable = getIsAvailable(status)
+              const isCancelled = status === 'cancelled'
               const { dateString, timeString } = formatServiceDateTime({
                 startDate,
                 endDate,
               })
 
               return (
-                <TableRow key={id} className={clsx(!isAvailable && 'line-through')}>
+                <TableRow key={id} className={clsx(isCancelled && 'line-through')}>
                   <TableCell className="font-medium">{dateString}</TableCell>
                   <TableCell>{timeString}</TableCell>
                   <TableCell>{lesson}</TableCell>
                   <TableCell>
-                    {isAvailable ? notes : <ServiceStatusBadge status={status} />}
+                    {isCancelled ? <ServiceStatusBadge status={status} /> : notes}
                   </TableCell>
                 </TableRow>
               )
@@ -61,7 +57,7 @@ export const ServiceScheduleTable = ({ scheduleItems }: Props) => {
       {/* Mobile cards */}
       <div className="md:hidden space-y-3">
         {scheduleItems.map(({ id, startDate, endDate, notes, lesson, status }) => {
-          const isAvailable = getIsAvailable(status)
+          const isCancelled = status === 'cancelled'
           const { dateString, timeString } = formatServiceDateTime({
             startDate,
             endDate,
@@ -79,7 +75,7 @@ export const ServiceScheduleTable = ({ scheduleItems }: Props) => {
                         <span
                           className={clsx(
                             'font-medium text-foreground',
-                            !isAvailable && 'line-through',
+                            isCancelled && 'line-through',
                           )}
                         >
                           {dateString}
@@ -89,20 +85,18 @@ export const ServiceScheduleTable = ({ scheduleItems }: Props) => {
                       {/* Time */}
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4 text-primary shrink-0" />
-                        <span
-                          className={clsx('text-foreground/80', !isAvailable && 'line-through')}
-                        >
+                        <span className={clsx('text-foreground/80', isCancelled && 'line-through')}>
                           {timeString}
                         </span>
                       </div>
                     </div>
-                    {!isAvailable && <ServiceStatusBadge status={status} />}
+                    <ServiceStatusBadge status={status} />
                   </div>
 
                   {/* Lesson content */}
                   {lesson && (
                     <div className="pt-2 border-t border-primary/20">
-                      <span className={clsx('text-foreground/80', !isAvailable && 'line-through')}>
+                      <span className={clsx('text-foreground/80', isCancelled && 'line-through')}>
                         {lesson}
                       </span>
                     </div>

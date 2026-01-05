@@ -14,8 +14,8 @@ export function ServicePageSection({ id, icon, title, description, children }: P
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-12">
           {icon && (
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-primary to-secondary rounded-full mb-4">
-              <DynamicIcon name={icon as IconName} className="w-8 h-8 text-white" />
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/20 rounded-full mb-4">
+              <DynamicIcon name={icon as IconName} className="w-8 h-8 text-primary" />
             </div>
           )}
           {title && (

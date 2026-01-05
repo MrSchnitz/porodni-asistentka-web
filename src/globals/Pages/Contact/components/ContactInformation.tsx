@@ -58,7 +58,7 @@ export const ContactInformation = ({ contactInfo, note }: Props) => {
                 </div>
               )}
               <div>
-                <div className="text-sm text-foreground/80 mb-1">{info.title}</div>
+                <div className="text-sm text-foreground/90 font-medium mb-1">{info.title}</div>
                 <div>
                   <InfoContent info={info} />
                 </div>

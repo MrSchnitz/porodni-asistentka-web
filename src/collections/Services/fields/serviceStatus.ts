@@ -8,7 +8,7 @@ export const serviceStatus: Field = {
   defaultValue: 'scheduled',
   options: [
     { label: 'Naplánováno', value: 'scheduled' },
-    { label: 'Otevřeno', value: 'open' },
+    { label: 'Probíhá', value: 'inProgress' },
     { label: 'Obsazeno', value: 'booked' },
     { label: 'Zrušeno', value: 'cancelled' },
   ],

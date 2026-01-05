@@ -4,9 +4,7 @@ import RichText from '@/components/RichText'
 import { ServiceCourse } from './components/ServiceCourse/ServiceCourse'
 import { ServiceContentSection } from './components/ServiceContentSection'
 import { ServiceSchedule } from './components/ServiceSchedule/ServiceSchedule'
-import { useMemo } from 'react'
 import { ServiceInfoItem } from './components/ServiceInfoItem'
-import { AdditionalInfo } from '../../../types'
 import { ServiceLessons } from './components/ServiceCourse/ServiceLessons'
 import { ServiceAnnouncements } from './components/ServiceAnnouncements'
 import { cn } from '@/lib/utils'
@@ -16,40 +14,13 @@ type Props = {
   isPageDetail?: boolean
 }
 
-export function ServiceDetailContent({
-  service: {
-    duration,
-    price,
-    location,
-    additionalInfo,
-    content,
-    note,
-    courses,
-    schedules,
-    serviceType,
-    lessonsSection,
-    announcements,
-  },
-  isPageDetail = false,
-}: Props) {
-  const infoItems = useMemo<AdditionalInfo[]>(() => {
-    return [
-      duration && {
-        id: 'duration',
-        icon: 'clock',
-        title: 'Délka',
-        value: duration,
-      },
-      price && { id: 'price', icon: 'coins', title: 'Cena', value: price },
-      location && {
-        id: 'location',
-        icon: 'map-pin',
-        title: 'Místo',
-        value: location,
-      },
-      ...(additionalInfo ?? []),
-    ].filter(Boolean) as AdditionalInfo[]
-  }, [duration, price, location, additionalInfo])
+export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
+  if (!service.detail) {
+    return null
+  }
+
+  const { serviceType, lessonsSection, courses, schedules } = service
+  const { content, additionalInfo, note, announcements } = service.detail
 
   return (
     <div className="space-y-6">
@@ -57,18 +28,19 @@ export function ServiceDetailContent({
       {content && <RichText className="text-base md:text-lg text-foreground/90" data={content} />}
 
       {/* Info */}
-      {infoItems.length > 0 && (
+      {additionalInfo && additionalInfo.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {infoItems.map((info, index) => (
-            <ServiceInfoItem
-              key={info.id}
-              {...info}
-              className={cn(
-                isPageDetail ? 'bg-card' : '',
-                index === infoItems.length - 1 && infoItems.length % 2 !== 0 && 'sm:col-span-2',
-              )}
-            />
-          ))}
+          {additionalInfo.map((info, index) => {
+            const isLastOdd = index === additionalInfo.length - 1 && additionalInfo.length % 2 !== 0
+
+            return (
+              <ServiceInfoItem
+                key={info.id}
+                {...info}
+                className={cn(isPageDetail ? 'bg-card' : '', isLastOdd && 'sm:col-span-2')}
+              />
+            )
+          })}
         </div>
       )}
 

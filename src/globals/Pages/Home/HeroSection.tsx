@@ -7,12 +7,14 @@ import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion } from 'motion/react'
+import { getLinkUrl } from '@/utilities/getLinkUrl'
 
 type Props = {
   data: HomePage['hero']
 }
 
 export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButtons } }: Props) {
+  console.log(ctaButtons)
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-linear-to-br from-accent via-background to-accent/30">
       {/* Content */}
@@ -71,7 +73,7 @@ export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButt
                 transition={{ duration: 0.8, delay: 0.7 }}
               >
                 {ctaButtons.map((button, index) => (
-                  <Link key={button.id} href={button.link.url ?? ''}>
+                  <Link key={button.id} href={getLinkUrl(button.link)}>
                     <Button
                       size="lg"
                       variant={index > 0 ? 'outline' : 'default'}

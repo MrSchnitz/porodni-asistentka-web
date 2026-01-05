@@ -13,7 +13,7 @@ export function ReviewCard({ review }: Props) {
   return (
     <Card className="border-primary/30 relative hover:shadow-xl transition-all bg-card">
       <CardContent className="p-6">
-        <Quote className="w-10 h-10 text-secondary/40 mb-4" />
+        <Quote className="w-10 h-10 text-primary/60 mb-4" />
 
         <div className="flex gap-1 mb-4">
           {numberOfStarsArray.map((_, i) => (

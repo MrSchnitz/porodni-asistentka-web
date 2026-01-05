@@ -17,11 +17,13 @@ export const ServiceIcon = ({ icon: { fileIcon, lucideIcon }, className }: Props
     return (
       <div
         className={cn(
-          'w-14 h-14 bg-linear-to-br from-primary to-secondary rounded-full flex items-center justify-center shadow-md shrink-0',
+          'w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center shrink-0',
           className,
         )}
       >
-        {lucideIcon && <DynamicIcon className="w-7 h-7 text-white" name={lucideIcon as IconName} />}
+        {lucideIcon && (
+          <DynamicIcon className="w-7 h-7 text-primary" name={lucideIcon as IconName} />
+        )}
       </div>
     )
   }

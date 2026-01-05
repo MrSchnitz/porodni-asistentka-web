@@ -5,6 +5,7 @@ import { serviceScheduleItems } from './fields/serviceScheduleItems'
 import { serviceLessonSection } from './fields/serviceLessonSection'
 import { serviceAdditionalInfo } from './fields/serviceAdditionalInfo'
 import { serviceAnnouncements } from './fields/serviceAnnouncements'
+import { iconImageField } from '@/fields/iconField'
 
 const generateSlug = (title: string): string => {
   return title
@@ -24,7 +25,7 @@ export const Services: CollectionConfig = {
     plural: 'Služby',
   },
   admin: {
-    defaultColumns: ['title', 'description'],
+    defaultColumns: ['title'],
     useAsTitle: 'title',
     group: 'Obsah',
   },
@@ -104,29 +105,7 @@ export const Services: CollectionConfig = {
         {
           label: 'Základní informace',
           fields: [
-            {
-              name: 'icon',
-              type: 'group',
-              label: 'Ikona',
-              fields: [
-                {
-                  name: 'fileIcon',
-                  type: 'upload',
-                  label: 'Ikona ze souboru',
-                  relationTo: 'media',
-                },
-                {
-                  name: 'lucideIcon',
-                  type: 'text',
-                  label: 'Ikona z knihovny',
-                  admin: {
-                    components: {
-                      Field: '@/components/admin/IconField',
-                    },
-                  },
-                },
-              ],
-            },
+            iconImageField,
             {
               name: 'title',
               type: 'text',
@@ -134,48 +113,81 @@ export const Services: CollectionConfig = {
               required: true,
             },
             {
-              name: 'description',
-              type: 'richText',
-              label: 'Popis',
-              required: true,
-            },
-            {
-              name: 'content',
-              type: 'richText',
-              label: 'Obsah',
-            },
-            {
-              type: 'group',
-              label: 'Informace',
-              fields: [
+              type: 'tabs',
+              tabs: [
                 {
-                  type: 'row',
+                  label: 'Kartička služby',
                   fields: [
                     {
-                      name: 'duration',
-                      type: 'text',
-                      label: 'Délka',
-                      admin: { width: '33%' },
-                    },
-                    {
-                      name: 'price',
-                      type: 'text',
-                      label: 'Cena',
-                      admin: { width: '33%' },
-                    },
-                    {
-                      name: 'location',
-                      type: 'text',
-                      label: 'Místo',
-                      admin: { width: '33%' },
+                      name: 'card',
+                      type: 'group',
+                      label: '',
+                      required: true,
+                      admin: {
+                        hideGutter: true,
+                      },
+                      fields: [
+                        { name: 'description', type: 'richText', label: 'Popis', required: true },
+                        serviceAdditionalInfo({
+                          defaultValue: [
+                            {
+                              title: 'Cena',
+                              value: '',
+                            },
+                          ],
+                          fields: [
+                            { name: 'title', label: 'Název', type: 'text', required: true },
+                            { name: 'value', label: 'Popis', type: 'textarea', required: true },
+                          ],
+                        }),
+                      ],
                     },
                   ],
                 },
-                serviceAdditionalInfo(),
+                {
+                  label: 'Detail služby',
+                  fields: [
+                    {
+                      name: 'detail',
+                      type: 'group',
+                      label: '',
+                      required: true,
+                      admin: {
+                        hideGutter: true,
+                      },
+                      fields: [
+                        {
+                          name: 'content',
+                          type: 'richText',
+                          label: 'Obsah',
+                        },
+                        serviceAdditionalInfo({
+                          defaultValue: [
+                            {
+                              icon: 'clock',
+                              title: 'Délka',
+                              value: '',
+                            },
+                            {
+                              icon: 'coins',
+                              title: 'Cena',
+                              value: '',
+                            },
+                            {
+                              icon: 'map-pin',
+                              title: 'Místo',
+                              value: '',
+                            },
+                          ],
+                        }),
+                        { name: 'note', type: 'richText', label: 'Poznámka' },
+                        serviceAnnouncements(),
+                      ],
+                    },
+                  ],
+                },
               ],
             },
-            { name: 'note', type: 'richText', label: 'Poznámka' },
-            serviceAnnouncements(),
           ],
         },
         {

@@ -13,3 +13,27 @@ export const iconField: Field = {
     },
   },
 }
+
+export const iconImageField: Field = {
+  name: 'icon',
+  type: 'group',
+  label: 'Ikona',
+  fields: [
+    {
+      name: 'fileIcon',
+      type: 'upload',
+      label: 'Ikona ze souboru',
+      relationTo: 'media',
+    },
+    {
+      name: 'lucideIcon',
+      type: 'text',
+      label: 'Ikona z knihovny',
+      admin: {
+        components: {
+          Field: '@/components/admin/IconField',
+        },
+      },
+    },
+  ],
+}

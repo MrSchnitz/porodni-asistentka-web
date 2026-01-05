@@ -52,7 +52,7 @@ function TitleWithIcon({ title, icon, description, compact }: HeaderContentProps
     >
       <div
         className={cn(
-          'bg-primary/10 rounded-full flex items-center justify-center shrink-0',
+          'bg-primary/20 rounded-full flex items-center justify-center shrink-0',
           iconSize,
           compact && 'hidden sm:flex',
         )}

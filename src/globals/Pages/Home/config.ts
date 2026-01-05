@@ -42,8 +42,12 @@ export const HomePage: GlobalConfig = {
         },
         {
           name: 'ctaButtons',
-          label: 'CTA tlačítka',
+          label: 'Tlačítka pro přesměrování',
           type: 'array',
+          labels: {
+            singular: 'Tlačítko pro přesměrování',
+            plural: 'Tlačítka pro přesměrování',
+          },
           fields: [link({ appearances: false })],
           maxRows: 2,
           admin: {
@@ -85,7 +89,7 @@ export const HomePage: GlobalConfig = {
         },
         {
           name: 'ctaButton',
-          label: 'CTA tlačítko',
+          label: 'Tlačítko pro přesměrování',
           type: 'array',
           fields: [link({ appearances: false })],
           maxRows: 1,
@@ -124,16 +128,6 @@ export const HomePage: GlobalConfig = {
               relationTo: ['reviews'],
             },
           ],
-        },
-        {
-          name: 'ctaButton',
-          label: 'CTA tlačítko',
-          type: 'array',
-          fields: [link({ appearances: false })],
-          maxRows: 1,
-          admin: {
-            initCollapsed: true,
-          },
         },
       ],
     },

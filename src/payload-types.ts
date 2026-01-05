@@ -134,7 +134,7 @@ export type Schedules =
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "serviceStatus".
  */
-export type ServiceStatus = ('scheduled' | 'open' | 'booked' | 'cancelled') | null;
+export type ServiceStatus = ('scheduled' | 'inProgress' | 'booked' | 'cancelled') | null;
 /**
  * Supported timezones in IANA format.
  *
@@ -287,63 +287,71 @@ export interface Service {
     lucideIcon?: string | null;
   };
   title: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: any;
+  card: {
+    description: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
         version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      [k: string]: unknown;
     };
-    [k: string]: unknown;
+    additionalInfo?:
+      | {
+          title: string;
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
   };
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
+  detail: {
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
         version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  duration?: string | null;
-  price?: string | null;
-  location?: string | null;
-  additionalInfo?:
-    | {
-        icon?: string | null;
-        title: string;
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
-  note?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
+      };
+      [k: string]: unknown;
+    } | null;
+    additionalInfo?:
+      | {
+          icon?: string | null;
+          title: string;
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+    note?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
         version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  announcements?: Announcements;
+      };
+      [k: string]: unknown;
+    } | null;
+    announcements?: Announcements;
+  };
   serviceType?: ('courses' | 'lessons') | null;
   lessonsSection?: {
     title?: string | null;
@@ -551,21 +559,33 @@ export interface ServicesSelect<T extends boolean = true> {
         lucideIcon?: T;
       };
   title?: T;
-  description?: T;
-  content?: T;
-  duration?: T;
-  price?: T;
-  location?: T;
-  additionalInfo?:
+  card?:
     | T
     | {
-        icon?: T;
-        title?: T;
-        value?: T;
-        id?: T;
+        description?: T;
+        additionalInfo?:
+          | T
+          | {
+              title?: T;
+              value?: T;
+              id?: T;
+            };
       };
-  note?: T;
-  announcements?: T | AnnouncementsSelect<T>;
+  detail?:
+    | T
+    | {
+        content?: T;
+        additionalInfo?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              value?: T;
+              id?: T;
+            };
+        note?: T;
+        announcements?: T | AnnouncementsSelect<T>;
+      };
   serviceType?: T;
   lessonsSection?:
     | T
@@ -829,12 +849,6 @@ export interface Reviews {
           relationTo: 'reviews';
           value: string | Review;
         } | null;
-        id?: string | null;
-      }[]
-    | null;
-  ctaButton?:
-    | {
-        link: Link;
         id?: string | null;
       }[]
     | null;
@@ -1162,12 +1176,6 @@ export interface ReviewsSelect1<T extends boolean = true> {
     | T
     | {
         reference?: T;
-        id?: T;
-      };
-  ctaButton?:
-    | T
-    | {
-        link?: T | LinkSelect<T>;
         id?: T;
       };
 }

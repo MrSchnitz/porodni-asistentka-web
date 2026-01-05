@@ -44,7 +44,7 @@ export const WeeklyScheduleCard = ({
   location: string
   slug: string
 }) => {
-  const isCancelled = ['cancelled', 'booked'].includes(status ?? '')
+  const isCancelled = status === 'cancelled'
 
   return (
     <Link href={`${PAGE_ROUTES.servicesPage.path}/${slug}`}>
