@@ -11,8 +11,8 @@ export function ReviewCard({ review }: Props) {
   const numberOfStarsArray = [...Array(review.rating)]
 
   return (
-    <Card className="border-primary/30 relative hover:shadow-xl transition-all bg-card">
-      <CardContent className="p-6">
+    <Card className="border-primary/30 relative bg-card h-full">
+      <CardContent className="p-6 h-full flex flex-col">
         <Quote className="w-10 h-10 text-primary/60 mb-4" />
 
         <div className="flex gap-1 mb-4">
@@ -21,7 +21,7 @@ export function ReviewCard({ review }: Props) {
           ))}
         </div>
 
-        <div className="text-foreground/80 mb-6 italic">
+        <div className="text-foreground/80 mb-6 italic flex-1">
           <RichText data={review.content} />
         </div>
 
