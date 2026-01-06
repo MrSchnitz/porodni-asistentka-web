@@ -53,12 +53,12 @@ export const ContactInformation = ({ contactInfo, note }: Props) => {
           <Card key={index} className="border-primary/30 hover:shadow-md transition-shadow bg-card">
             <CardContent className="p-4 flex items-start gap-4">
               {info.icon && (
-                <div className="w-10 h-10 bg-linear-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
-                  <DynamicIcon name={info.icon as IconName} className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center shrink-0">
+                  <DynamicIcon name={info.icon as IconName} className="w-5 h-5 text-primary" />
                 </div>
               )}
               <div>
-                <div className="text-sm text-foreground/90 font-medium mb-1">{info.title}</div>
+                <div className="text-base text-foreground font-medium mb-1">{info.title}</div>
                 <div>
                   <InfoContent info={info} />
                 </div>
@@ -70,7 +70,7 @@ export const ContactInformation = ({ contactInfo, note }: Props) => {
 
       {note && (
         <div className="bg-linear-to-br from-primary/20 to-secondary/20 rounded-2xl p-6 border border-primary/30">
-          <RichText className="text-base text-foreground/80" data={note} />
+          <RichText className="text-base text-foreground" data={note} />
         </div>
       )}
     </div>
