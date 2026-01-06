@@ -5,6 +5,7 @@ import { AdminBar } from '@/components/AdminBar'
 import { draftMode } from 'next/headers'
 import { Footer } from '@/globals/Layout/Footer/Footer'
 import { Announcement } from '@/globals/Layout/Announcement/Announcement'
+import { CookieConsent } from '@/components/CookieConsent/CookieConsent'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,6 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Header />
         <main>{children}</main>
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   )
