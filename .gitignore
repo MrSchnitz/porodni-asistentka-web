@@ -19,6 +19,7 @@
 
 # production
 /build
+/src/migrations
 
 # misc
 .DS_Store
@@ -43,15 +44,16 @@ next-env.d.ts
 .env
 
 /media
-
 /downloads
-
+/data
 /minio-data
 /mongo-data
+/postgres-data
 /backups
 /docker-images
 /other-scripts
 /README
+/deploy
 
 # Playwright
 node_modules/

@@ -1,4 +1,4 @@
-import { getClientSideURL } from '@/utilities/getURL'
+import { getServerSideURL } from '@/utilities/getURL'
 
 /**
  * Processes media resource URL to ensure proper formatting
@@ -18,7 +18,8 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     return cacheTag ? `${url}?${cacheTag}` : url
   }
 
-  // Otherwise prepend client-side URL
-  const baseUrl = getClientSideURL()
+  // Use server URL for media to ensure consistency with Next.js remotePatterns
+  // This prevents mismatches when users access via different domains (e.g., www vs non-www)
+  const baseUrl = getServerSideURL()
   return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
 }

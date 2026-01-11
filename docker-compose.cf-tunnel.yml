@@ -1,0 +1,107 @@
+# ============================================
+# Cloudflare Tunnel + PostgreSQL
+# ============================================
+# USAGE: docker compose -f docker-compose.cf-tunnel.yml up -d
+#
+# ============================================
+# TWO OPTIONS
+# ============================================
+#
+# OPTION A: Quick Tunnel (FREE auto-generated domain) [DEFAULT]
+# -------------------------------------------------------------
+# - Gets you a random domain like: https://random-words.trycloudflare.com
+# - No Cloudflare account needed!
+# - Just run: docker compose -f docker-compose.cf-tunnel.yml up -d
+# - Check logs for URL: docker logs cloudflared
+#
+# OPTION B: Custom Domain (requires Cloudflare account)
+# -----------------------------------------------------
+# 1. Go to: https://one.dash.cloudflare.com/
+# 2. Networks → Tunnels → Create a tunnel
+# 3. Choose "Cloudflared", name it, copy the token
+# 4. Add to .env: CLOUDFLARE_TUNNEL_TOKEN=your_token
+# 5. Configure Public Hostname in Cloudflare dashboard:
+#    - Domain: your-domain.com
+#    - Type: HTTP
+#    - URL: app:3000
+# 6. Uncomment "OPTION B" section below and comment out "OPTION A"
+#
+# ============================================
+# ADVANTAGES
+# ============================================
+# - No need to open ports 80/443 on your server
+# - No need for Let's Encrypt certificates (Cloudflare handles SSL)
+# - Built-in DDoS protection
+# - Works behind NAT/firewall without port forwarding
+# - Free with Cloudflare (even on free plan)
+#
+
+services:
+  # Cloudflare Tunnel - handles SSL and domain routing
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    networks:
+      - app-network
+    depends_on:
+      app:
+        condition: service_started
+    # =============================================
+    # OPTION A: Quick Tunnel (auto-generated domain)
+    # =============================================
+    # No config needed - just run and check logs for URL:
+    #   docker logs cloudflared
+    command: tunnel --url http://app:3000
+    # =============================================
+    # OPTION B: Custom Domain (with token)
+    # =============================================
+    # Uncomment below and comment out OPTION A above:
+    # command: tunnel --no-autoupdate run
+    # environment:
+    #   - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+
+  app:
+    image: porodni-asistentka-web:latest
+    container_name: app
+    env_file: .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    expose:
+      - '3000'
+    volumes:
+      - ./media:/app/media
+    networks:
+      - app-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: payload
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: payload
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U payload']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

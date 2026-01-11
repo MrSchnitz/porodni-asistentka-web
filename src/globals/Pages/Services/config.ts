@@ -4,6 +4,7 @@ import { GlobalConfig } from 'payload'
 
 export const ServicesPage: GlobalConfig = {
   slug: 'servicesPage',
+  dbName: 'svc_page', // Shortened db name
   label: 'Stránka služeb',
   admin: {
     group: 'Stránky',
@@ -12,6 +13,7 @@ export const ServicesPage: GlobalConfig = {
     pageHeader,
     {
       name: 'serviceSections',
+      dbName: 'sections',
       type: 'array',
       label: 'Sekce služeb',
       fields: [
@@ -33,6 +35,7 @@ export const ServicesPage: GlobalConfig = {
             },
             {
               name: 'serviceSectionItems',
+              dbName: 'items',
               type: 'array',
               label: 'Vyberte služby pro zobrazení na stránce',
               fields: [

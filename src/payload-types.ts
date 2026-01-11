@@ -227,6 +227,7 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('cs' | 'en') | ('cs' | 'en')[];
   globals: {
     homePage: HomePage;
     servicesPage: ServicesPage;

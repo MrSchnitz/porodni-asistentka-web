@@ -4,6 +4,7 @@ import { GlobalConfig } from 'payload'
 
 export const WeeklyScheduledServicesPage: GlobalConfig = {
   slug: 'weeklyScheduledServicesPage',
+  dbName: 'weekly_svc_page',
   label: 'Aktuální služby',
   admin: {
     group: 'Stránky',
@@ -23,7 +24,7 @@ export const WeeklyScheduledServicesPage: GlobalConfig = {
           required: true,
         },
         { name: 'description', type: 'textarea', label: 'Popis' },
-        serviceAnnouncementsSection(),
+        serviceAnnouncementsSection({ dbName: 'announce' }),
       ],
     },
   ],

@@ -4,8 +4,8 @@ const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Required for Docker standalone output
   output: 'standalone',
+
   images: {
     remotePatterns: [
       ...[SERVER_URL].filter(Boolean).map((item) => {
@@ -17,16 +17,23 @@ const nextConfig = {
       }),
     ],
   },
-  webpack: (webpackConfig) => {
+  webpack: (webpackConfig, { dev }) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
     }
 
+    if (dev) {
+      webpackConfig.watchOptions = {
+        ...webpackConfig.watchOptions,
+        ignored: ['**/node_modules/**', '**/media/**', '**/.git/**'],
+      }
+    }
+
     return webpackConfig
   },
-  reactStrictMode: true
+  reactStrictMode: true,
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

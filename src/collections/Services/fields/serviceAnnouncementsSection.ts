@@ -1,6 +1,10 @@
 import { Field, GroupField } from 'payload'
 
-export const serviceAnnouncementsSection = (options?: Partial<GroupField>): Field => ({
+type AnnouncementsSectionOptions = Partial<GroupField> & {
+  dbName?: string
+}
+
+export const serviceAnnouncementsSection = (options?: AnnouncementsSectionOptions): Field => ({
   name: 'announcementsSection',
   type: 'group',
   label: 'Oznámení',
@@ -13,6 +17,7 @@ export const serviceAnnouncementsSection = (options?: Partial<GroupField>): Fiel
     },
     {
       name: 'announcements',
+      dbName: options?.dbName ? `${options.dbName}` : undefined,
       type: 'array',
       interfaceName: 'announcements',
       label: '',

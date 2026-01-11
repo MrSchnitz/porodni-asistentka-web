@@ -51,7 +51,7 @@ services:
   app:
     depends_on:
       - traefik
-      - mongo
+      - postgres
     labels:
       - 'traefik.enable=true'
       # HTTPS Router

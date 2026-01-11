@@ -1,0 +1,151 @@
+# ============================================
+# Cloudflare Tunnel - Web App + SSH Access + PostgreSQL
+# ============================================
+# Hostuj aplikaci A spravuj server přes SSH - vše přes Cloudflare Tunnel
+#
+# ============================================
+# SETUP (one-time)
+# ============================================
+#
+# 1. Vytvoř Cloudflare účet a přidej doménu: https://dash.cloudflare.com
+#
+# 2. Vytvoř tunnel v Zero Trust dashboardu:
+#    https://one.dash.cloudflare.com/ → Networks → Tunnels → Create
+#    - Pojmenuj tunnel (např. "muj-server")
+#    - Zkopíruj TUNNEL_TOKEN
+#
+# 3. Nastav Public Hostnames v Cloudflare dashboardu:
+#
+#    Hostname 1 (Web App):
+#    ┌─────────────────────────────────────────┐
+#    │ Subdomain: (prázdné nebo www)           │
+#    │ Domain:    tvoje-domena.cz              │
+#    │ Type:      HTTP                         │
+#    │ URL:       app:3000                     │
+#    └─────────────────────────────────────────┘
+#
+#    Hostname 2 (SSH):
+#    ┌─────────────────────────────────────────┐
+#    │ Subdomain: ssh                          │
+#    │ Domain:    tvoje-domena.cz              │
+#    │ Type:      SSH                          │
+#    │ URL:       host.docker.internal:22      │
+#    │            (nebo IP serveru:22)         │
+#    └─────────────────────────────────────────┘
+#
+# 4. (Volitelné) Nastav Access Policy pro SSH:
+#    Zero Trust → Access → Applications → Add Application
+#    - Self-hosted, domain: ssh.tvoje-domena.cz
+#    - Přidej policy (např. email whitelist)
+#
+# 5. Přidej token do .env:
+#    CLOUDFLARE_TUNNEL_TOKEN=eyJhIjoiYWNjb3VudF9pZC4uLg...
+#
+# 6. Spusť: docker compose -f docker-compose.cf-tunnel-full.yml up -d
+#
+# ============================================
+# SSH PŘIPOJENÍ (z klienta)
+# ============================================
+#
+# Nainstaluj cloudflared na svém počítači:
+#   brew install cloudflared   (Mac)
+#   scoop install cloudflared  (Windows)
+#   apt install cloudflared    (Linux)
+#
+# Přidej do ~/.ssh/config:
+#
+#   Host muj-server
+#     HostName ssh.tvoje-domena.cz
+#     User pi
+#     ProxyCommand cloudflared access ssh --hostname %h
+#
+# Pak se připojíš jednoduše:
+#   ssh muj-server
+#
+# Nebo jednorázově:
+#   cloudflared access ssh --hostname ssh.tvoje-domena.cz
+#
+# ============================================
+# MIGRACE DATABÁZE
+# ============================================
+#
+# Migrace se spouští z lokálního PC přes SSH tunel:
+#
+# 1. Otevři SSH tunel (v jednom terminálu):
+#    ssh -L 5432:localhost:5432 muj-server
+#
+# 2. Spusť migrace (v druhém terminálu):
+#    DATABASE_URI=postgresql://payload:heslo@localhost:5432/payload pnpm payload migrate
+#
+# ============================================
+# ADVANTAGES
+# ============================================
+# - Žádné otevřené porty (ani 22 pro SSH!)
+# - Kompletní správa serveru bez veřejné IP
+# - Cloudflare Access = 2FA pro SSH
+# - DDoS ochrana pro web
+# - Vše zdarma na Cloudflare free plan
+#
+
+services:
+  # Cloudflare Tunnel connector
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - app-network
+    extra_hosts:
+      # Umožní cloudflared přistupovat k SSH na hostu
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      app:
+        condition: service_started
+
+  app:
+    image: porodni-asistentka-web:latest
+    container_name: app
+    env_file: .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    expose:
+      - '3000'
+    volumes:
+      - ./media:/app/media
+    networks:
+      - app-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: payload
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: payload
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U payload']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

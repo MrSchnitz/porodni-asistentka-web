@@ -1,3 +1,16 @@
+# ============================================
+# Docker Compose - Payload CMS Application
+# ============================================
+#
+# Použití:
+#   docker compose up -d
+#
+# .env musí obsahovat:
+#   DATABASE_URI=postgresql://payload:heslo@postgres:5432/payload
+#   POSTGRES_PASSWORD=heslo
+#
+# ============================================
+
 services:
   traefik:
     image: traefik:v2.11
@@ -16,28 +29,30 @@ services:
       - payload-network
     restart: unless-stopped
     # Traefik is only needed for production deployment
-    # For local development, use: docker compose up -d mongo
+    # For local development, use: docker compose up -d postgres
     # For SSL/HTTPS, use one of:
     #   docker compose -f docker-compose.yml -f docker-compose.ssl-duckdns.yml up -d
     #   docker compose -f docker-compose.yml -f docker-compose.ssl-cloudflare.yml up -d
 
-  mongo:
-    image: mongo:8
-    container_name: mongo
-    env_file: .env
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: payload
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: payload
     ports:
-      - '27017:27017' # Expose MongoDB for local development
+      - '5432:5432' # Expose PostgreSQL for local development
     volumes:
-      - ./mongo-data:/data/db
+      - ./postgres-data:/var/lib/postgresql/data
     networks:
       - payload-network
-    restart: unless-stopped
     healthcheck:
-      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
-      interval: 10s
+      test: ['CMD-SHELL', 'pg_isready -U payload']
+      interval: 5s
       timeout: 5s
       retries: 5
-      start_period: 10s
+    restart: unless-stopped
 
   app:
     # ============================================
@@ -75,8 +90,10 @@ services:
     networks:
       - payload-network
     depends_on:
-      - traefik
-      - mongo
+      postgres:
+        condition: service_healthy
+      traefik:
+        condition: service_started
     restart: unless-stopped
     # App service is only needed for production deployment
     # For local development, run: pnpm dev (app runs locally, not in Docker)
