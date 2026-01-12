@@ -916,7 +916,13 @@ export interface Hero {
   title: string;
   quote?: string | null;
   subtitle?: string | null;
-  heroImage?: (string | null) | Media;
+  switchInterval?: number | null;
+  heroImages?:
+    | {
+        heroImage?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   ctaButtons?:
     | {
         link: Link;
@@ -1280,7 +1286,13 @@ export interface HeroSelect<T extends boolean = true> {
   title?: T;
   quote?: T;
   subtitle?: T;
-  heroImage?: T;
+  switchInterval?: T;
+  heroImages?:
+    | T
+    | {
+        heroImage?: T;
+        id?: T;
+      };
   ctaButtons?:
     | T
     | {

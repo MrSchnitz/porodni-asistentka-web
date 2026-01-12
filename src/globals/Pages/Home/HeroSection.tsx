@@ -1,6 +1,6 @@
 'use client'
 
-import { Media } from '@/components/Media'
+import { ImageCarousel } from '@/components/ImageCarousel/ImageCarousel'
 import { Button } from '@/components/ui/button'
 import { HomePage } from '@/payload-types'
 import Link from 'next/link'
@@ -9,11 +9,17 @@ import { cn } from '@/lib/utils'
 import { motion } from 'motion/react'
 import { getLinkUrl } from '@/utilities/getLinkUrl'
 
+const DEFAULT_IMAGE_SWITCH_INTERVAL = 6000 // milliseconds (6 seconds)
+
 type Props = {
   data: HomePage['hero']
 }
 
-export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButtons } }: Props) {
+export function HeroSection({
+  data: { title, subtitle, heroImages, switchInterval, quote, ctaButtons },
+}: Props) {
+  const imageSwitchInterval = switchInterval ? switchInterval * 1000 : DEFAULT_IMAGE_SWITCH_INTERVAL // switchInterval is in seconds, so we need to convert it to milliseconds
+
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-linear-to-br from-accent via-background to-accent/30">
       {/* Content */}
@@ -89,22 +95,23 @@ export function HeroSection({ data: { title, subtitle, heroImage, quote, ctaButt
             )}
           </motion.div>
 
-          {/* Image */}
-          <motion.div
-            className="relative hidden lg:block"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-          >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <Media resource={heroImage} />
+          {/* Image Carousel */}
+          {heroImages && heroImages.length > 0 && (
+            <motion.div
+              className="relative hidden lg:block"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.4 }}
+            >
+              <ImageCarousel
+                images={heroImages.map((img) => img.heroImage)}
+                interval={imageSwitchInterval}
+                className="relative rounded-3xl overflow-hidden shadow-lg aspect-4/3"
+              />
               {/* Subtle overlay */}
-              <div className="absolute inset-0 bg-linear-to-t from-primary/10 to-transparent"></div>
-            </div>
-            {/* Decorative element */}
-            <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-primary/20 rounded-full blur-3xl -z-10"></div>
-            <div className="absolute -top-6 -left-6 w-48 h-48 bg-secondary/20 rounded-full blur-3xl -z-10"></div>
-          </motion.div>
+              <div className="absolute inset-0 rounded-3xl bg-primary/10 pointer-events-none"></div>
+            </motion.div>
+          )}
         </div>
       </div>
     </section>

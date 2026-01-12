@@ -21,5 +21,34 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 400,
+        height: 300,
+        position: 'centre',
+      },
+      {
+        name: 'card',
+        width: 768,
+        height: 512,
+        position: 'centre',
+      },
+      {
+        name: 'tablet',
+        width: 1024,
+        height: undefined, // zachová poměr stran
+        position: 'centre',
+      },
+      {
+        name: 'desktop',
+        width: 1920,
+        height: undefined, // zachová poměr stran
+        position: 'centre',
+      },
+    ],
+    adminThumbnail: 'thumbnail',
+    mimeTypes: ['image/*'],
+  },
 }

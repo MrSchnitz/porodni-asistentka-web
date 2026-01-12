@@ -35,10 +35,35 @@ export const HomePage: GlobalConfig = {
           label: 'Podnadpis',
         },
         {
-          name: 'heroImage',
-          type: 'upload',
-          label: 'Hero obrázek',
-          relationTo: 'media',
+          type: 'group',
+          label: 'Úvodní obrázky',
+          fields: [
+            {
+              name: 'switchInterval',
+              type: 'number',
+              label: 'Interval mezi obrázky (v sekundách)',
+              defaultValue: 6,
+              min: 1,
+              max: 20,
+            },
+            {
+              name: 'heroImages',
+              type: 'array',
+              label: '',
+              labels: {
+                singular: 'Úvodní obrázek',
+                plural: 'Úvodní obrázky',
+              },
+              fields: [
+                {
+                  name: 'heroImage',
+                  type: 'upload',
+                  label: 'Úvodní obrázek',
+                  relationTo: 'media',
+                },
+              ],
+            },
+          ],
         },
         {
           name: 'ctaButtons',
