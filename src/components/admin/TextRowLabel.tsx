@@ -6,6 +6,8 @@ interface RowData {
   title?: string
   name?: string
   item?: string
+  value?: string
+  description?: string
 }
 
 /**
@@ -15,7 +17,7 @@ interface RowData {
 export const TextRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<RowData>()
 
-  const text = data?.title || data?.name || data?.item
+  const text = data?.title || data?.name || data?.item || data?.value || data?.description
 
   if (!text) {
     return <div>Položka {(rowNumber ?? 0) + 1}</div>

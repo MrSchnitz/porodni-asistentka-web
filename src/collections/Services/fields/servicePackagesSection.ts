@@ -39,7 +39,7 @@ export const servicePackagesSection = (options?: Partial<GroupField>): Field => 
       admin: {
         condition: (_, siblingData) => siblingData?.enabled,
         components: {
-          RowLabel: '@/collections/Services/components/RowLabels/TextRowLabel#TextRowLabel',
+          RowLabel: '@/components/admin/TextRowLabel#TextRowLabel',
         },
       },
       fields: [
@@ -63,7 +63,7 @@ export const servicePackagesSection = (options?: Partial<GroupField>): Field => 
           },
           admin: {
             components: {
-              RowLabel: '@/collections/Services/components/RowLabels/TextRowLabel#TextRowLabel',
+              RowLabel: '@/components/admin/TextRowLabel#TextRowLabel',
             },
           },
           fields: [

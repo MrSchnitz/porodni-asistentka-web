@@ -29,9 +29,44 @@ export const AboutPage: GlobalConfig = {
       required: true,
     },
     {
+      name: 'myValuesSection',
+      type: 'group',
+      label: 'Sekce s mými hodnotami',
+      fields: [
+        { name: 'showMyValues', type: 'checkbox', label: 'Zobrazit sekci s mými hodnotami' },
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Nadpis',
+          defaultValue: 'Moje hodnoty',
+          admin: { condition: (_, siblingData) => siblingData?.showMyValues },
+        },
+        {
+          name: 'values',
+          type: 'array',
+          label: 'Hodnoty',
+          labels: {
+            singular: 'Hodnota',
+            plural: 'Hodnoty',
+          },
+          admin: {
+            initCollapsed: true,
+            condition: (_, siblingData) => siblingData?.showMyValues,
+            components: {
+              RowLabel: '@/components/admin/TextRowLabel#TextRowLabel',
+            },
+          },
+          fields: [
+            { name: 'title', type: 'text', label: 'Nadpis hodnoty' },
+            { name: 'description', type: 'textarea', label: 'Popis hodnoty' },
+          ],
+        },
+      ],
+    },
+    {
       name: 'ctaSection',
       type: 'group',
-      label: 'CTA sekce',
+      label: 'Sekce pro přesměrování',
       fields: [
         {
           name: 'title',

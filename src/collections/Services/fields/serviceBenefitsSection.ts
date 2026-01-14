@@ -31,7 +31,7 @@ export const serviceBenefitsSection = (options?: Partial<GroupField>): Field => 
       admin: {
         condition: (_, siblingData) => siblingData?.enabled,
         components: {
-          RowLabel: '@/collections/Services/components/RowLabels/TextRowLabel#TextRowLabel',
+          RowLabel: '@/components/admin/TextRowLabel#TextRowLabel',
         },
       },
       fields: [

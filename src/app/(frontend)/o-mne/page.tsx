@@ -41,6 +41,35 @@ export default async function Page() {
         </div>
       </section>
 
+      {data.myValuesSection && data.myValuesSection.showMyValues && (
+        <section className="py-20 bg-card">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-5xl mx-auto">
+              <h2
+                className="text-3xl sm:text-4xl mb-12 text-center text-foreground"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                {data.myValuesSection.title}
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {data.myValuesSection.values?.map((value) => (
+                  <div key={value.id} className="flex gap-4">
+                    <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center shrink-0 shadow-md">
+                      <span className="text-2xl text-primary">✓</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl mb-2 text-foreground">{value.title}</h3>
+                      <p className="text-foreground/70">{value.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="py-20 bg-linear-to-br from-muted to-accent">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Card className="max-w-4xl mx-auto border-primary/30 bg-card shadow-xl">
