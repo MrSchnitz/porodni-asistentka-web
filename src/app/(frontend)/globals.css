@@ -49,6 +49,7 @@
   --sidebar-ring: #e8b44f;
 
   --navbar-height: 80px;
+  --navbar-height-mobile: 72px;
 }
 
 .dark {
@@ -129,6 +130,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --spacing-navbar: var(--navbar-height);
+  --spacing-navbar-mobile: var(--navbar-height-mobile);
 }
 
 @keyframes accordion-down {
