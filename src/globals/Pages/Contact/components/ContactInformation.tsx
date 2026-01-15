@@ -15,24 +15,30 @@ const InfoContent = ({ info }: { info: ContactPageInfo }) => {
   switch (info.valueType) {
     case 'email':
       return (
-        <a href={`mailto:${info.value}`} className="text-primary hover:text-secondary">
+        <a
+          href={`mailto:${info.value}`}
+          className="text-foreground/90 hover:text-secondary transition-colors"
+        >
           {info.value}
         </a>
       )
     case 'phone':
       return (
-        <a href={`tel:${info.value}`} className="text-primary hover:text-secondary">
+        <a
+          href={`tel:${info.value}`}
+          className="text-foreground/90 hover:text-secondary transition-colors"
+        >
           {info.value}
         </a>
       )
     case 'link':
       return (
-        <a href={info.value} className="text-primary hover:text-secondary">
+        <a href={info.value} className="text-primary hover:text-secondary transition-colors">
           {info.value}
         </a>
       )
     default:
-      return <span className="text-foreground/80">{info.value}</span>
+      return <span className="text-foreground/90">{info.value}</span>
   }
 }
 

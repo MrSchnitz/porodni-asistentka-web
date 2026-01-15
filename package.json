@@ -22,6 +22,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@marsidev/react-turnstile": "^1.4.1",
     "@payloadcms/admin-bar": "^3.70.0",
     "@payloadcms/db-postgres": "^3.70.0",
     "@payloadcms/next": "3.70.0",
