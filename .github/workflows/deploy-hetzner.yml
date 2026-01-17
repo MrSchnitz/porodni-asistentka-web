@@ -1,0 +1,136 @@
+name: Build and Deploy (Hetzner)
+
+on:
+  # push:
+  #   branches:
+  #     - main # Deploy when pushing to main branch
+  workflow_dispatch: # Allow manual trigger
+  workflow_call:
+    inputs:
+      rollback_version:
+        description: 'Version to rollback to (e.g., v42-a1b2c3d)'
+        required: false
+        type: string
+
+env:
+  IMAGE_NAME: porodni-asistentka-web
+  SERVER_PATH: /opt/porodni-asistentka-web
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image_version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set version
+        id: version
+        run: |
+          IMAGE_VERSION="v${{ github.run_number }}-${GITHUB_SHA::7}"
+          echo "version=$IMAGE_VERSION" >> $GITHUB_OUTPUT
+          echo "IMAGE_VERSION=$IMAGE_VERSION" >> $GITHUB_ENV
+          echo "Building version: $IMAGE_VERSION"
+
+      - name: Build Docker image
+        run: |
+          docker build --platform linux/amd64 -t ${{ env.IMAGE_NAME }}:latest .
+          docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
+
+      - name: Save image
+        run: |
+          mkdir -p docker-images
+          docker save ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }} | gzip > docker-images/${{ env.IMAGE_NAME }}-${{ steps.version.outputs.version }}.tar.gz
+          docker save ${{ env.IMAGE_NAME }}:latest | gzip > docker-images/${{ env.IMAGE_NAME }}-latest.tar.gz
+          echo "Saved image version: ${{ steps.version.outputs.version }}"
+
+      - name: Copy image to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT || 22 }}
+          source: 'docker-images/${{ env.IMAGE_NAME }}-${{ steps.version.outputs.version }}.tar.gz,docker-images/${{ env.IMAGE_NAME }}-latest.tar.gz'
+          target: '${{ env.SERVER_PATH }}/docker-images/'
+          strip_components: 0
+
+  deploy:
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get image version
+        id: version
+        run: |
+          # Try to get version from build job output first (normal run)
+          if [ -n "${{ needs.build.outputs.image_version }}" ]; then
+            IMAGE_VERSION="${{ needs.build.outputs.image_version }}"
+          else
+            # For re-run scenarios, get version from build job logs of this workflow run
+            echo "Re-run detected - getting version from build job logs..."
+            IMAGE_VERSION=$(gh run view ${{ github.run_id }} --log 2>/dev/null | grep -oP 'Building version: \Kv\d+-\w+' | head -1 || echo "")
+            if [ -z "$IMAGE_VERSION" ]; then
+              echo "⚠️  Could not automatically determine version from logs."
+              echo "Please check the 'build' job output for the version (look for 'Building version: vXX-xxxxxxx')"
+              echo "Or check the workflow run summary."
+              exit 1
+            fi
+          fi
+          echo "version=$IMAGE_VERSION" >> $GITHUB_OUTPUT
+          echo "✓ Using image version: $IMAGE_VERSION"
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT || 22 }}
+          script: |
+            set -e
+            cd ${{ env.SERVER_PATH }}
+            IMAGE_VERSION="${{ steps.version.outputs.version }}"
+            IMAGE_FILE="docker-images/${{ env.IMAGE_NAME }}-${IMAGE_VERSION}.tar.gz"
+            COMPOSE_FILE="docker-compose.yml"
+            DOMAIN_NAME="${{ secrets.DOMAIN_NAME }}"
+            DOMAIN_EMAIL="${{ secrets.DOMAIN_EMAIL }}"
+
+            # Find and fix file location if needed
+            if [ -d "$IMAGE_FILE" ]; then
+              rm -rf "$IMAGE_FILE"
+            fi
+            FOUND_FILE=$(find docker-images -name "${{ env.IMAGE_NAME }}-${IMAGE_VERSION}.tar.gz" -type f | head -1)
+            if [ -n "$FOUND_FILE" ] && [ "$FOUND_FILE" != "$IMAGE_FILE" ]; then
+              mv "$FOUND_FILE" "$IMAGE_FILE"
+            fi
+
+            # Load Docker image
+            echo "Loading Docker image from $IMAGE_FILE (version: ${IMAGE_VERSION})"
+            docker load -i "$IMAGE_FILE"
+
+            # Update docker-compose.yml with versioned image
+            if [ -f "$COMPOSE_FILE" ]; then
+              sed -i.bak "s|^[[:space:]]*# image: ${{ env.IMAGE_NAME }}|    image: ${{ env.IMAGE_NAME }}|g" "$COMPOSE_FILE"
+              sed -i.bak "s|^[[:space:]]*image: ${{ env.IMAGE_NAME }}.*|    image: ${{ env.IMAGE_NAME }}:${IMAGE_VERSION}|g" "$COMPOSE_FILE"
+              sed -i.bak "s|^[[:space:]]*build:|    # build:|g" "$COMPOSE_FILE"
+            fi
+
+            # Deploy
+            echo "Stopping existing containers..."
+            docker compose -f "$COMPOSE_FILE" down || true
+
+            # if [ -n "$DOMAIN_NAME" ] && [ -n "$DOMAIN_EMAIL" ]; then
+            #   echo "Setting up SSL..."
+            #   ./setup-ssl.sh "$DOMAIN_NAME" "$DOMAIN_EMAIL"
+            # else
+            #   echo "Starting containers with image version ${IMAGE_VERSION}..."
+            #   docker compose -f "$COMPOSE_FILE" up -d
+            #   echo "Deployment completed! Image version: ${IMAGE_VERSION}"
+            #   docker compose -f "$COMPOSE_FILE" ps
+            # fi
+

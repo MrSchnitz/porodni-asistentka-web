@@ -116,6 +116,7 @@ services:
       - '3000'
     volumes:
       - ./media:/app/media
+      - ./downloads:/app/downloads
     networks:
       - app-network
     depends_on:

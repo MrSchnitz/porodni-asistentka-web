@@ -18,6 +18,7 @@ services:
       - '3000:3000'
     volumes:
       - ./media:/app/media
+      - ./downloads:/app/downloads
     depends_on:
       postgres:
         condition: service_healthy

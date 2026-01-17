@@ -1,135 +1,244 @@
-name: Build and Deploy
+# ============================================
+# Deploy to Raspberry Pi
+# ============================================
+# 
+# Automatický deployment na RPi server
+# - Build ARM64 image
+# - Kopírování přes Cloudflare Tunnel
+# - Migrace databáze
+# - Restart aplikace
+#
+# ============================================
+# REQUIRED SECRETS (GitHub → Settings → Secrets)
+# ============================================
+# SSH_PI_HOST            - SSH hostname přes Cloudflare (např. ssh.vase-domena.cz)
+# SERVER_PI_USER         - SSH uživatel (např. pi)
+# SSH_PI_PASSWORD        - Heslo pro SSH přístup na server
+# POSTGRES_PI_PASSWORD   - Heslo pro PostgreSQL databázi
+#
+
+name: Deploy to RPi
 
 on:
-  push:
-    branches:
-      - main # Deploy when pushing to main branch
-  workflow_dispatch: # Allow manual trigger
-  workflow_call:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
     inputs:
-      rollback_version:
-        description: 'Version to rollback to (e.g., v42-a1b2c3d)'
+      skip_migrations:
+        description: 'Skip database migrations'
         required: false
-        type: string
+        type: boolean
+        default: false
 
 env:
   IMAGE_NAME: porodni-asistentka-web
-  SERVER_PATH: /opt/porodni-asistentka-web
+  SERVER_PATH: ~/apps/porodni-asistentka-test
 
 jobs:
+  # ============================================
+  # Job 1: Build Docker image for ARM64
+  # ============================================
   build:
+    name: 🔨 Build ARM64 Image
     runs-on: ubuntu-latest
     outputs:
       image_version: ${{ steps.version.outputs.version }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up QEMU (for ARM64 build)
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Set version
+      - name: Generate version
         id: version
         run: |
-          IMAGE_VERSION="v${{ github.run_number }}-${GITHUB_SHA::7}"
-          echo "version=$IMAGE_VERSION" >> $GITHUB_OUTPUT
-          echo "IMAGE_VERSION=$IMAGE_VERSION" >> $GITHUB_ENV
-          echo "Building version: $IMAGE_VERSION"
+          VERSION="v${{ github.run_number }}-${GITHUB_SHA::7}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Building version: $VERSION"
 
-      - name: Build Docker image
+      - name: Build Docker image (ARM64)
         run: |
-          docker build --platform linux/amd64 -t ${{ env.IMAGE_NAME }}:latest .
-          docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }}
+          docker buildx build \
+            --platform linux/arm64 \
+            --tag ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }} \
+            --tag ${{ env.IMAGE_NAME }}:latest \
+            --output type=docker,dest=image.tar \
+            .
 
-      - name: Save image
+      - name: Compress image
         run: |
-          mkdir -p docker-images
-          docker save ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }} | gzip > docker-images/${{ env.IMAGE_NAME }}-${{ steps.version.outputs.version }}.tar.gz
-          docker save ${{ env.IMAGE_NAME }}:latest | gzip > docker-images/${{ env.IMAGE_NAME }}-latest.tar.gz
-          echo "Saved image version: ${{ steps.version.outputs.version }}"
+          gzip image.tar
+          ls -lh image.tar.gz
+          echo "📦 Image size: $(du -h image.tar.gz | cut -f1)"
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: image.tar.gz
+          retention-days: 1
+
+  # ============================================
+  # Job 2: Deploy to server and run migrations
+  # ============================================
+  deploy:
+    name: 🚀 Deploy to RPi
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+
+      - name: Install cloudflared and sshpass
+        run: |
+          # Install cloudflared
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+          chmod +x cloudflared
+          sudo mv cloudflared /usr/local/bin/
+          cloudflared --version
+          
+          # Install sshpass for password-based auth
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      - name: Setup SSH with Cloudflare Tunnel
+        run: |
+          mkdir -p ~/.ssh
+          
+          # Configure SSH to use Cloudflare Tunnel
+          cat >> ~/.ssh/config << EOF
+          Host ${{ secrets.SSH_PI_HOST }}
+              User ${{ secrets.SERVER_PI_USER }}
+              ProxyCommand cloudflared access ssh --hostname %h
+              StrictHostKeyChecking no
+          EOF
+          chmod 600 ~/.ssh/config
 
       - name: Copy image to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SERVER_PORT || 22 }}
-          source: 'docker-images/${{ env.IMAGE_NAME }}-${{ steps.version.outputs.version }}.tar.gz,docker-images/${{ env.IMAGE_NAME }}-latest.tar.gz'
-          target: '${{ env.SERVER_PATH }}/docker-images/'
-          strip_components: 0
-
-  deploy:
-    needs: build
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get image version
-        id: version
+        env:
+          SSHPASS: ${{ secrets.SSH_PI_PASSWORD }}
         run: |
-          # Try to get version from build job output first (normal run)
-          if [ -n "${{ needs.build.outputs.image_version }}" ]; then
-            IMAGE_VERSION="${{ needs.build.outputs.image_version }}"
-          else
-            # For re-run scenarios, get version from build job logs of this workflow run
-            echo "Re-run detected - getting version from build job logs..."
-            IMAGE_VERSION=$(gh run view ${{ github.run_id }} --log 2>/dev/null | grep -oP 'Building version: \Kv\d+-\w+' | head -1 || echo "")
-            if [ -z "$IMAGE_VERSION" ]; then
-              echo "⚠️  Could not automatically determine version from logs."
-              echo "Please check the 'build' job output for the version (look for 'Building version: vXX-xxxxxxx')"
-              echo "Or check the workflow run summary."
-              exit 1
-            fi
-          fi
-          echo "version=$IMAGE_VERSION" >> $GITHUB_OUTPUT
-          echo "✓ Using image version: $IMAGE_VERSION"
+          echo "📤 Copying image to server via Cloudflare Tunnel..."
+          sshpass -e scp image.tar.gz ${{ secrets.SSH_PI_HOST }}:${{ env.SERVER_PATH }}/
 
       - name: Deploy on server
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SERVER_PORT || 22 }}
-          script: |
+        env:
+          SSHPASS: ${{ secrets.SSH_PI_PASSWORD }}
+        run: |
+          sshpass -e ssh ${{ secrets.SSH_PI_HOST }} << DEPLOY_SCRIPT
             set -e
             cd ${{ env.SERVER_PATH }}
-            IMAGE_VERSION="${{ steps.version.outputs.version }}"
-            IMAGE_FILE="docker-images/${{ env.IMAGE_NAME }}-${IMAGE_VERSION}.tar.gz"
-            COMPOSE_FILE="docker-compose.yml"
-            DOMAIN_NAME="${{ secrets.DOMAIN_NAME }}"
-            DOMAIN_EMAIL="${{ secrets.DOMAIN_EMAIL }}"
+            
+            echo "📦 Loading Docker image..."
+            docker load < image.tar.gz
+            
+            echo "🔄 Restarting application..."
+            docker compose down app || true
+            docker compose up -d
+            
+            echo "🧹 Cleanup..."
+            rm -f image.tar.gz
+            docker image prune -f
+            
+            echo "✅ Deployment complete!"
+            docker compose ps
+          DEPLOY_SCRIPT
 
-            # Find and fix file location if needed
-            if [ -d "$IMAGE_FILE" ]; then
-              rm -rf "$IMAGE_FILE"
-            fi
-            FOUND_FILE=$(find docker-images -name "${{ env.IMAGE_NAME }}-${IMAGE_VERSION}.tar.gz" -type f | head -1)
-            if [ -n "$FOUND_FILE" ] && [ "$FOUND_FILE" != "$IMAGE_FILE" ]; then
-              mv "$FOUND_FILE" "$IMAGE_FILE"
-            fi
+      # ----------------------------------------
+      # Database migrations (optional)
+      # ----------------------------------------
+      - name: Setup Node.js
+        if: ${{ github.event.inputs.skip_migrations != 'true' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
-            # Load Docker image
-            echo "Loading Docker image from $IMAGE_FILE (version: ${IMAGE_VERSION})"
-            docker load -i "$IMAGE_FILE"
+      - name: Setup pnpm
+        if: ${{ github.event.inputs.skip_migrations != 'true' }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
 
-            # Update docker-compose.yml with versioned image
-            if [ -f "$COMPOSE_FILE" ]; then
-              sed -i.bak "s|^[[:space:]]*# image: ${{ env.IMAGE_NAME }}|    image: ${{ env.IMAGE_NAME }}|g" "$COMPOSE_FILE"
-              sed -i.bak "s|^[[:space:]]*image: ${{ env.IMAGE_NAME }}.*|    image: ${{ env.IMAGE_NAME }}:${IMAGE_VERSION}|g" "$COMPOSE_FILE"
-              sed -i.bak "s|^[[:space:]]*build:|    # build:|g" "$COMPOSE_FILE"
-            fi
+      - name: Install dependencies
+        if: ${{ github.event.inputs.skip_migrations != 'true' }}
+        run: pnpm install --frozen-lockfile
 
-            # Deploy
-            echo "Stopping existing containers..."
-            docker compose -f "$COMPOSE_FILE" down || true
+      - name: Run migrations via SSH tunnel
+        if: ${{ github.event.inputs.skip_migrations != 'true' }}
+        env:
+          POSTGRES_PI_PASSWORD: ${{ secrets.POSTGRES_PI_PASSWORD }}
+          SSHPASS: ${{ secrets.SSH_PI_PASSWORD }}
+        run: |
+          echo "🔗 Opening SSH tunnel to PostgreSQL via Cloudflare..."
+          
+          # Start SSH tunnel in background (through Cloudflare Tunnel)
+          sshpass -e ssh -L 5432:localhost:5432 -N ${{ secrets.SSH_PI_HOST }} &
+          TUNNEL_PID=$!
+          sleep 5
+          
+          echo "🗃️ Running migrations..."
+          DATABASE_URI="postgresql://payload:${POSTGRES_PI_PASSWORD}@localhost:5432/payload" \
+            pnpm payload migrate
+          
+          echo "🔌 Closing tunnel..."
+          kill $TUNNEL_PID || true
+          
+          echo "✅ Migrations complete!"
 
-            # if [ -n "$DOMAIN_NAME" ] && [ -n "$DOMAIN_EMAIL" ]; then
-            #   echo "Setting up SSL..."
-            #   ./setup-ssl.sh "$DOMAIN_NAME" "$DOMAIN_EMAIL"
-            # else
-            #   echo "Starting containers with image version ${IMAGE_VERSION}..."
-            #   docker compose -f "$COMPOSE_FILE" up -d
-            #   echo "Deployment completed! Image version: ${IMAGE_VERSION}"
-            #   docker compose -f "$COMPOSE_FILE" ps
-            # fi
+  # ============================================
+  # Job 4: Verify deployment
+  # ============================================
+  # verify:
+  #   name: ✅ Verify Deployment
+  #   needs: [deploy, migrate]
+  #   if: always() && needs.deploy.result == 'success'
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Wait for app to start
+  #       run: sleep 15
+
+  #     - name: Check website
+  #       run: |
+  #         SITE_URL="${{ secrets.SITE_URL }}"
+  #         if [ -z "$SITE_URL" ]; then
+  #           echo "⏭️ SITE_URL secret not set, skipping verification"
+  #           exit 0
+  #         fi
+          
+  #         echo "🔍 Checking website at $SITE_URL..."
+  #         HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL" || echo "000")
+          
+  #         if [ "$HTTP_STATUS" = "200" ]; then
+  #           echo "✅ Website is up! (HTTP $HTTP_STATUS)"
+  #         else
+  #           echo "⚠️ Website returned HTTP $HTTP_STATUS"
+  #         fi
+
+  #     - name: Check admin panel
+  #       run: |
+  #         SITE_URL="${{ secrets.SITE_URL }}"
+  #         if [ -z "$SITE_URL" ]; then
+  #           exit 0
+  #         fi
+          
+  #         echo "🔍 Checking admin panel..."
+  #         HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL/admin" || echo "000")
+          
+  #         if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "302" ]; then
+  #           echo "✅ Admin panel is accessible! (HTTP $HTTP_STATUS)"
+  #         else
+  #           echo "⚠️ Admin panel returned HTTP $HTTP_STATUS"
+  #         fi

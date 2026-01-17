@@ -25,6 +25,10 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Build-time arguments for public env vars (inlined into JS bundle)
+ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY
+ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
+
 RUN corepack enable pnpm && pnpm run build
 
 # ============================================
@@ -44,6 +48,9 @@ RUN addgroup --system --gid 1001 nodejs && \
 # Copy standalone output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Create downloads directory with correct permissions
+RUN mkdir -p /app/downloads && chown nextjs:nodejs /app/downloads
 
 USER nextjs
 

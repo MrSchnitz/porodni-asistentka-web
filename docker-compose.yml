@@ -87,6 +87,7 @@ services:
       - 'traefik.http.routers.app.priority=1'
     volumes:
       - ./media:/app/media
+      - ./downloads:/app/downloads
     networks:
       - payload-network
     depends_on:
