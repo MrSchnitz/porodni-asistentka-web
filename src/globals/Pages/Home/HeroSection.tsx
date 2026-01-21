@@ -39,7 +39,7 @@ export function HeroSection({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <Sparkles className="w-6 h-6 text-primary" />
+                <Sparkles className="w-6 h-6 text-primary" aria-hidden="true" />
                 <span
                   className="text-primary text-2xl"
                   style={{ fontFamily: 'var(--font-display)' }}

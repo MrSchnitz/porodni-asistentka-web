@@ -14,7 +14,7 @@ export const FooterClient = ({
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-foreground text-background py-12">
+    <footer className="bg-foreground text-background py-12" aria-label="Patička webu">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
@@ -31,14 +31,14 @@ export const FooterClient = ({
           {/* Documents Section */}
           {downloadsSection?.enabled && (
             <div>
-              <h3 className="mb-3">{downloadsSection.title}</h3>
+              <h2 className="mb-3 text-base">{downloadsSection.title}</h2>
               <ul className="space-y-1.5 text-sm">
                 <li>
                   <Link
                     href={PAGE_ROUTES.downloadsPage.path}
                     className="text-background/70 hover:text-primary transition-colors flex items-center gap-2"
                   >
-                    <Lock className="w-3.5 h-3.5 text-primary" />
+                    <Lock className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
                     {downloadsSection.link}
                   </Link>
                 </li>
@@ -52,22 +52,27 @@ export const FooterClient = ({
           {/* Contact Info */}
           {contact && (
             <div className="md:col-start-3 md:col-end-3">
-              {contact.title && <h3 className="text-lg mb-4">{contact.title}</h3>}
+              {contact.title && <h2 className="text-lg mb-4">{contact.title}</h2>}
               <ul className="space-y-3">
                 {contact.phone && (
                   <li className="flex items-start gap-3 text-background/70">
-                    <Phone className="w-5 h-5 shrink-0 mt-0.5 text-primary" />
-                    <a href="tel:+420777123456" className="hover:text-primary transition-colors">
+                    <Phone className="w-5 h-5 shrink-0 mt-0.5 text-primary" aria-hidden="true" />
+                    <a 
+                      href={`tel:${contact.phone.replace(/\s/g, '')}`} 
+                      className="hover:text-primary transition-colors"
+                      aria-label={`Zavolat na ${contact.phone}`}
+                    >
                       {contact.phone}
                     </a>
                   </li>
                 )}
                 {contact.email && (
                   <li className="flex items-start gap-3 text-background/70">
-                    <Mail className="w-5 h-5 shrink-0 mt-0.5 text-primary" />
+                    <Mail className="w-5 h-5 shrink-0 mt-0.5 text-primary" aria-hidden="true" />
                     <a
-                      href="mailto:jana@porodni-asistentka.cz"
+                      href={`mailto:${contact.email}`}
                       className="hover:text-primary transition-colors"
+                      aria-label={`Napsat email na ${contact.email}`}
                     >
                       {contact.email}
                     </a>
@@ -75,8 +80,8 @@ export const FooterClient = ({
                 )}
                 {contact.adress && (
                   <li className="flex items-start gap-3 text-background/70">
-                    <MapPin className="w-5 h-5 shrink-0 mt-0.5 text-primary" />
-                    <span>{contact.adress}</span>
+                    <MapPin className="w-5 h-5 shrink-0 mt-0.5 text-primary" aria-hidden="true" />
+                    <address className="not-italic">{contact.adress}</address>
                   </li>
                 )}
               </ul>

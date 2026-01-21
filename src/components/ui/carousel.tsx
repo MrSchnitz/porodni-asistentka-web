@@ -194,10 +194,11 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
         )}
         disabled={!canScrollPrev}
         onClick={scrollPrev}
+        aria-label="Předchozí položka"
         {...props}
       >
-        <ArrowLeft className="h-4 w-4" />
-        <span className="sr-only">Previous slide</span>
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+        <span className="sr-only">Předchozí položka</span>
       </Button>
     )
   },
@@ -222,10 +223,11 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
         )}
         disabled={!canScrollNext}
         onClick={scrollNext}
+        aria-label="Další položka"
         {...props}
       >
-        <ArrowRight className="h-4 w-4" />
-        <span className="sr-only">Next slide</span>
+        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        <span className="sr-only">Další položka</span>
       </Button>
     )
   },

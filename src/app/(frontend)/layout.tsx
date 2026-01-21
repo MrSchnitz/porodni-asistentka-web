@@ -18,12 +18,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled } = await draftMode()
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="cs" suppressHydrationWarning>
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+        >
+          Přeskočit na obsah
+        </a>
         <AdminBar
           adminBarProps={{
             preview: isEnabled,
@@ -31,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
         <Announcement />
         <Header />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
         <CookieConsent />
       </body>

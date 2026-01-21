@@ -28,7 +28,12 @@ export function ImageCarousel({ images: rawImages, interval = 5000, className }:
   if (images.length === 0) return null
 
   return (
-    <div className={className}>
+    <div 
+      className={className}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Galerie obrázků"
+    >
       <AnimatePresence>
         <motion.div
           key={currentIndex}
@@ -37,10 +42,17 @@ export function ImageCarousel({ images: rawImages, interval = 5000, className }:
           exit={{ opacity: 0 }}
           transition={{ duration: 2, ease: 'easeInOut' }}
           className="absolute inset-0"
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`Obrázek ${currentIndex + 1} z ${images.length}`}
         >
           <Media resource={images[currentIndex]} fill imgClassName="object-cover" />
         </motion.div>
       </AnimatePresence>
+      {/* Screen reader announcement for slide changes */}
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        Obrázek {currentIndex + 1} z {images.length}
+      </div>
     </div>
   )
 }

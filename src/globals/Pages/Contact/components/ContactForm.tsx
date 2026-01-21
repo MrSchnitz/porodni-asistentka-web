@@ -59,6 +59,8 @@ export const ContactForm = () => {
 
         {state && (
           <div
+            role="alert"
+            aria-live="polite"
             className={`mb-4 p-3 rounded ${
               state.success
                 ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'

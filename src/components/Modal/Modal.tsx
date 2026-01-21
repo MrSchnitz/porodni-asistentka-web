@@ -1,7 +1,7 @@
 'use client'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'motion/react'
-import { useEffect, useState, useCallback, useImperativeHandle } from 'react'
+import { useEffect, useState, useCallback, useImperativeHandle, useRef } from 'react'
 
 export type ModalImperativeHandle = {
   handleClose: () => void
@@ -15,6 +15,8 @@ type Props = {
   className?: string
   backdropClassName?: string
   modalClassName?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
 }
 
 export function Modal({
@@ -25,8 +27,10 @@ export function Modal({
   className,
   backdropClassName,
   modalClassName,
+  ...ariaProps
 }: Props) {
   const [isOpen, setIsOpen] = useState(isVisible)
+  const modalRef = useRef<HTMLDivElement>(null)
 
   const handleOpen = useCallback(() => {
     setIsOpen(true)
@@ -57,6 +61,13 @@ export function Modal({
     }
   }, [isVisible, handleOpen, handleClose])
 
+  // Focus modal when opened
+  useEffect(() => {
+    if (isOpen) {
+      modalRef.current?.focus()
+    }
+  }, [isOpen])
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -82,18 +93,24 @@ export function Modal({
             transition={{ duration: 0.2 }}
             className={cn('fixed inset-0 bg-black/50 backdrop-blur-sm', backdropClassName)}
             onClick={handleClose}
+            aria-hidden="true"
           />
 
           {/* Animated content container */}
           <motion.div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            tabIndex={-1}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className={cn(
-              'relative z-60 w-full max-w-4xl max-h-[95dvh] overflow-y-auto rounded-2xl',
+              'relative z-60 w-full max-w-4xl max-h-[95dvh] overflow-y-auto rounded-2xl outline-none',
               modalClassName,
             )}
+            {...ariaProps}
           >
             {children}
           </motion.div>

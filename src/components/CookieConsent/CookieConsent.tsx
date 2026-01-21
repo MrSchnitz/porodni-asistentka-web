@@ -28,6 +28,9 @@ export function CookieConsent() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          role="dialog"
+          aria-label="Oznámení o cookies"
+          aria-describedby="cookie-description"
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
@@ -42,17 +45,17 @@ export function CookieConsent() {
             )}
           >
             {/* Decorative cookie */}
-            <div className="pointer-events-none absolute -right-6 -top-6 opacity-[0.05]">
+            <div className="pointer-events-none absolute -right-6 -top-6 opacity-[0.05]" aria-hidden="true">
               <Cookie className="size-24 text-primary" strokeWidth={1} />
             </div>
 
             <div className="relative p-4">
               <div className="mb-3 flex items-center gap-2">
-                <Cookie className="size-5 text-primary" />
+                <Cookie className="size-5 text-primary" aria-hidden="true" />
                 <span className="font-medium text-foreground">Cookies</span>
               </div>
 
-              <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+              <p id="cookie-description" className="mb-4 text-sm leading-relaxed text-muted-foreground">
                 Na našich stránkách používáme pouze nezbytné cookies pro správné fungování webu.
               </p>
 

@@ -20,6 +20,7 @@ export const ServiceIcon = ({ icon: { fileIcon, lucideIcon }, className }: Props
           'w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center shrink-0',
           className,
         )}
+        aria-hidden="true"
       >
         {lucideIcon && (
           <DynamicIcon className="w-7 h-7 text-primary" name={lucideIcon as IconName} />

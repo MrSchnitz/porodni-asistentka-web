@@ -20,7 +20,7 @@ type HeaderContentProps = Props & {
 
 function BackButton({ compact }: { compact?: boolean }) {
   return (
-    <Link href={PAGE_ROUTES.servicesPage.path} className={compact ? 'shrink-0' : undefined}>
+    <Link href={PAGE_ROUTES.servicesPage.path} className={compact ? 'shrink-0' : undefined} aria-label="Zpět na přehled služeb">
       <Button
         variant="ghost"
         size={compact ? 'sm' : 'default'}
@@ -29,7 +29,7 @@ function BackButton({ compact }: { compact?: boolean }) {
           compact ? 'h-8 px-2' : 'w-fit',
         )}
       >
-        <ArrowLeft className={cn('mr-2', compact ? 'w-3 h-3' : 'w-4 h-4')} />
+        <ArrowLeft className={cn('mr-2', compact ? 'w-3 h-3' : 'w-4 h-4')} aria-hidden="true" />
         Zpět
       </Button>
     </Link>
@@ -56,6 +56,7 @@ function TitleWithIcon({ title, icon, description, compact }: HeaderContentProps
           iconSize,
           compact && 'hidden sm:flex',
         )}
+        aria-hidden="true"
       >
         <DynamicIcon name={icon as IconName} className={cn('text-primary', iconInnerSize)} />
       </div>

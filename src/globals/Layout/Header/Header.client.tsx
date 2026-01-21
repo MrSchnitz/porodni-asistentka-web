@@ -50,7 +50,7 @@ export function HeaderClient({
             </div>
           </Link>
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-8">
+          <nav aria-label="Hlavní navigace" className="hidden lg:flex items-center gap-4 xl:gap-8">
             {navItems?.map((item) => (
               <NavItem key={item.id} item={item.link} className="text-sm lg:text-base" />
             ))}
@@ -59,15 +59,17 @@ export function HeaderClient({
               <a
                 href={`tel:${phone}`}
                 className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
+                aria-label={`Zavolat na ${phone}`}
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="w-4 h-4" aria-hidden="true" />
                 <span>{phone}</span>
               </a>
               <a
                 href={`mailto:${email}`}
                 className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
+                aria-label={`Napsat email na ${email}`}
               >
-                <Mail className="w-4 h-4" />
+                <Mail className="w-4 h-4" aria-hidden="true" />
               </a>
             </div>
           </nav>
@@ -75,14 +77,20 @@ export function HeaderClient({
           <button
             className="lg:hidden p-2 text-foreground"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={mobileMenuOpen ? 'Zavřít menu' : 'Otevřít menu'}
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Navigation */}
       <motion.nav
+        id="mobile-navigation"
+        aria-label="Mobilní navigace"
+        aria-hidden={!mobileMenuOpen}
         className="lg:hidden fixed left-0 right-0 bg-background/98 backdrop-blur-md border-b border-primary/20 shadow-xl"
         initial={false}
         animate={{
@@ -115,16 +123,18 @@ export function HeaderClient({
                 href={`tel:${phone}`}
                 className="flex items-center gap-3 text-foreground hover:text-primary transition-colors py-2"
                 onClick={handleCloseMobileMenu}
+                aria-label={`Zavolat na ${phone}`}
               >
-                <Phone className="w-5 h-5" />
+                <Phone className="w-5 h-5" aria-hidden="true" />
                 <span>{phone}</span>
               </a>
               <a
                 href={`mailto:${email}`}
                 className="flex items-center gap-3 text-foreground hover:text-primary transition-colors py-2"
                 onClick={handleCloseMobileMenu}
+                aria-label={`Napsat email na ${email}`}
               >
-                <Mail className="w-5 h-5" />
+                <Mail className="w-5 h-5" aria-hidden="true" />
                 <span>{email}</span>
               </a>
             </div>
