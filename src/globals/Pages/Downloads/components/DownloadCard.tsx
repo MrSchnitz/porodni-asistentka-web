@@ -36,7 +36,10 @@ export const DownloadCard = ({ title, description, mimeType, filesize, url, file
     <Card className="border-primary/30 hover:shadow-lg transition-shadow">
       <CardContent className="p-6">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center shrink-0" aria-hidden="true">
+          <div
+            className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center shrink-0"
+            aria-hidden="true"
+          >
             <FileText className="w-6 h-6 text-primary" />
           </div>
           <div className="flex-1 min-w-0">
@@ -50,11 +53,7 @@ export const DownloadCard = ({ title, description, mimeType, filesize, url, file
                 <span>{formatFileSize(filesize)}</span>
               </div>
               <Button size="sm" asChild className="bg-primary hover:bg-secondary text-foreground">
-                <a 
-                  href={url ?? '#'} 
-                  download={filename}
-                  aria-label={`Stáhnout soubor ${title}`}
-                >
+                <a href={url ?? '#'} download={filename} aria-label={`Stáhnout soubor ${title}`}>
                   <Download className="w-4 h-4 mr-1.5" aria-hidden="true" />
                   Stáhnout
                 </a>

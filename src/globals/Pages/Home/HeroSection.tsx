@@ -10,6 +10,7 @@ import { motion } from 'motion/react'
 import { getLinkUrl } from '@/utilities/getLinkUrl'
 
 const DEFAULT_IMAGE_SWITCH_INTERVAL = 6000 // milliseconds (6 seconds)
+const DEFAULT_IMAGE_SWITCH_DURATION = 1 // seconds
 
 type Props = {
   data: HomePage['hero']
@@ -72,7 +73,7 @@ export function HeroSection({
 
             {ctaButtons && (
               <motion.div
-                className="flex flex-col sm:flex-row gap-4"
+                className="flex flex-col flex-wrap sm:flex-row gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.7 }}
@@ -106,6 +107,7 @@ export function HeroSection({
               <ImageCarousel
                 images={heroImages.map((img) => img.heroImage)}
                 interval={imageSwitchInterval}
+                duration={DEFAULT_IMAGE_SWITCH_DURATION}
                 className="relative rounded-3xl overflow-hidden shadow-lg aspect-4/3"
               />
               {/* Subtle overlay */}

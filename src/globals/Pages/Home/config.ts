@@ -74,7 +74,7 @@ export const HomePage: GlobalConfig = {
             plural: 'Tlačítka pro přesměrování',
           },
           fields: [link({ appearances: false })],
-          maxRows: 2,
+          maxRows: 3,
           admin: {
             initCollapsed: true,
           },

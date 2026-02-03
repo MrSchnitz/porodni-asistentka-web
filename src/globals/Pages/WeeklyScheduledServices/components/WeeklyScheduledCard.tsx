@@ -92,7 +92,10 @@ export const WeeklyScheduleCard = ({
           <div className="flex items-center justify-between pt-3 mt-3 border-t border-primary/30">
             <span className="flex items-center gap-1 text-primary group-hover:gap-2 transition-all text-sm">
               <span>Zobrazit detail služby</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+              <ArrowRight
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                aria-hidden="true"
+              />
             </span>
           </div>
         </CardContent>

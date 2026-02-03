@@ -5,7 +5,7 @@ import { GlobalConfig } from 'payload'
 export const WeeklyScheduledServicesPage: GlobalConfig = {
   slug: 'weeklyScheduledServicesPage',
   dbName: 'weekly_svc_page',
-  label: 'Aktuální služby',
+  label: 'Aktuálně probíhající služby',
   admin: {
     group: 'Stránky',
   },

@@ -101,7 +101,11 @@ export function DialogHeader({ children }: { children: React.ReactNode }) {
 
 export function DialogTitle({ children, id }: { children: React.ReactNode; id?: string }) {
   return (
-    <h2 id={id} className="text-3xl text-foreground mb-2" style={{ fontFamily: 'var(--font-body)' }}>
+    <h2
+      id={id}
+      className="text-3xl text-foreground mb-2"
+      style={{ fontFamily: 'var(--font-body)' }}
+    >
       {children}
     </h2>
   )

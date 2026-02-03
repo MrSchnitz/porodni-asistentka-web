@@ -30,7 +30,11 @@ export function HeaderClient({
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-18 sm:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <Link
+            href="/"
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            onClick={handleCloseMobileMenu}
+          >
             {logo && <GlobalLogo logo={logo} className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />}
             <div className="flex flex-col justify-center">
               <span
@@ -81,7 +85,11 @@ export function HeaderClient({
             aria-controls="mobile-navigation"
             aria-label={mobileMenuOpen ? 'Zavřít menu' : 'Otevřít menu'}
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
+            {mobileMenuOpen ? (
+              <X className="w-5 h-5" aria-hidden="true" />
+            ) : (
+              <Menu className="w-5 h-5" aria-hidden="true" />
+            )}
           </button>
         </div>
       </div>

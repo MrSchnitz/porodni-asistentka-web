@@ -41,3 +41,5 @@ export type ServicePackage = NonNullable<ServicePackageSection['packages']>[numb
 export type ServicePackageOffer = NonNullable<ServicePackage['includedOffers']>[number]
 
 export type ImportantItemsSection = NonNullable<DownloadsPage['important']>
+
+export type IconType = NonNullable<Service['icon']>

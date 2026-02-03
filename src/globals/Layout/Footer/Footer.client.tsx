@@ -57,8 +57,8 @@ export const FooterClient = ({
                 {contact.phone && (
                   <li className="flex items-start gap-3 text-background/70">
                     <Phone className="w-5 h-5 shrink-0 mt-0.5 text-primary" aria-hidden="true" />
-                    <a 
-                      href={`tel:${contact.phone.replace(/\s/g, '')}`} 
+                    <a
+                      href={`tel:${contact.phone.replace(/\s/g, '')}`}
                       className="hover:text-primary transition-colors"
                       aria-label={`Zavolat na ${contact.phone}`}
                     >

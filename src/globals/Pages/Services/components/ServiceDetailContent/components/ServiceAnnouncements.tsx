@@ -52,7 +52,10 @@ export const ServiceAnnouncements = ({ announcements }: Props) => {
                     resource={announcement.image}
                     imgClassName="w-full h-auto rounded-lg shadow-md transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center" aria-hidden="true">
+                  <div
+                    className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                    aria-hidden="true"
+                  >
                     <div className="text-center text-white">
                       <ZoomIn className="w-12 h-12 mx-auto mb-2" />
                       <p className="text-sm">Klikněte pro zvětšení</p>

@@ -61,7 +61,10 @@ export const ContactInformation = ({ contactInfo, note }: Props) => {
           <Card key={index} className="border-primary/30 hover:shadow-md transition-shadow bg-card">
             <CardContent className="p-4 flex items-start gap-4">
               {info.icon && (
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center shrink-0" aria-hidden="true">
+                <div
+                  className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center shrink-0"
+                  aria-hidden="true"
+                >
                   <DynamicIcon name={info.icon as IconName} className="w-5 h-5 text-primary" />
                 </div>
               )}

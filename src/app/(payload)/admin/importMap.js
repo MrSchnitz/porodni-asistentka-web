@@ -38,8 +38,8 @@ import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@pa
 import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
 import { default as default_3eca826ce9bd531f858867bbd9e8f2f6 } from '@/globals/Pages/Downloads/components/PasswordStatus'
 import { RowLabel as RowLabel_4699d459aa16a2d49e3f0ff5fadd5e0f } from '@/globals/Layout/components/RowLabel'
-import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/components/BeforeDashboard'
-import { default as default_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/BeforeLogin'
+import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/components/admin/BeforeDashboard'
+import { default as default_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/admin/BeforeLogin'
 import { default as default_7fcf195037406fe0b64b31c9e9270aec } from '@/components/admin/DateInputProvider'
 import { CollectionCards as CollectionCards_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 

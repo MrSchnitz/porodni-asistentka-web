@@ -1,10 +1,10 @@
 import { Media } from '@/components/Media'
-import { Service } from '@/payload-types'
+import { IconType } from '@/globals/Pages/types'
 import { DynamicIcon, IconName } from 'lucide-react/dynamic'
 import { cn } from '@/lib/utils'
 
 type Props = {
-  icon: NonNullable<Service['icon']>
+  icon: IconType
   className?: string
 }
 

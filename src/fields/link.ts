@@ -47,7 +47,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
               layout: 'horizontal',
               width: '50%',
             },
-            defaultValue: 'custom',
+            defaultValue: 'reference',
             options: [
               {
                 label: 'Interní odkaz',

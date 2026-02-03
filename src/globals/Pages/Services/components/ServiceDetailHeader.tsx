@@ -1,16 +1,17 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { DynamicIcon, IconName } from 'lucide-react/dynamic'
-import { PAGE_ROUTES } from '../../pageRoutes'
-import { StickyHeader } from '../../components/StickyNavbar'
+import { PAGE_ROUTES } from '@/globals/Pages/pageRoutes'
+import { StickyHeader } from '@/globals/Pages/components/StickyNavbar'
 import { cn } from '@/lib/utils'
 import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import RichText from '@/components/RichText'
+import { IconType } from '@/globals/Pages/types'
+import { ServiceIcon } from './ServiceIcon'
 
 type Props = {
   title: string
-  icon?: string
+  icon?: IconType
   description?: DefaultTypedEditorState
 }
 
@@ -20,7 +21,11 @@ type HeaderContentProps = Props & {
 
 function BackButton({ compact }: { compact?: boolean }) {
   return (
-    <Link href={PAGE_ROUTES.servicesPage.path} className={compact ? 'shrink-0' : undefined} aria-label="Zpět na přehled služeb">
+    <Link
+      href={PAGE_ROUTES.servicesPage.path}
+      className={compact ? 'shrink-0' : undefined}
+      aria-label="Zpět na přehled služeb"
+    >
       <Button
         variant="ghost"
         size={compact ? 'sm' : 'default'}
@@ -37,8 +42,6 @@ function BackButton({ compact }: { compact?: boolean }) {
 }
 
 function TitleWithIcon({ title, icon, description, compact }: HeaderContentProps) {
-  const iconSize = compact ? 'w-8 h-8' : 'w-14 h-14'
-  const iconInnerSize = compact ? 'w-4 h-4' : 'w-7 h-7'
   const textSize = compact ? 'text-base sm:text-lg font-medium' : 'text-3xl'
   const Tag = compact ? 'span' : 'h1'
 
@@ -50,16 +53,7 @@ function TitleWithIcon({ title, icon, description, compact }: HeaderContentProps
         description ? 'items-start' : 'items-center',
       )}
     >
-      <div
-        className={cn(
-          'bg-primary/20 rounded-full flex items-center justify-center shrink-0',
-          iconSize,
-          compact && 'hidden sm:flex',
-        )}
-        aria-hidden="true"
-      >
-        <DynamicIcon name={icon as IconName} className={cn('text-primary', iconInnerSize)} />
-      </div>
+      {!compact && icon && <ServiceIcon icon={icon} />}
       <div className="space-y-3">
         <Tag
           className={cn('text-foreground leading-tight', textSize)}

@@ -15,9 +15,9 @@ export function ReviewCard({ review }: Props) {
       <CardContent className="p-6 h-full flex flex-col">
         <Quote className="w-10 h-10 text-primary/60 mb-4" aria-hidden="true" />
 
-        <div 
-          className="flex gap-1 mb-4" 
-          role="img" 
+        <div
+          className="flex gap-1 mb-4"
+          role="img"
           aria-label={`Hodnocení ${review.rating} z 5 hvězdiček`}
         >
           {numberOfStarsArray.map((_, i) => (

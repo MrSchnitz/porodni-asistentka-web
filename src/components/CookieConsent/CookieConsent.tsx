@@ -45,7 +45,10 @@ export function CookieConsent() {
             )}
           >
             {/* Decorative cookie */}
-            <div className="pointer-events-none absolute -right-6 -top-6 opacity-[0.05]" aria-hidden="true">
+            <div
+              className="pointer-events-none absolute -right-6 -top-6 opacity-[0.05]"
+              aria-hidden="true"
+            >
               <Cookie className="size-24 text-primary" strokeWidth={1} />
             </div>
 
@@ -55,7 +58,10 @@ export function CookieConsent() {
                 <span className="font-medium text-foreground">Cookies</span>
               </div>
 
-              <p id="cookie-description" className="mb-4 text-sm leading-relaxed text-muted-foreground">
+              <p
+                id="cookie-description"
+                className="mb-4 text-sm leading-relaxed text-muted-foreground"
+              >
                 Na našich stránkách používáme pouze nezbytné cookies pro správné fungování webu.
               </p>
 
