@@ -201,6 +201,8 @@ export interface Config {
     downloads: Download;
     users: User;
     media: Media;
+    blogs: Blog;
+    'blog-categories': BlogCategory;
     'payload-kv': PayloadKv;
     'payload-folders': FolderInterface;
     'payload-locked-documents': PayloadLockedDocument;
@@ -218,6 +220,8 @@ export interface Config {
     downloads: DownloadsSelect<false> | DownloadsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
+    'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -235,6 +239,7 @@ export interface Config {
     aboutPage: AboutPage;
     contactPage: ContactPage;
     downloadsPage: DownloadsPage;
+    blogPage: BlogPage;
     header: Header;
     footer: Footer;
     announcement: Announcement;
@@ -246,6 +251,7 @@ export interface Config {
     aboutPage: AboutPageSelect<false> | AboutPageSelect<true>;
     contactPage: ContactPageSelect<false> | ContactPageSelect<true>;
     downloadsPage: DownloadsPageSelect<false> | DownloadsPageSelect<true>;
+    blogPage: BlogPageSelect<false> | BlogPageSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     announcement: AnnouncementSelect<false> | AnnouncementSelect<true>;
@@ -557,6 +563,49 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs".
+ */
+export interface Blog {
+  id: string;
+  /**
+   * Automaticky generovaný z názvu služby. Lze upravit.
+   */
+  slug: string;
+  title: string;
+  headImage?: (string | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  publishedAt?: string | null;
+  author?: string | null;
+  category?: (string | null) | BlogCategory;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-categories".
+ */
+export interface BlogCategory {
+  id: string;
+  title?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -598,6 +647,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'blogs';
+        value: string | Blog;
+      } | null)
+    | ({
+        relationTo: 'blog-categories';
+        value: string | BlogCategory;
       } | null)
     | ({
         relationTo: 'payload-folders';
@@ -924,6 +981,30 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs_select".
+ */
+export interface BlogsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  headImage?: T;
+  content?: T;
+  publishedAt?: T;
+  author?: T;
+  category?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-categories_select".
+ */
+export interface BlogCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -1015,7 +1096,7 @@ export interface Hero {
 export interface Link {
   type?: ('reference' | 'custom') | null;
   newTab?: boolean | null;
-  reference?: ('/' | '/aktualni-sluzby' | '/sluzby' | '/o-mne' | '/kontakt' | '/ke-stazeni') | null;
+  reference?: ('/' | '/aktualni-sluzby' | '/sluzby' | '/o-mne' | '/kontakt' | '/ke-stazeni' | '/blog') | null;
   url?: string | null;
   label: string;
 }
@@ -1238,6 +1319,22 @@ export interface DownloadsPage {
         }[]
       | null;
   };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogPage".
+ */
+export interface BlogPage {
+  id: string;
+  pageHeader: PageHeader;
+  blogPosts?:
+    | {
+        blogPost?: (string | null) | Blog;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1575,6 +1672,22 @@ export interface DownloadsPageSelect<T extends boolean = true> {
               item?: T;
               id?: T;
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogPage_select".
+ */
+export interface BlogPageSelect<T extends boolean = true> {
+  pageHeader?: T | PageHeaderSelect<T>;
+  blogPosts?:
+    | T
+    | {
+        blogPost?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

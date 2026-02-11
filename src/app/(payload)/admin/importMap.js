@@ -37,9 +37,10 @@ import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } f
 import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
 import { default as default_3eca826ce9bd531f858867bbd9e8f2f6 } from '@/globals/Pages/Downloads/components/PasswordStatus'
+import { BlogPostRowLabel as BlogPostRowLabel_7f1e8c37a863d8618d66f3c86402045e } from '@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel'
 import { RowLabel as RowLabel_4699d459aa16a2d49e3f0ff5fadd5e0f } from '@/globals/Layout/components/RowLabel'
-import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/components/admin/BeforeDashboard'
-import { default as default_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/admin/BeforeLogin'
+import { default as default_915324d4628771dbb8d31cdc4601c33e } from '@/components/admin/BeforeDashboard'
+import { default as default_89344134860f9bc63867ffefbf33f214 } from '@/components/admin/BeforeLogin'
 import { default as default_7fcf195037406fe0b64b31c9e9270aec } from '@/components/admin/DateInputProvider'
 import { CollectionCards as CollectionCards_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 
@@ -83,9 +84,10 @@ export const importMap = {
   "@payloadcms/ui/rsc#FolderField": FolderField_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui#FolderTypeField": FolderTypeField_3817bf644402e67bfe6577f60ef982de,
   "@/globals/Pages/Downloads/components/PasswordStatus#default": default_3eca826ce9bd531f858867bbd9e8f2f6,
+  "@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel#BlogPostRowLabel": BlogPostRowLabel_7f1e8c37a863d8618d66f3c86402045e,
   "@/globals/Layout/components/RowLabel#RowLabel": RowLabel_4699d459aa16a2d49e3f0ff5fadd5e0f,
-  "@/components/BeforeDashboard#default": default_1a7510af427896d367a49dbf838d2de6,
-  "@/components/BeforeLogin#default": default_8a7ab0eb7ab5c511aba12e68480bfe5e,
+  "@/components/admin/BeforeDashboard#default": default_915324d4628771dbb8d31cdc4601c33e,
+  "@/components/admin/BeforeLogin#default": default_89344134860f9bc63867ffefbf33f214,
   "@/components/admin/DateInputProvider#default": default_7fcf195037406fe0b64b31c9e9270aec,
   "@payloadcms/ui/rsc#CollectionCards": CollectionCards_ab83ff7e88da8d3530831f296ec4756a
 }

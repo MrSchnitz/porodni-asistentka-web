@@ -20,12 +20,9 @@ export default function ServicesPage({ data: { pageHeader, serviceSections } }: 
 
   return (
     <main>
-      <PageHeader
-        data={pageHeader}
-        navbar={
-          showNavbar ? <ServicePageNavigation serviceSections={serviceSections ?? []} /> : undefined
-        }
-      />
+      <PageHeader data={pageHeader}>
+        {showNavbar ? <ServicePageNavigation serviceSections={serviceSections ?? []} /> : undefined}
+      </PageHeader>
       {serviceSections?.map(({ id, servicesSection }) => {
         if (!servicesSection?.serviceSectionItems?.length) {
           return null

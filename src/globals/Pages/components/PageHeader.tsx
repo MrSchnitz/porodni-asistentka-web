@@ -3,11 +3,11 @@ import { PageHeader as PageHeaderType } from '@/payload-types'
 
 type Props = {
   data: PageHeaderType
-  navbar?: React.ReactNode
+  children?: React.ReactNode
   className?: string
 }
 
-export const PageHeader = ({ data: { title, subtitle }, navbar, className }: Props) => {
+export const PageHeader = ({ data: { title, subtitle }, children, className }: Props) => {
   return (
     <section className={cn('py-10 sm:py-20 bg-linear-to-br from-background to-muted', className)}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,7 +19,7 @@ export const PageHeader = ({ data: { title, subtitle }, navbar, className }: Pro
             {title}
           </h1>
           <p className="text-lg sm:text-xl text-foreground/70 mb-6 sm:mb-8">{subtitle}</p>
-          {navbar}
+          {children}
         </div>
       </div>
     </section>

@@ -49,3 +49,25 @@ export function extractTextFromRichText(data: unknown): string | null {
   const text = extractText(richText.root.children).trim()
   return text || null
 }
+
+const WORDS_PER_MINUTE = 200
+
+/**
+ * Calculate read time in minutes from word count.
+ * Uses ~200 words/min (average reading speed).
+ */
+function countWords(text: string): number {
+  return text.trim().split(/\s+/).filter(Boolean).length
+}
+
+/**
+ * Get human-readable read time from Lexical rich text content.
+ * Returns e.g. "1 min čtení" or "5 min čtení".
+ */
+export function getReadTimeFromRichText(data: unknown): string {
+  const text = extractTextFromRichText(data)
+  if (!text) return '1 min čtení'
+  const words = countWords(text)
+  const minutes = Math.max(1, Math.ceil(words / WORDS_PER_MINUTE))
+  return minutes === 1 ? '1 min čtení' : `${minutes} min čtení`
+}

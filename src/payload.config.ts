@@ -22,6 +22,9 @@ import { AboutPage } from './globals/Pages/About/config'
 import { ContactPage } from './globals/Pages/Contact/config'
 import { Announcement } from './globals/Layout/Announcement/config'
 import { DownloadsPage } from './globals/Pages/Downloads/config'
+import { BlogCategories } from './collections/Blog/BlogCategories'
+import { Blogs } from './collections/Blog/Blogs'
+import { BlogPage } from './globals/Pages/Blog/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -33,13 +36,14 @@ const pagesGlobalsConfig: GlobalConfig[] = [
   AboutPage,
   ContactPage,
   DownloadsPage,
+  BlogPage,
 ]
 
 export default buildConfig({
   admin: {
     components: {
-      beforeLogin: ['@/components/BeforeLogin'],
-      beforeDashboard: ['@/components/BeforeDashboard'],
+      beforeLogin: ['@/components/admin/BeforeLogin'],
+      beforeDashboard: ['@/components/admin/BeforeDashboard'],
       providers: ['@/components/admin/DateInputProvider'],
     },
     user: Users.slug,
@@ -51,7 +55,7 @@ export default buildConfig({
     },
   },
   globals: [...pagesGlobalsConfig, Header, Footer, Announcement],
-  collections: [Services, Reviews, Downloads, Users, Media],
+  collections: [Services, Reviews, Downloads, Users, Media, Blogs, BlogCategories],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

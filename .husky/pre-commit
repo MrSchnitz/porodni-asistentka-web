@@ -1,1 +1,3 @@
-pnpm exec lint-staged
+#!/usr/bin/env sh
+# Run in login shell so node/pnpm are in PATH (fixes commit from Cursor UI)
+cd "$(git rev-parse --show-toplevel)" && exec "${SHELL:-/bin/bash}" -l -c 'npx lint-staged'

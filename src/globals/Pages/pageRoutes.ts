@@ -31,4 +31,8 @@ export const PAGE_ROUTES = {
     label: 'Ke stažení',
     path: '/ke-stazeni',
   },
+  blogPage: {
+    label: 'Blog',
+    path: '/blog',
+  },
 } satisfies PageRoute
