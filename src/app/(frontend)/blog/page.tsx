@@ -1,7 +1,13 @@
+import type { Metadata } from 'next'
 import { BlogPostListWithSearch } from '@/globals/Pages/Blog/components/BlogPostListWithSearch/BlogPostListWithSearch'
 import type { BlogPage } from '@/payload-types'
 import { getGlobal } from '@/utilities/getGlobals'
 import { hasData } from '@/utilities/payload'
+
+export const metadata: Metadata = {
+  title: 'Blog',
+  description: 'Články o těhotenství, porodu a péči o novorozence. Tipy od porodní asistentky.',
+}
 
 export default async function Page() {
   const data = (await getGlobal('blogPage', 2)) as BlogPage
