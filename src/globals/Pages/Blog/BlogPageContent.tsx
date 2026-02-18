@@ -1,10 +1,14 @@
+'use client'
+
 import { BlogPostListWithSearch } from '@/globals/Pages/Blog/components/BlogPostListWithSearch/BlogPostListWithSearch'
 import type { BlogPage } from '@/payload-types'
-import { getGlobal } from '@/utilities/getGlobals'
 import { hasData } from '@/utilities/payload'
 
-export default async function Page() {
-  const data = (await getGlobal('blogPage', 2)) as BlogPage
+type Props = {
+  data: BlogPage
+}
+
+export function BlogPageContent({ data }: Props) {
   const categories: string[] = Array.from(
     new Set(
       data.blogPosts?.map(({ blogPost }) =>

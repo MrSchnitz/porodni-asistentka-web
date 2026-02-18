@@ -300,3 +300,9 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
+
+/* Disable links in Payload Live Preview so editors don't leave the iframe */
+body[data-preview='true'] main a {
+  pointer-events: none;
+  cursor: default;
+}

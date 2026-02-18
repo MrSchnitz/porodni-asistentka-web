@@ -1,3 +1,5 @@
+'use client'
+
 import { GlobalLogo } from '@/components/Logo/GlobalLogo'
 import { PAGE_ROUTES } from '@/globals/Pages/pageRoutes'
 import { Footer } from '@/payload-types'

@@ -1,12 +1,12 @@
 'use client'
 
 import { ServicesPage as ServicesPageType } from '@/payload-types'
+import { hasData } from '@/utilities/payload'
+import { usePathname } from 'next/navigation'
 import { PageHeader } from '../components/PageHeader'
 import { ServicePageCard } from './components/ServicePage/ServicePageCard'
 import { ServicePageSection } from './components/ServicePage/ServicePageSection'
 import { ServicePageNavigation } from './components/ServicePage/ServicePageNavigation'
-import { hasData } from '@/utilities/payload'
-import { usePathname } from 'next/navigation'
 
 type Props = {
   data: ServicesPageType

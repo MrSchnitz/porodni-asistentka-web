@@ -1,6 +1,6 @@
-import { DownloadsPage } from '@/globals/Pages/Downloads/DownloadsPage'
 import { DownloadAuthPage } from '@/globals/Pages/Downloads/DownloadAuthPage'
-import { DownloadsPage as DownloadsPageType } from '@/payload-types'
+import { DownloadsPage } from '@/globals/Pages/Downloads/DownloadsPage'
+import type { DownloadsPage as DownloadsPageType } from '@/payload-types'
 import { getGlobal } from '@/utilities/getGlobals'
 import { isDownloadsAuthenticated } from './actions'
 

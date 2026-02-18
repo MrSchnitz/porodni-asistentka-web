@@ -53,6 +53,40 @@ export default buildConfig({
     meta: {
       viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
     },
+    livePreview: {
+      /** Iframe načte /preview – client-side Live Preview v reálném čase. */
+      url: ({ data, collectionConfig, globalConfig }) => {
+        const params = new URLSearchParams()
+        if (globalConfig) {
+          params.set('global', globalConfig.slug)
+          return `/preview?${params.toString()}`
+        }
+        if (collectionConfig && data && typeof (data as { slug?: string }).slug === 'string') {
+          params.set('collection', collectionConfig.slug)
+          params.set('slug', (data as { slug: string }).slug)
+          return `/preview?${params.toString()}`
+        }
+        return null
+      },
+      collections: ['blogs', 'services'],
+      globals: [
+        'homePage',
+        'servicesPage',
+        'weeklyScheduledServicesPage',
+        'aboutPage',
+        'contactPage',
+        'downloadsPage',
+        'blogPage',
+        'header',
+        'footer',
+        'announcement',
+      ],
+      breakpoints: [
+        { label: 'Mobil', name: 'mobile', width: 375, height: 667 },
+        { label: 'Tablet', name: 'tablet', width: 768, height: 1024 },
+        { label: 'Desktop', name: 'desktop', width: 1440, height: 900 },
+      ],
+    },
   },
   globals: [...pagesGlobalsConfig, Header, Footer, Announcement],
   collections: [Services, Reviews, Downloads, Users, Media, Blogs, BlogCategories],

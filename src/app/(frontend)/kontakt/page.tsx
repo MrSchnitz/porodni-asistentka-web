@@ -1,29 +1,8 @@
+import { ContactPageContent } from '@/globals/Pages/Contact/ContactPageContent'
+import type { ContactPage } from '@/payload-types'
 import { getGlobal } from '@/utilities/getGlobals'
-import { ContactPage } from '@/payload-types'
-import { PageHeader } from '@/globals/Pages/components/PageHeader'
-import { ContactInformation } from '@/globals/Pages/Contact/components/ContactInformation'
-import { ContactForm } from '@/globals/Pages/Contact/components/ContactForm'
 
 export default async function Page() {
   const data = (await getGlobal('contactPage', 1)) as ContactPage
-
-  return (
-    <main className="min-h-dvh flex flex-col bg-linear-to-br from-background to-muted">
-      <section id="contact" className="py-20 flex-1">
-        <PageHeader data={data.pageHeader} className="bg-none py-0 sm:py-0 mb-16" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {data.contactInfo && (
-              <div>
-                <ContactInformation contactInfo={data.contactInfo} note={data.note ?? null} />
-              </div>
-            )}
-            <div>
-              <ContactForm />
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  )
+  return <ContactPageContent data={data} />
 }
