@@ -1,7 +1,6 @@
+import { CMSLink } from '@/components/CMSLink/CMSLink'
 import { Button } from '@/components/ui/button'
 import { Services } from '@/payload-types'
-import Link from 'next/link'
-import { getLinkUrl } from '@/utilities/getLinkUrl'
 
 type Props = {
   button: NonNullable<Services['ctaButton']>[number]
@@ -13,7 +12,7 @@ export function ServiceLinkButton({ button }: Props) {
   }
 
   return (
-    <Link key={button.id} href={getLinkUrl(button.link)}>
+    <CMSLink key={button.id} link={button.link}>
       <Button
         size="lg"
         variant="outline"
@@ -21,6 +20,6 @@ export function ServiceLinkButton({ button }: Props) {
       >
         {button.link.label}
       </Button>
-    </Link>
+    </CMSLink>
   )
 }

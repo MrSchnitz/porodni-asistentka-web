@@ -1,5 +1,6 @@
 'use client'
 
+import { CMSLink } from '@/components/CMSLink/CMSLink'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
@@ -7,7 +8,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { PageHeader } from '@/globals/Pages/components/PageHeader'
 import { AboutPage } from '@/payload-types'
 import { cn } from '@/utilities/ui'
-import { Link } from '@payloadcms/ui'
 
 type Props = {
   data: AboutPage
@@ -87,21 +87,23 @@ export function AboutPageContent({ data }: Props) {
                 <p className="text-xl text-foreground/70 mb-8">{data.ctaSection.subtitle}</p>
               )}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                {data.ctaSection?.ctaButtons?.map((button, index) => (
-                  <Link key={button.id} href={button.link?.url ?? ''}>
-                    <Button
-                      size="lg"
-                      variant={index > 0 ? 'outline' : 'default'}
-                      className={cn(
-                        index > 0
-                          ? 'border-primary text-primary hover:bg-primary/10'
-                          : 'bg-primary hover:bg-secondary text-foreground shadow-lg',
-                      )}
-                    >
-                      {button.link?.label}
-                    </Button>
-                  </Link>
-                ))}
+                {data.ctaSection?.ctaButtons?.map((button, index) =>
+                  button.link ? (
+                    <CMSLink key={button.id} link={button.link}>
+                      <Button
+                        size="lg"
+                        variant={index > 0 ? 'outline' : 'default'}
+                        className={cn(
+                          index > 0
+                            ? 'border-primary text-primary hover:bg-primary/10'
+                            : 'bg-primary hover:bg-secondary text-foreground shadow-lg',
+                        )}
+                      >
+                        {button.link.label}
+                      </Button>
+                    </CMSLink>
+                  ) : null,
+                )}
               </div>
             </CardContent>
           </Card>

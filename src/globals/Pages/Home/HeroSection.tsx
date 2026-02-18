@@ -1,13 +1,12 @@
 'use client'
 
+import { CMSLink } from '@/components/CMSLink/CMSLink'
 import { ImageCarousel } from '@/components/ImageCarousel/ImageCarousel'
 import { Button } from '@/components/ui/button'
 import { HomePage } from '@/payload-types'
-import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion } from 'motion/react'
-import { getLinkUrl } from '@/utilities/getLinkUrl'
 
 const DEFAULT_IMAGE_SWITCH_INTERVAL = 6000 // milliseconds (6 seconds)
 const DEFAULT_IMAGE_SWITCH_DURATION = 1 // seconds
@@ -79,7 +78,7 @@ export function HeroSection({
                 transition={{ duration: 0.8, delay: 0.7 }}
               >
                 {ctaButtons.map((button, index) => (
-                  <Link key={button.id} href={getLinkUrl(button.link)}>
+                  <CMSLink key={button.id} link={button.link}>
                     <Button
                       size="lg"
                       variant={index > 0 ? 'outline' : 'default'}
@@ -90,7 +89,7 @@ export function HeroSection({
                     >
                       {button.link.label}
                     </Button>
-                  </Link>
+                  </CMSLink>
                 ))}
               </motion.div>
             )}
