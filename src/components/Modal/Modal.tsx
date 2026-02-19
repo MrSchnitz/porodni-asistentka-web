@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'motion/react'
 import { useEffect, useState, useCallback, useImperativeHandle, useRef } from 'react'
 
-export type ModalImperativeHandle = {
+type ModalImperativeHandle = {
   handleClose: () => void
 }
 

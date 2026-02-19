@@ -8,7 +8,7 @@ interface ServiceSectionRow {
   }
 }
 
-export const ServiceSectionRowLabel: React.FC<RowLabelProps> = () => {
+const ServiceSectionRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<ServiceSectionRow>()
   const title = data?.servicesSection?.title
 

@@ -22,8 +22,7 @@ export const ServicesPage: GlobalConfig = {
       },
       admin: {
         components: {
-          RowLabel:
-            '@/globals/Pages/Services/components/admin/ServiceSectionRowLabel#ServiceSectionRowLabel',
+          RowLabel: '@/globals/Pages/Services/components/admin/ServiceSectionRowLabel',
         },
       },
       fields: [

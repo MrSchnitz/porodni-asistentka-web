@@ -6,7 +6,7 @@ interface ContactInfoRow {
   title?: string
 }
 
-export const ContactInfoRowLabel: React.FC<RowLabelProps> = () => {
+const ContactInfoRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<ContactInfoRow>()
   const title = data?.title
 

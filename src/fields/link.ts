@@ -3,9 +3,9 @@ import type { Field, GroupField } from 'payload'
 import deepMerge from '@/utilities/deepMerge'
 import { PAGE_ROUTES } from '@/globals/Pages/pageRoutes'
 
-export type LinkAppearances = 'default' | 'outline'
+type LinkAppearances = 'default' | 'outline'
 
-export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
+const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
   default: {
     label: 'Výchozí',
     value: 'default',

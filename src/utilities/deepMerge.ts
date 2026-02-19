@@ -6,6 +6,7 @@
  * @param item
  * @returns {boolean}
  */
+/** @public */
 export function isObject(item: unknown): item is object {
   return typeof item === 'object' && !Array.isArray(item)
 }

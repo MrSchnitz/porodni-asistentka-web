@@ -18,6 +18,7 @@ export function hasData<T extends object>(value: string | T | null | undefined):
 /**
  * Type guard to check if a Payload relation value is just an ID string
  */
+/** @public */
 export function isId(value: string | object | null | undefined): value is string {
   return typeof value === 'string'
 }

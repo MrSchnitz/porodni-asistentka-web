@@ -1,4 +1,4 @@
-export function ServicePageCardSkeleton() {
+function ServicePageCardSkeleton() {
   return (
     <div className="bg-background rounded-2xl p-6 shadow-sm border border-primary/30 animate-pulse h-full flex flex-col">
       {/* Icon + title row (same as ServicePageCard) */}

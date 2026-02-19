@@ -7,7 +7,7 @@ import { ScheduleItems } from '@/globals/Pages/types'
 
 type Entry = NonNullable<ScheduleItems>[number]
 
-export const ScheduleRowLabel: React.FC<RowLabelProps> = () => {
+const ScheduleRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<Entry>()
 
   if (!data?.startDate) {

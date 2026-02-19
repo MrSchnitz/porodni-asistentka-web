@@ -14,7 +14,7 @@ interface RowData {
  * Generic row label component that displays the first found text value
  * from common fields: title, name, item
  */
-export const TextRowLabel: React.FC<RowLabelProps> = () => {
+const TextRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<RowData>()
 
   const text = data?.title || data?.name || data?.item || data?.value || data?.description

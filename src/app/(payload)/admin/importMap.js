@@ -25,7 +25,7 @@ import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997e
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_8479dd81eebc7b77e5a6fbc945497c77 } from '@/collections/Services/components/RowLabels/InfoRowLabel'
-import { TextRowLabel as TextRowLabel_158dbb56dc406867b31217ed34fb28bb } from '@/components/admin/TextRowLabel'
+import { default as default_158dbb56dc406867b31217ed34fb28bb } from '@/components/admin/TextRowLabel'
 import { default as default_8e96060ce66d2c0d1a73d857ecde10bb } from '@/collections/Services/components/RowLabels/LessonRowLabel'
 import { default as default_20a15819bf544ccd121e32023e63363f } from '@/collections/Services/components/RowLabels/CourseRowLabel'
 import { default as default_eb7be762210eec7fcd9aff30f20b34f4 } from '@/collections/Services/components/CourseSelect/CourseSelect'
@@ -36,10 +36,10 @@ import { default as default_97f4e200e923f0724456dc94adacc07d } from '@/collectio
 import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
-import { ServiceSectionRowLabel as ServiceSectionRowLabel_f4d65967a823bb24d0849dcb310405b9 } from '@/globals/Pages/Services/components/admin/ServiceSectionRowLabel'
-import { ContactInfoRowLabel as ContactInfoRowLabel_9c97f938f008495effa2768a6afb7956 } from '@/globals/Pages/Contact/components/admin/ContactInfoRowLabel'
+import { default as default_f4d65967a823bb24d0849dcb310405b9 } from '@/globals/Pages/Services/components/admin/ServiceSectionRowLabel'
+import { default as default_9c97f938f008495effa2768a6afb7956 } from '@/globals/Pages/Contact/components/admin/ContactInfoRowLabel'
 import { default as default_3eca826ce9bd531f858867bbd9e8f2f6 } from '@/globals/Pages/Downloads/components/PasswordStatus'
-import { BlogPostRowLabel as BlogPostRowLabel_7f1e8c37a863d8618d66f3c86402045e } from '@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel'
+import { default as default_7f1e8c37a863d8618d66f3c86402045e } from '@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel'
 import { NavItemRowLabel as NavItemRowLabel_1ca93d5caf65e728a666215018b03653 } from '@/globals/Layout/Header/components/admin/NavItemRowLabel'
 import { default as default_534076e2c753ea5d539a54b05f456b1b } from '@/components/admin/Icon'
 import { default as default_a44df17d0fc3dcd873dae43dc3bf66bd } from '@/components/admin/Logo'
@@ -75,7 +75,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/collections/Services/components/RowLabels/InfoRowLabel#default": default_8479dd81eebc7b77e5a6fbc945497c77,
-  "@/components/admin/TextRowLabel#TextRowLabel": TextRowLabel_158dbb56dc406867b31217ed34fb28bb,
+  "@/components/admin/TextRowLabel#default": default_158dbb56dc406867b31217ed34fb28bb,
   "@/collections/Services/components/RowLabels/LessonRowLabel#default": default_8e96060ce66d2c0d1a73d857ecde10bb,
   "@/collections/Services/components/RowLabels/CourseRowLabel#default": default_20a15819bf544ccd121e32023e63363f,
   "@/collections/Services/components/CourseSelect/CourseSelect#default": default_eb7be762210eec7fcd9aff30f20b34f4,
@@ -86,10 +86,10 @@ export const importMap = {
   "@payloadcms/ui/rsc#FolderTableCell": FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui/rsc#FolderField": FolderField_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui#FolderTypeField": FolderTypeField_3817bf644402e67bfe6577f60ef982de,
-  "@/globals/Pages/Services/components/admin/ServiceSectionRowLabel#ServiceSectionRowLabel": ServiceSectionRowLabel_f4d65967a823bb24d0849dcb310405b9,
-  "@/globals/Pages/Contact/components/admin/ContactInfoRowLabel#ContactInfoRowLabel": ContactInfoRowLabel_9c97f938f008495effa2768a6afb7956,
+  "@/globals/Pages/Services/components/admin/ServiceSectionRowLabel#default": default_f4d65967a823bb24d0849dcb310405b9,
+  "@/globals/Pages/Contact/components/admin/ContactInfoRowLabel#default": default_9c97f938f008495effa2768a6afb7956,
   "@/globals/Pages/Downloads/components/PasswordStatus#default": default_3eca826ce9bd531f858867bbd9e8f2f6,
-  "@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel#BlogPostRowLabel": BlogPostRowLabel_7f1e8c37a863d8618d66f3c86402045e,
+  "@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel#default": default_7f1e8c37a863d8618d66f3c86402045e,
   "@/globals/Layout/Header/components/admin/NavItemRowLabel#NavItemRowLabel": NavItemRowLabel_1ca93d5caf65e728a666215018b03653,
   "@/components/admin/Icon#default": default_534076e2c753ea5d539a54b05f456b1b,
   "@/components/admin/Logo#default": default_a44df17d0fc3dcd873dae43dc3bf66bd,

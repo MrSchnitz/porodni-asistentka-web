@@ -2,7 +2,7 @@
 
 import { useDocumentInfo, useForm } from '@payloadcms/ui'
 
-export const PasswordStatus = () => {
+const PasswordStatus = () => {
   const { initialData } = useDocumentInfo()
   const { getData } = useForm()
 

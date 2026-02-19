@@ -8,7 +8,7 @@ type PlanningEntry = {
   courseIndex?: string
 }
 
-export const PlanningRowLabel: React.FC<RowLabelProps> = () => {
+const PlanningRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<PlanningEntry>()
 
   const hasCourse = !!data?.courseIndex

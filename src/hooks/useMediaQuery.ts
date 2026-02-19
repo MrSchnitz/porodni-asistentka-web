@@ -18,6 +18,7 @@ type Breakpoint = keyof typeof breakpoints
 /**
  * Hook to check if viewport matches a media query
  */
+/** @public */
 export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(false)
 
@@ -47,6 +48,7 @@ export function useBreakpoint(breakpoint: Breakpoint): boolean {
 /**
  * Hook to check if viewport is mobile (< sm breakpoint)
  */
+/** @public */
 export function useIsMobile(): boolean {
   const isSmOrLarger = useBreakpoint('sm')
   return !isSmOrLarger
@@ -55,6 +57,7 @@ export function useIsMobile(): boolean {
 /**
  * Get current breakpoint name
  */
+/** @public */
 export function useCurrentBreakpoint(): Breakpoint | 'xs' {
   const isSm = useBreakpoint('sm')
   const isMd = useBreakpoint('md')

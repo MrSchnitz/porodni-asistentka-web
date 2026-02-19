@@ -1,0 +1,13 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreDependencies": ["eslint-config-next", "lint-staged"],
+  "ignoreIssues": {
+    "src/components/ui/**": ["exports", "types", "files"],
+    "src/payload-types.ts": ["exports", "types"],
+    "src/app/(frontend)/ke-stazeni/actions.ts": ["exports"],
+    "src/components/admin/TextRowLabel.tsx": ["exports"],
+    "src/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel.tsx": ["exports"],
+    "src/globals/Pages/Contact/components/admin/ContactInfoRowLabel.tsx": ["exports"],
+    "src/globals/Pages/Services/components/admin/ServiceSectionRowLabel.tsx": ["exports"]
+  }
+}

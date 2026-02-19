@@ -32,7 +32,7 @@ export type WeeklyScheduleByDay = {
   friday: WeeklyScheduleItem[]
 }
 
-export const dayIndexToName: Record<number, keyof WeeklyScheduleByDay> = {
+const dayIndexToName: Record<number, keyof WeeklyScheduleByDay> = {
   1: 'monday',
   2: 'tuesday',
   3: 'wednesday',

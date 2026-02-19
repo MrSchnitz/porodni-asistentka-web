@@ -53,7 +53,7 @@ export const AboutPage: GlobalConfig = {
             initCollapsed: true,
             condition: (_, siblingData) => siblingData?.showMyValues,
             components: {
-              RowLabel: '@/components/admin/TextRowLabel#TextRowLabel',
+              RowLabel: '@/components/admin/TextRowLabel',
             },
           },
           fields: [

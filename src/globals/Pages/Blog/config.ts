@@ -19,8 +19,7 @@ export const BlogPage: GlobalConfig = {
       },
       admin: {
         components: {
-          RowLabel:
-            '@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel#BlogPostRowLabel',
+          RowLabel: '@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel',
         },
       },
       fields: [

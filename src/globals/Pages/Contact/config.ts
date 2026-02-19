@@ -20,8 +20,7 @@ export const ContactPage: GlobalConfig = {
       },
       admin: {
         components: {
-          RowLabel:
-            '@/globals/Pages/Contact/components/admin/ContactInfoRowLabel#ContactInfoRowLabel',
+          RowLabel: '@/globals/Pages/Contact/components/admin/ContactInfoRowLabel',
         },
       },
       fields: [

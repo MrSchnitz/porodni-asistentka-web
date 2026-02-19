@@ -17,7 +17,7 @@ function getTitle(blog: unknown): string | null {
   return null
 }
 
-export const BlogPostRowLabel: React.FC<RowLabelProps> = () => {
+const BlogPostRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<BlogPostRow>()
   const blogPost = data?.blogPost
   const titleFromData = getTitle(blogPost)

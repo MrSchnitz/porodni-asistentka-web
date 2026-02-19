@@ -32,13 +32,7 @@ export type WeeklyScheduledServicesInfoSection = NonNullable<
 
 export type ServiceBenefitsSection = NonNullable<Service['detail']['benefitsSection']>
 
-export type ServiceBenefit = NonNullable<ServiceBenefitsSection['benefits']>[number]
-
 export type ServicePackageSection = NonNullable<Service['detail']['packageSection']>
-
-export type ServicePackage = NonNullable<ServicePackageSection['packages']>[number]
-
-export type ServicePackageOffer = NonNullable<ServicePackage['includedOffers']>[number]
 
 export type ImportantItemsSection = NonNullable<DownloadsPage['important']>
 

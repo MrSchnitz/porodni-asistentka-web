@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 /**
  * Provider that disables mobile keyboard on date inputs
  */
-export const DateInputProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const DateInputProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     const handleFocus = (e: FocusEvent) => {
       const target = e.target

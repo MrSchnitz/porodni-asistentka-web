@@ -28,7 +28,7 @@ export const serviceAnnouncementsSection = (options?: AnnouncementsSectionOption
       admin: {
         condition: (_, siblingData) => siblingData?.enabled,
         components: {
-          RowLabel: '@/components/admin/TextRowLabel#TextRowLabel',
+          RowLabel: '@/components/admin/TextRowLabel',
         },
       },
       fields: [

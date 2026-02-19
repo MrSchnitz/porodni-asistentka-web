@@ -7,7 +7,7 @@ type Lesson = NonNullable<
   NonNullable<NonNullable<NonNullable<Service['courses']>[number]>['lessonsSection']>['lessons']
 >[number]
 
-export const LessonRowLabel: React.FC<RowLabelProps> = () => {
+const LessonRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<Lesson>()
 
   if (!data?.title) {
