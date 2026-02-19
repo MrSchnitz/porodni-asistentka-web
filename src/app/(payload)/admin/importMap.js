@@ -41,7 +41,8 @@ import { ContactInfoRowLabel as ContactInfoRowLabel_9c97f938f008495effa2768a6afb
 import { default as default_3eca826ce9bd531f858867bbd9e8f2f6 } from '@/globals/Pages/Downloads/components/PasswordStatus'
 import { BlogPostRowLabel as BlogPostRowLabel_7f1e8c37a863d8618d66f3c86402045e } from '@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel'
 import { NavItemRowLabel as NavItemRowLabel_1ca93d5caf65e728a666215018b03653 } from '@/globals/Layout/Header/components/admin/NavItemRowLabel'
-import { default as default_915324d4628771dbb8d31cdc4601c33e } from '@/components/admin/BeforeDashboard'
+import { default as default_534076e2c753ea5d539a54b05f456b1b } from '@/components/admin/Icon'
+import { default as default_a44df17d0fc3dcd873dae43dc3bf66bd } from '@/components/admin/Logo'
 import { default as default_89344134860f9bc63867ffefbf33f214 } from '@/components/admin/BeforeLogin'
 import { default as default_7fcf195037406fe0b64b31c9e9270aec } from '@/components/admin/DateInputProvider'
 import { CollectionCards as CollectionCards_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
@@ -90,7 +91,8 @@ export const importMap = {
   "@/globals/Pages/Downloads/components/PasswordStatus#default": default_3eca826ce9bd531f858867bbd9e8f2f6,
   "@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel#BlogPostRowLabel": BlogPostRowLabel_7f1e8c37a863d8618d66f3c86402045e,
   "@/globals/Layout/Header/components/admin/NavItemRowLabel#NavItemRowLabel": NavItemRowLabel_1ca93d5caf65e728a666215018b03653,
-  "@/components/admin/BeforeDashboard#default": default_915324d4628771dbb8d31cdc4601c33e,
+  "@/components/admin/Icon#default": default_534076e2c753ea5d539a54b05f456b1b,
+  "@/components/admin/Logo#default": default_a44df17d0fc3dcd873dae43dc3bf66bd,
   "@/components/admin/BeforeLogin#default": default_89344134860f9bc63867ffefbf33f214,
   "@/components/admin/DateInputProvider#default": default_7fcf195037406fe0b64b31c9e9270aec,
   "@payloadcms/ui/rsc#CollectionCards": CollectionCards_ab83ff7e88da8d3530831f296ec4756a

@@ -43,8 +43,11 @@ export default buildConfig({
   admin: {
     components: {
       beforeLogin: ['@/components/admin/BeforeLogin'],
-      beforeDashboard: ['@/components/admin/BeforeDashboard'],
       providers: ['@/components/admin/DateInputProvider'],
+      graphics: {
+        Logo: '@/components/admin/Logo',
+        Icon: '@/components/admin/Icon',
+      },
     },
     user: Users.slug,
     importMap: {

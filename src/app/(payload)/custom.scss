@@ -1,3 +1,10 @@
+:root {
+  // Radii (match frontend --radius: 1rem)
+  --style-radius-s: 0.75rem;
+  --style-radius-m: 1rem;
+  --style-radius-l: 1.25rem;
+}
+
 // Disable input zooming on mobile (iOS Safari zooms when font-size < 16px)
 @media screen and (max-width: 768px) {
   input[type='text'],
