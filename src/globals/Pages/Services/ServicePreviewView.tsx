@@ -14,8 +14,8 @@ type Props = {
 }
 
 /**
- * Náhled služby s přepínačem Kartička služby / Detail služby –
- * v adminu není aktivní tab v postMessage, takže výběr je v náhledu.
+ * Service preview with Service card / Service detail toggle –
+ * admin has no active tab in postMessage, so the choice is made in the preview.
  */
 export function ServicePreviewView({ service }: Props) {
   const [view, setView] = useState<View>('detail')
@@ -25,7 +25,7 @@ export function ServicePreviewView({ service }: Props) {
 
   return (
     <div className="min-h-dvh bg-background">
-      {/* Lišta náhledu – vizuálně oddělená od obsahu stránky */}
+      {/* Preview bar – visually separated from page content */}
       <div
         className="sticky top-0 z-10 flex justify-center items-center gap-3 border-y-2 border-amber-500/40 bg-amber-50/80 px-4 py-2 shadow-sm dark:border-amber-400/30 dark:bg-amber-950/30"
         role="tablist"

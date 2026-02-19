@@ -36,9 +36,11 @@ import { default as default_97f4e200e923f0724456dc94adacc07d } from '@/collectio
 import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
+import { ServiceSectionRowLabel as ServiceSectionRowLabel_f4d65967a823bb24d0849dcb310405b9 } from '@/globals/Pages/Services/components/admin/ServiceSectionRowLabel'
+import { ContactInfoRowLabel as ContactInfoRowLabel_9c97f938f008495effa2768a6afb7956 } from '@/globals/Pages/Contact/components/admin/ContactInfoRowLabel'
 import { default as default_3eca826ce9bd531f858867bbd9e8f2f6 } from '@/globals/Pages/Downloads/components/PasswordStatus'
 import { BlogPostRowLabel as BlogPostRowLabel_7f1e8c37a863d8618d66f3c86402045e } from '@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel'
-import { RowLabel as RowLabel_4699d459aa16a2d49e3f0ff5fadd5e0f } from '@/globals/Layout/components/RowLabel'
+import { NavItemRowLabel as NavItemRowLabel_1ca93d5caf65e728a666215018b03653 } from '@/globals/Layout/Header/components/admin/NavItemRowLabel'
 import { default as default_915324d4628771dbb8d31cdc4601c33e } from '@/components/admin/BeforeDashboard'
 import { default as default_89344134860f9bc63867ffefbf33f214 } from '@/components/admin/BeforeLogin'
 import { default as default_7fcf195037406fe0b64b31c9e9270aec } from '@/components/admin/DateInputProvider'
@@ -83,9 +85,11 @@ export const importMap = {
   "@payloadcms/ui/rsc#FolderTableCell": FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui/rsc#FolderField": FolderField_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui#FolderTypeField": FolderTypeField_3817bf644402e67bfe6577f60ef982de,
+  "@/globals/Pages/Services/components/admin/ServiceSectionRowLabel#ServiceSectionRowLabel": ServiceSectionRowLabel_f4d65967a823bb24d0849dcb310405b9,
+  "@/globals/Pages/Contact/components/admin/ContactInfoRowLabel#ContactInfoRowLabel": ContactInfoRowLabel_9c97f938f008495effa2768a6afb7956,
   "@/globals/Pages/Downloads/components/PasswordStatus#default": default_3eca826ce9bd531f858867bbd9e8f2f6,
   "@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel#BlogPostRowLabel": BlogPostRowLabel_7f1e8c37a863d8618d66f3c86402045e,
-  "@/globals/Layout/components/RowLabel#RowLabel": RowLabel_4699d459aa16a2d49e3f0ff5fadd5e0f,
+  "@/globals/Layout/Header/components/admin/NavItemRowLabel#NavItemRowLabel": NavItemRowLabel_1ca93d5caf65e728a666215018b03653,
   "@/components/admin/BeforeDashboard#default": default_915324d4628771dbb8d31cdc4601c33e,
   "@/components/admin/BeforeLogin#default": default_89344134860f9bc63867ffefbf33f214,
   "@/components/admin/DateInputProvider#default": default_7fcf195037406fe0b64b31c9e9270aec,

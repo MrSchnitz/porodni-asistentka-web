@@ -54,21 +54,26 @@ export default buildConfig({
       viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
     },
     livePreview: {
-      /** Iframe načte /preview – client-side Live Preview v reálném čase. */
+      /** Iframe loads /preview — client-side Live Preview in real time. */
       url: ({ data, collectionConfig, globalConfig }) => {
         const params = new URLSearchParams()
         if (globalConfig) {
           params.set('global', globalConfig.slug)
           return `/preview?${params.toString()}`
         }
-        if (collectionConfig && data && typeof (data as { slug?: string }).slug === 'string') {
-          params.set('collection', collectionConfig.slug)
-          params.set('slug', (data as { slug: string }).slug)
-          return `/preview?${params.toString()}`
+        if (collectionConfig && data) {
+          const d = data as { slug?: string; id?: string }
+          const byId = collectionConfig.slug === 'reviews'
+          const value = byId ? d.id : d.slug
+          if (typeof value === 'string') {
+            params.set('collection', collectionConfig.slug)
+            params.set(byId ? 'id' : 'slug', value)
+            return `/preview?${params.toString()}`
+          }
         }
         return null
       },
-      collections: ['blogs', 'services'],
+      collections: ['blogs', 'services', 'reviews'],
       globals: [
         'homePage',
         'servicesPage',

@@ -16,12 +16,12 @@ export const FooterClient = ({
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-foreground text-background py-12" aria-label="Patička webu">
+    <footer className="bg-foreground text-background py-8 md:py-12" aria-label="Patička webu">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-3 md:mb-4">
               {logo && <GlobalLogo logo={logo} className="w-12 h-12" />}
               <span className="text-2xl" style={{ fontFamily: 'var(--font-display)' }}>
                 {footerTitle}
@@ -33,7 +33,7 @@ export const FooterClient = ({
           {/* Documents Section */}
           {downloadsSection?.enabled && (
             <div>
-              <h2 className="mb-3 text-base">{downloadsSection.title}</h2>
+              <h2 className="mb-2 md:mb-3 text-base">{downloadsSection.title}</h2>
               <ul className="space-y-1.5 text-sm">
                 <li>
                   <Link
@@ -46,7 +46,9 @@ export const FooterClient = ({
                 </li>
               </ul>
               {downloadsSection.description && (
-                <p className="text-background/60 text-xs mt-3">{downloadsSection.description}</p>
+                <p className="text-background/60 text-xs mt-2 md:mt-3">
+                  {downloadsSection.description}
+                </p>
               )}
             </div>
           )}
@@ -54,8 +56,8 @@ export const FooterClient = ({
           {/* Contact Info */}
           {contact && (
             <div className="md:col-start-3 md:col-end-3">
-              {contact.title && <h2 className="text-lg mb-4">{contact.title}</h2>}
-              <ul className="space-y-3">
+              {contact.title && <h2 className="text-lg mb-3 md:mb-4">{contact.title}</h2>}
+              <ul className="space-y-2 md:space-y-3">
                 {contact.phone && (
                   <li className="flex items-start gap-3 text-background/70">
                     <Phone className="w-5 h-5 shrink-0 mt-0.5 text-primary" aria-hidden="true" />
@@ -91,7 +93,7 @@ export const FooterClient = ({
           )}
         </div>
         {bottomText && (
-          <div className="border-t border-background/20 pt-8 text-center text-background/70 w-full">
+          <div className="border-t border-background/20 mt-6 pt-6 md:mt-8 md:pt-8 text-center text-background/70 w-full">
             <p>
               &copy; {currentYear} {bottomText}
             </p>

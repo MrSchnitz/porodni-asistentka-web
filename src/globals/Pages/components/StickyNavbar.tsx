@@ -30,7 +30,12 @@ export function StickyHeader({
   fixedMaxWidth = 'max-w-6xl',
 }: Props) {
   const [showFixed, setShowFixed] = useState(false)
+  const [isPreview, setIsPreview] = useState(false)
   const headerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setIsPreview(document.body.getAttribute('data-preview') === 'true')
+  }, [])
 
   useEffect(() => {
     if (!headerRef.current) return
@@ -67,7 +72,8 @@ export function StickyHeader({
             exit={{ y: -60, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className={cn(
-              'fixed top-18 sm:top-20 left-0 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-primary/10 py-3',
+              'fixed left-0 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-primary/10 py-3',
+              isPreview ? 'top-0' : 'top-navbar-mobile sm:top-navbar',
               fixedClassName,
             )}
           >

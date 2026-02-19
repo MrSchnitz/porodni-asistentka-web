@@ -1,15 +1,20 @@
 import { getWeeklyScheduleItems, dayNames } from '@/app/(frontend)/aktualni-sluzby/actions'
 import { PreviewRenderer } from '@/components/LivePreview/PreviewRenderer'
-import { getDocument } from '@/utilities/getDocument'
+import { getDocument, getDocumentById } from '@/utilities/getDocument'
 import { getGlobal } from '@/utilities/getGlobals'
-import type { Blog, Config, Service } from '@/payload-types'
+import type { Blog, Config, Review, Service } from '@/payload-types'
 import { notFound } from 'next/navigation'
 
-type SearchParams = Promise<{ global?: string; collection?: string; slug?: string } | null>
+type SearchParams = Promise<{
+  global?: string
+  collection?: string
+  slug?: string
+  id?: string
+} | null>
 
 type GlobalSlug = keyof Config['globals']
 
-/** Globály podporované v /preview (client-side Live Preview v reálném čase). */
+/** Globals supported in /preview (client-side Live Preview in real time). */
 const PREVIEW_GLOBALS: Partial<Record<GlobalSlug, { depth: number }>> = {
   homePage: { depth: 2 },
   servicesPage: { depth: 3 },
@@ -23,10 +28,11 @@ const PREVIEW_GLOBALS: Partial<Record<GlobalSlug, { depth: number }>> = {
   announcement: { depth: 1 },
 }
 
-/** Kolekce podporované v /preview. */
+/** Collections supported in /preview. */
 const PREVIEW_COLLECTIONS = {
   services: { depth: 3 },
   blogs: { depth: 2 },
+  reviews: { depth: 1 },
 } as const
 
 export default async function PreviewPage({ searchParams }: { searchParams: SearchParams }) {
@@ -58,33 +64,49 @@ export default async function PreviewPage({ searchParams }: { searchParams: Sear
     return <PreviewRenderer global={globalSlug} initialData={initialData} depth={config.depth} />
   }
 
-  if (collection && slug && collection in PREVIEW_COLLECTIONS) {
+  if (collection && collection in PREVIEW_COLLECTIONS) {
     const collConfig = PREVIEW_COLLECTIONS[collection as keyof typeof PREVIEW_COLLECTIONS]
-    const initialData = await getDocument(
-      collection as 'services' | 'blogs',
-      slug,
-      collConfig.depth,
-    )
+    let initialData: Awaited<ReturnType<typeof getDocument>> | null = null
+    switch (collection) {
+      case 'reviews':
+        initialData = params?.id
+          ? await getDocumentById('reviews', params.id, collConfig.depth)
+          : null
+        break
+      case 'services':
+      case 'blogs':
+        initialData = slug ? await getDocument(collection, slug, collConfig.depth) : null
+        break
+    }
     if (!initialData) notFound()
 
-    if (collection === 'services') {
-      return (
-        <PreviewRenderer
-          collection="services"
-          initialData={initialData as Service}
-          depth={collConfig.depth}
-        />
-      )
-    }
-
-    if (collection === 'blogs') {
-      return (
-        <PreviewRenderer
-          collection="blogs"
-          initialData={initialData as Blog}
-          depth={collConfig.depth}
-        />
-      )
+    switch (collection) {
+      case 'services':
+        return (
+          <PreviewRenderer
+            collection="services"
+            initialData={initialData as Service}
+            depth={collConfig.depth}
+          />
+        )
+      case 'blogs':
+        return (
+          <PreviewRenderer
+            collection="blogs"
+            initialData={initialData as Blog}
+            depth={collConfig.depth}
+          />
+        )
+      case 'reviews':
+        return (
+          <PreviewRenderer
+            collection="reviews"
+            initialData={initialData as Review}
+            depth={collConfig.depth}
+          />
+        )
+      default:
+        notFound()
     }
   }
 

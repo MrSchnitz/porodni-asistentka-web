@@ -54,6 +54,10 @@ export const Header: GlobalConfig = {
       name: 'navItems',
       type: 'array',
       label: 'Navigační položky',
+      labels: {
+        singular: 'Navigační položka',
+        plural: 'Navigační položky',
+      },
       fields: [
         link({
           appearances: false,
@@ -63,7 +67,7 @@ export const Header: GlobalConfig = {
       admin: {
         initCollapsed: true,
         components: {
-          RowLabel: '@/globals/Layout/components/RowLabel#RowLabel',
+          RowLabel: '@/globals/Layout/Header/components/admin/NavItemRowLabel#NavItemRowLabel',
         },
       },
     },

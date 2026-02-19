@@ -16,7 +16,7 @@ export const HomePage: GlobalConfig = {
       name: 'hero',
       type: 'group',
       interfaceName: 'Hero',
-      label: 'Hero sekce',
+      label: 'Úvodní sekce',
       fields: [
         {
           name: 'title',
@@ -102,6 +102,10 @@ export const HomePage: GlobalConfig = {
           name: 'services',
           type: 'array',
           label: 'Služby',
+          labels: {
+            singular: 'Služba',
+            plural: 'Služby',
+          },
           maxRows: 6,
           fields: [
             {
@@ -115,6 +119,10 @@ export const HomePage: GlobalConfig = {
         {
           name: 'ctaButton',
           label: 'Tlačítko pro přesměrování',
+          labels: {
+            singular: 'Tlačítko pro přesměrování',
+            plural: 'Tlačítka pro přesměrování',
+          },
           type: 'array',
           fields: [link({ appearances: false })],
           maxRows: 1,
@@ -145,6 +153,10 @@ export const HomePage: GlobalConfig = {
           name: 'reviews',
           type: 'array',
           label: 'Recenze',
+          labels: {
+            singular: 'Recenze',
+            plural: 'Recenze',
+          },
           fields: [
             {
               name: 'reference',

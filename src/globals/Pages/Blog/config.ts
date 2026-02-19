@@ -13,6 +13,10 @@ export const BlogPage: GlobalConfig = {
       name: 'blogPosts',
       type: 'array',
       label: 'Vybrané příspěvky',
+      labels: {
+        singular: 'Příspěvek',
+        plural: 'Příspěvky',
+      },
       admin: {
         components: {
           RowLabel:

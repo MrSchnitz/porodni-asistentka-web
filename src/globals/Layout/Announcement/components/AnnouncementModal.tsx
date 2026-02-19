@@ -45,7 +45,7 @@ export function AnnouncementModal({
     if (showOnce) {
       const dismissed = localStorage.getItem(`announcement-modal-dismissed-${id}`)
       if (!dismissed) {
-        // Zobrazit modal s mírným zpožděním pro lepší UX
+        // Show modal with a short delay for better UX
         setTimeout(() => setIsVisible(true), 500)
       }
     } else {
@@ -69,7 +69,7 @@ export function AnnouncementModal({
         onCloseComplete={handleDismiss}
         modalClassName="bg-white rounded-2xl shadow-2xl max-w-md w-full pointer-events-auto overflow-hidden m-4"
       >
-        {/* Header s ikonou */}
+        {/* Header with icon */}
         <div className={`${bgColors[type]} p-6 relative`}>
           <button
             onClick={handleDismiss}

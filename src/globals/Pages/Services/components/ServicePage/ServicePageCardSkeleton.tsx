@@ -14,7 +14,7 @@ export function ServicePageCardSkeleton() {
         <div className="h-4 bg-primary/15 rounded w-4/6" />
       </div>
 
-      {/* Divider + single price line (Cena: ...) */}
+      {/* Divider + single price line (Price: ...) */}
       <div className="mt-4 pt-4 border-t border-primary/20">
         <div className="flex justify-between items-center">
           <div className="h-4 bg-primary/15 rounded w-12" />

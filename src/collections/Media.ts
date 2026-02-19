@@ -38,13 +38,13 @@ export const Media: CollectionConfig = {
       {
         name: 'tablet',
         width: 1024,
-        height: undefined, // zachová poměr stran
+        height: undefined, // preserves aspect ratio
         position: 'centre',
       },
       {
         name: 'desktop',
         width: 1920,
-        height: undefined, // zachová poměr stran
+        height: undefined, // preserves aspect ratio
         position: 'centre',
       },
     ],

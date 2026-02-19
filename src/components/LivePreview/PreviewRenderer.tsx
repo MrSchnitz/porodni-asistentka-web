@@ -14,6 +14,7 @@ import { HeaderClient } from '@/globals/Layout/Header/Header.client'
 import { FooterClient } from '@/globals/Layout/Footer/Footer.client'
 import { AnnouncementClient } from '@/globals/Layout/Announcement/AnnouncementClient'
 import type { WeeklyScheduleByDay } from '@/app/(frontend)/aktualni-sluzby/actions'
+import { ReviewCard } from '@/globals/Pages/Home/components/ReviewCard'
 import type {
   AboutPage,
   Announcement,
@@ -24,6 +25,7 @@ import type {
   Footer,
   Header,
   HomePage,
+  Review,
   Service,
   ServicesPage as ServicesPageType,
   WeeklyScheduledServicesPage,
@@ -49,11 +51,12 @@ type PreviewRendererProps =
   | { global: 'announcement'; initialData: Announcement; depth: number }
   | { collection: 'services'; initialData: Service; depth: number }
   | { collection: 'blogs'; initialData: Blog; depth: number }
+  | { collection: 'reviews'; initialData: Review; depth: number }
   | { global: string; initialData: unknown; depth: number }
 
 /**
- * Client wrapper pro /preview – Live Preview v reálném čase.
- * Data předává do content komponent jako prop.
+ * Client wrapper for /preview – real-time Live Preview.
+ * Passes data to content components as prop.
  */
 export function PreviewRenderer(props: PreviewRendererProps) {
   const { initialData, depth } = props
@@ -75,6 +78,12 @@ export function PreviewRenderer(props: PreviewRendererProps) {
       case 'blogs':
         return wrap<Blog>(props.initialData as Blog, (data) => (
           <BlogPostDetailPage blogPost={data} relatedPosts={[]} />
+        ))
+      case 'reviews':
+        return wrap<Review>(props.initialData as Review, (data) => (
+          <div className="p-6 max-w-md">
+            <ReviewCard review={data} />
+          </div>
         ))
       default:
         return (

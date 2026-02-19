@@ -22,6 +22,21 @@ export async function getDocument(collection: Collection, slug: string, depth = 
   return page.docs[0]
 }
 
+/** Fetches a document by id (for collections without slug, e.g. reviews). */
+export async function getDocumentById(collection: Collection, id: string, depth = 0) {
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection,
+    depth,
+    where: {
+      id: { equals: id },
+    },
+  })
+
+  return result.docs[0]
+}
+
 /**
  * Returns a unstable_cache function mapped with the cache tag for the slug
  */

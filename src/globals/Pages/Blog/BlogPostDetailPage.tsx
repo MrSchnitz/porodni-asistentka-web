@@ -21,7 +21,7 @@ export function BlogPostDetailPage({ blogPost, relatedPosts }: Props) {
               <div className="rounded-2xl overflow-hidden shadow-xl">
                 <Media
                   resource={blogPost.headImage}
-                  className="w-full h-[400px] sm:h-[500px] object-cover"
+                  className="w-full max-h-[400px] sm:max-h-[500px] object-cover"
                 />
               </div>
             </div>

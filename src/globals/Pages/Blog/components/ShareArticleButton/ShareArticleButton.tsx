@@ -10,7 +10,7 @@ type Props = {
   className?: string
 }
 
-/** Sestaví čistou URL pouze z cesty (bez náhodného textu za mezerou/newline). */
+/** Builds a clean URL from the path only (without any stray text after space/newline). */
 function buildShareUrl(path: string): string {
   const origin = typeof window !== 'undefined' ? window.location.origin : ''
   const cleanPath = path.split(/[\s\n]/)[0].trim()

@@ -14,6 +14,16 @@ export const ContactPage: GlobalConfig = {
       name: 'contactInfo',
       type: 'array',
       label: 'Kontaktní informace',
+      labels: {
+        singular: 'Kontaktní informace',
+        plural: 'Kontaktní informace',
+      },
+      admin: {
+        components: {
+          RowLabel:
+            '@/globals/Pages/Contact/components/admin/ContactInfoRowLabel#ContactInfoRowLabel',
+        },
+      },
       fields: [
         iconField,
         { name: 'title', type: 'text', label: 'Nadpis' },

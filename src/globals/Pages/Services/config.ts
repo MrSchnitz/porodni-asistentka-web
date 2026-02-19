@@ -16,6 +16,16 @@ export const ServicesPage: GlobalConfig = {
       dbName: 'sections',
       type: 'array',
       label: 'Sekce služeb',
+      labels: {
+        singular: 'Sekce služeb',
+        plural: 'Sekce služeb',
+      },
+      admin: {
+        components: {
+          RowLabel:
+            '@/globals/Pages/Services/components/admin/ServiceSectionRowLabel#ServiceSectionRowLabel',
+        },
+      },
       fields: [
         {
           name: 'servicesSection',
@@ -38,6 +48,10 @@ export const ServicesPage: GlobalConfig = {
               dbName: 'items',
               type: 'array',
               label: 'Vyberte služby pro zobrazení na stránce',
+              labels: {
+                singular: 'Služba',
+                plural: 'Služby',
+              },
               fields: [
                 {
                   name: 'item',
