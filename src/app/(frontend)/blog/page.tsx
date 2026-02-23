@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { BlogPostListWithSearch } from '@/globals/Pages/Blog/components/BlogPostListWithSearch/BlogPostListWithSearch'
+import { BlogPostListWithSearch } from '@/features/blog/components/BlogPostListWithSearch/BlogPostListWithSearch'
 import type { BlogPage } from '@/payload-types'
 import { getGlobal } from '@/utilities/getGlobals'
 import { hasData } from '@/utilities/payload'

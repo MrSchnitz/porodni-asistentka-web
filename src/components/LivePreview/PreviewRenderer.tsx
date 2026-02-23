@@ -1,20 +1,20 @@
 'use client'
 
 import { LivePreview } from '@/components/LivePreview/LivePreview'
-import { AboutPageContent } from '@/globals/Pages/About/AboutPageContent'
-import { BlogPageContent } from '@/globals/Pages/Blog/BlogPageContent'
-import { BlogPostDetailPage } from '@/globals/Pages/Blog/BlogPostDetailPage'
-import { ContactPageContent } from '@/globals/Pages/Contact/ContactPageContent'
-import { DownloadsPage } from '@/globals/Pages/Downloads/DownloadsPage'
-import { HomeContent } from '@/globals/Pages/Home/HomeContent'
-import ServicesPage from '@/globals/Pages/Services/ServicesPage'
-import { ServicePreviewView } from '@/globals/Pages/Services/ServicePreviewView'
-import { WeeklyPageContent } from '@/globals/Pages/WeeklyScheduledServices/WeeklyPageContent'
-import { HeaderClient } from '@/globals/Layout/Header/Header.client'
-import { FooterClient } from '@/globals/Layout/Footer/Footer.client'
-import { AnnouncementClient } from '@/globals/Layout/Announcement/AnnouncementClient'
+import { AboutPageContent } from '@/features/about/AboutPageContent'
+import { BlogPageContent } from '@/features/blog/BlogPageContent'
+import { BlogPostDetailPage } from '@/features/blog/BlogPostDetailPage'
+import { ContactPageContent } from '@/features/contact/ContactPageContent'
+import { DownloadsPageContent } from '@/features/downloads/DownloadsPageContent'
+import { HomePageContent } from '@/features/home/HomePageContent'
+import { ServicesPageContent } from '@/features/services/ServicesPageContent'
+import { ServicePreviewView } from '@/features/services/ServicePreviewView'
+import { WeeklyPageContent } from '@/features/weekly-scheduled-services/WeeklyPageContent'
+import { HeaderClient } from '@/features/layout/Header/Header.client'
+import { FooterClient } from '@/features/layout/Footer/Footer.client'
+import { AnnouncementClient } from '@/features/layout/Announcement/AnnouncementClient'
 import type { WeeklyScheduleByDay } from '@/app/(frontend)/aktualni-sluzby/actions'
-import { ReviewCard } from '@/globals/Pages/Home/components/ReviewCard'
+import { ReviewCard } from '@/features/home/components/ReviewCard'
 import type {
   AboutPage,
   Announcement,
@@ -97,7 +97,7 @@ export function PreviewRenderer(props: PreviewRendererProps) {
   const global = props.global
   switch (global) {
     case 'homePage':
-      return wrap<HomePage>(initialData as HomePage, (data) => <HomeContent data={data} />)
+      return wrap<HomePage>(initialData as HomePage, (data) => <HomePageContent data={data} />)
     case 'aboutPage':
       return wrap<AboutPage>(initialData as AboutPage, (data) => <AboutPageContent data={data} />)
     case 'contactPage':
@@ -106,11 +106,11 @@ export function PreviewRenderer(props: PreviewRendererProps) {
       ))
     case 'downloadsPage':
       return wrap<DownloadsPageType>(initialData as DownloadsPageType, (data) => (
-        <DownloadsPage data={data} />
+        <DownloadsPageContent data={data} />
       ))
     case 'servicesPage':
       return wrap<ServicesPageType>(initialData as ServicesPageType, (data) => (
-        <ServicesPage data={data} />
+        <ServicesPageContent data={data} />
       ))
     case 'weeklyScheduledServicesPage': {
       const { initialData, weeklySchedule, dayDates, dayNames } = props as Extract<

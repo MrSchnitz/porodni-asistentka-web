@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { WeeklyPageContent } from '@/globals/Pages/WeeklyScheduledServices/WeeklyPageContent'
+import { WeeklyPageContent } from '@/features/weekly-scheduled-services/WeeklyPageContent'
 import type { WeeklyScheduledServicesPage } from '@/payload-types'
 import { getGlobal } from '@/utilities/getGlobals'
 import { dayNames, getWeeklyScheduleItems } from './actions'

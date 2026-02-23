@@ -1,7 +1,7 @@
 import type { Field, GroupField } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
-import { PAGE_ROUTES } from '@/globals/Pages/pageRoutes'
+import { PAGE_ROUTES } from '@/features/_shared/pageRoutes'
 
 type LinkAppearances = 'default' | 'outline'
 

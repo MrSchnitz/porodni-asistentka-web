@@ -36,11 +36,11 @@ import { default as default_97f4e200e923f0724456dc94adacc07d } from '@/collectio
 import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
-import { default as default_f4d65967a823bb24d0849dcb310405b9 } from '@/globals/Pages/Services/components/admin/ServiceSectionRowLabel'
-import { default as default_9c97f938f008495effa2768a6afb7956 } from '@/globals/Pages/Contact/components/admin/ContactInfoRowLabel'
-import { default as default_3eca826ce9bd531f858867bbd9e8f2f6 } from '@/globals/Pages/Downloads/components/PasswordStatus'
-import { default as default_7f1e8c37a863d8618d66f3c86402045e } from '@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel'
-import { NavItemRowLabel as NavItemRowLabel_1ca93d5caf65e728a666215018b03653 } from '@/globals/Layout/Header/components/admin/NavItemRowLabel'
+import { default as default_e8afe77cabef088992ec87352539e18d } from '@/features/services/components/admin/ServiceSectionRowLabel'
+import { default as default_364174d5aef13606c6bb607fcde76322 } from '@/features/contact/components/admin/ContactInfoRowLabel'
+import { default as default_88f1e8d5feb2d7c90778319ade757992 } from '@/features/downloads/components/PasswordStatus'
+import { default as default_a33bbd4a4961fa25cae882137b030d7d } from '@/features/blog/components/BlogPostRowLabel/BlogPostRowLabel'
+import { NavItemRowLabel as NavItemRowLabel_56004ae4d230041dfc082b09c6e07978 } from '@/features/layout/Header/components/admin/NavItemRowLabel'
 import { default as default_534076e2c753ea5d539a54b05f456b1b } from '@/components/admin/Icon'
 import { default as default_a44df17d0fc3dcd873dae43dc3bf66bd } from '@/components/admin/Logo'
 import { default as default_89344134860f9bc63867ffefbf33f214 } from '@/components/admin/BeforeLogin'
@@ -86,11 +86,11 @@ export const importMap = {
   "@payloadcms/ui/rsc#FolderTableCell": FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui/rsc#FolderField": FolderField_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui#FolderTypeField": FolderTypeField_3817bf644402e67bfe6577f60ef982de,
-  "@/globals/Pages/Services/components/admin/ServiceSectionRowLabel#default": default_f4d65967a823bb24d0849dcb310405b9,
-  "@/globals/Pages/Contact/components/admin/ContactInfoRowLabel#default": default_9c97f938f008495effa2768a6afb7956,
-  "@/globals/Pages/Downloads/components/PasswordStatus#default": default_3eca826ce9bd531f858867bbd9e8f2f6,
-  "@/globals/Pages/Blog/components/BlogPostRowLabel/BlogPostRowLabel#default": default_7f1e8c37a863d8618d66f3c86402045e,
-  "@/globals/Layout/Header/components/admin/NavItemRowLabel#NavItemRowLabel": NavItemRowLabel_1ca93d5caf65e728a666215018b03653,
+  "@/features/services/components/admin/ServiceSectionRowLabel#default": default_e8afe77cabef088992ec87352539e18d,
+  "@/features/contact/components/admin/ContactInfoRowLabel#default": default_364174d5aef13606c6bb607fcde76322,
+  "@/features/downloads/components/PasswordStatus#default": default_88f1e8d5feb2d7c90778319ade757992,
+  "@/features/blog/components/BlogPostRowLabel/BlogPostRowLabel#default": default_a33bbd4a4961fa25cae882137b030d7d,
+  "@/features/layout/Header/components/admin/NavItemRowLabel#NavItemRowLabel": NavItemRowLabel_56004ae4d230041dfc082b09c6e07978,
   "@/components/admin/Icon#default": default_534076e2c753ea5d539a54b05f456b1b,
   "@/components/admin/Logo#default": default_a44df17d0fc3dcd873dae43dc3bf66bd,
   "@/components/admin/BeforeLogin#default": default_89344134860f9bc63867ffefbf33f214,

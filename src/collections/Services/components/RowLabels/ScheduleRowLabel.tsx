@@ -3,7 +3,7 @@
 import { formatServiceDateTime } from '@/utilities/formatServiceDateTime'
 import { RowLabelProps, useRowLabel } from '@payloadcms/ui'
 import { Ban } from 'lucide-react'
-import { ScheduleItems } from '@/globals/Pages/types'
+import { ScheduleItems } from '@/features/_shared/types'
 
 type Entry = NonNullable<ScheduleItems>[number]
 

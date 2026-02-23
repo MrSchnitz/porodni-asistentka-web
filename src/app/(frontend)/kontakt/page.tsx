@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ContactPageContent } from '@/globals/Pages/Contact/ContactPageContent'
+import { ContactPageContent } from '@/features/contact/ContactPageContent'
 import type { ContactPage } from '@/payload-types'
 import { getGlobal } from '@/utilities/getGlobals'
 

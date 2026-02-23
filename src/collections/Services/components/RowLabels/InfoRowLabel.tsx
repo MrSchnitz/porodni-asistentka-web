@@ -1,6 +1,6 @@
 'use client'
 
-import { AdditionalInfo } from '@/globals/Pages/types'
+import { AdditionalInfo } from '@/features/_shared/types'
 import { RowLabelProps, useRowLabel } from '@payloadcms/ui'
 
 type Info = AdditionalInfo

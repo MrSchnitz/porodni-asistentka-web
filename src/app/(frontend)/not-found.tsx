@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { PAGE_ROUTES } from '@/globals/Pages/pageRoutes'
+import { PAGE_ROUTES } from '@/features/_shared/pageRoutes'
 import { Home, ArrowLeft } from 'lucide-react'
 
 export default function NotFound() {

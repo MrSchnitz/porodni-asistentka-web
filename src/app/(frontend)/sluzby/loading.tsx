@@ -1,4 +1,4 @@
-import { ServicesGridSkeleton } from '@/globals/Pages/Services/components/ServicePage/ServicePageCardSkeleton'
+import { ServicesGridSkeleton } from '@/features/services/components/ServicePage/ServicePageCardSkeleton'
 
 export default function Loading() {
   return (

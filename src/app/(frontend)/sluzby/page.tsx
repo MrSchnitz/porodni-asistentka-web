@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import ServicesPage from '@/globals/Pages/Services/ServicesPage'
+import { ServicesPageContent } from '@/features/services/ServicesPageContent'
 import type { ServicesPage as ServicesPageType } from '@/payload-types'
 import { getGlobal } from '@/utilities/getGlobals'
 
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const data = (await getGlobal('servicesPage', 3)) as ServicesPageType
-  return <ServicesPage data={data} />
+  return <ServicesPageContent data={data} />
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import { DownloadAuthPage } from '@/globals/Pages/Downloads/DownloadAuthPage'
-import { DownloadsPage } from '@/globals/Pages/Downloads/DownloadsPage'
+import { DownloadAuthPage } from '@/features/downloads/DownloadAuthPage'
+import { DownloadsPageContent } from '@/features/downloads/DownloadsPageContent'
 import type { DownloadsPage as DownloadsPageType } from '@/payload-types'
 import { getGlobal } from '@/utilities/getGlobals'
 import { isDownloadsAuthenticated } from './actions'
@@ -19,5 +19,5 @@ export default async function Page() {
     return <DownloadAuthPage data={data} />
   }
 
-  return <DownloadsPage data={data} />
+  return <DownloadsPageContent data={data} />
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { AboutPageContent } from '@/globals/Pages/About/AboutPageContent'
+import { AboutPageContent } from '@/features/about/AboutPageContent'
 import type { AboutPage } from '@/payload-types'
 import { getGlobal } from '@/utilities/getGlobals'
 

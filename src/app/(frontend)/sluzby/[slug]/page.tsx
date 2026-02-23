@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ServiceDetailPage } from '@/globals/Pages/Services/ServiceDetailPage'
+import { ServiceDetailPage } from '@/features/services/ServiceDetailPage'
 import type { Service } from '@/payload-types'
 import { getPayload } from 'payload'
 import config from '@payload-config'

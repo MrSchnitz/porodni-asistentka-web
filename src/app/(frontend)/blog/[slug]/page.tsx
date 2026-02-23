@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { BlogPostDetailPage } from '@/globals/Pages/Blog/BlogPostDetailPage'
+import { BlogPostDetailPage } from '@/features/blog/BlogPostDetailPage'
 import type { Blog } from '@/payload-types'
 import { hasData } from '@/utilities/payload'
 import { getPayload } from 'payload'
