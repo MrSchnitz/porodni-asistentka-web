@@ -1,3 +1,4 @@
+/* eslint-disable */
 const pacificoFontUrl = 'https://fonts.googleapis.com/css2?family=Pacifico&display=swap'
 
 export default function AdminLogo() {

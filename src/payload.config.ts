@@ -1,6 +1,8 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import path from 'path'
+
+import { migrations } from './migrations'
 import { buildConfig, GlobalConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
@@ -109,6 +111,8 @@ export default buildConfig({
         process.env.DATABASE_URI || 'postgresql://payload:payload@localhost:5432/payload',
     },
     idType: 'uuid',
+    // Run pending migrations at server startup (production). See: https://payloadcms.com/docs/database/migrations
+    prodMigrations: migrations,
   }),
   sharp,
   plugins: [

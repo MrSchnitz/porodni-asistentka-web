@@ -61,6 +61,7 @@ type PreviewRendererProps =
 export function PreviewRenderer(props: PreviewRendererProps) {
   const { initialData, depth } = props
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const wrap = <T extends Record<string, any>>(data: T, render: (data: T) => React.ReactNode) => (
     <LivePreview initialData={data} depth={depth}>
       {render}

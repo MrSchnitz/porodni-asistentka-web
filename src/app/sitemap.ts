@@ -3,6 +3,9 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { getServerSideURL } from '@/utilities/getURL'
 
+// Generate at request time so Docker build does not need PAYLOAD_SECRET or database
+export const dynamic = 'force-dynamic'
+
 const baseUrl = getServerSideURL()
 
 const staticRoutes: string[] = [

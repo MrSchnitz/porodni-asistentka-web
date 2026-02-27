@@ -48,6 +48,8 @@ RUN addgroup --system --gid 1001 nodejs && \
 # Copy standalone output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Copy public assets (favicon, logo, og-image, etc.)
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
 # Create downloads directory with correct permissions
 RUN mkdir -p /app/downloads && chown nextjs:nodejs /app/downloads

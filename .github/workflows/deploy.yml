@@ -1,46 +1,44 @@
 # ============================================
 # Deploy to Raspberry Pi
 # ============================================
-# 
-# Automatický deployment na RPi server
-# - Build ARM64 image
-# - Kopírování přes Cloudflare Tunnel
-# - Migrace databáze
-# - Restart aplikace
+#
+# Build ARM64 image, deploy to RPi over Tailscale SSH. Migrations run at app startup (prodMigrations).
 #
 # ============================================
 # REQUIRED SECRETS (GitHub → Settings → Secrets)
 # ============================================
-# SSH_PI_HOST            - SSH hostname přes Cloudflare (např. ssh.vase-domena.cz)
-# SERVER_PI_USER         - SSH uživatel (např. pi)
-# SSH_PI_PASSWORD        - Heslo pro SSH přístup na server
-# POSTGRES_PI_PASSWORD   - Heslo pro PostgreSQL databázi
+# Tailscale (one of):
+#   Federated identity (recommended): TS_OAUTH_CLIENT_ID + TS_AUDIENCE
+#   OAuth: TS_OAUTH_CLIENT_ID + TS_OAUTH_SECRET
+#   Auth key: TAILSCALE_AUTHKEY (reusable, ephemeral, tag identity)
+#
+# RPi / SSH:
+#   TAILSCALE_PI_HOST    - RPi Tailscale hostname or IP (e.g. rpi-name or 100.x.x.x)
+#   SERVER_PI_USER       - SSH user (e.g. pi)
+#   SSH_PI_PRIVATE_KEY   - SSH private key (add public key to RPi ~/.ssh/authorized_keys)
+#
+# Migrations run at app startup via Payload prodMigrations (https://payloadcms.com/docs/database/migrations).
+# RPi: Install Tailscale, SSH enabled, SERVER_PATH with docker compose (app + postgres).
 #
 
 name: Deploy to RPi
 
 on:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    tags:
+      - 'v*' # only run for tags like v1.0.0
   workflow_dispatch:
-    inputs:
-      skip_migrations:
-        description: 'Skip database migrations'
-        required: false
-        type: boolean
-        default: false
 
 env:
   IMAGE_NAME: porodni-asistentka-web
-  SERVER_PATH: ~/apps/porodni-asistentka-test
+  SERVER_PATH: ${{ secrets.SERVER_PATH }}
 
 jobs:
   # ============================================
   # Job 1: Build Docker image for ARM64
   # ============================================
   build:
-    name: 🔨 Build ARM64 Image
+    name: Build ARM64 Image
     runs-on: ubuntu-latest
     outputs:
       image_version: ${{ steps.version.outputs.version }}
@@ -60,7 +58,7 @@ jobs:
         run: |
           VERSION="v${{ github.run_number }}-${GITHUB_SHA::7}"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "📦 Building version: $VERSION"
+          echo "Building version: $VERSION"
 
       - name: Build Docker image (ARM64)
         run: |
@@ -75,7 +73,7 @@ jobs:
         run: |
           gzip image.tar
           ls -lh image.tar.gz
-          echo "📦 Image size: $(du -h image.tar.gz | cut -f1)"
+          echo "Image size: $(du -h image.tar.gz | cut -f1)"
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v4
@@ -85,12 +83,15 @@ jobs:
           retention-days: 1
 
   # ============================================
-  # Job 2: Deploy to server and run migrations
+  # Job 2: Deploy via Tailscale SSH + optional migrations
   # ============================================
   deploy:
-    name: 🚀 Deploy to RPi
+    name: Deploy to RPi via Tailscale
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for Tailscale federated/OAuth auth
+      contents: read
 
     steps:
       - name: Checkout code
@@ -101,144 +102,51 @@ jobs:
         with:
           name: docker-image
 
-      - name: Install cloudflared and sshpass
-        run: |
-          # Install cloudflared
-          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
-          chmod +x cloudflared
-          sudo mv cloudflared /usr/local/bin/
-          cloudflared --version
-          
-          # Install sshpass for password-based auth
-          sudo apt-get update
-          sudo apt-get install -y sshpass
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:ci
+          ping: ${{ secrets.TAILSCALE_PI_HOST }}
+        # Alternative: auth key (reusable, ephemeral, tag identity)
+        # with:
+        #   authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+        #   tags: tag:ci
+        #   ping: ${{ secrets.TAILSCALE_PI_HOST }}
 
-      - name: Setup SSH with Cloudflare Tunnel
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          
-          # Configure SSH to use Cloudflare Tunnel
+          echo "${{ secrets.SSH_PI_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.TAILSCALE_PI_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
           cat >> ~/.ssh/config << EOF
-          Host ${{ secrets.SSH_PI_HOST }}
+          Host ${{ secrets.TAILSCALE_PI_HOST }}
               User ${{ secrets.SERVER_PI_USER }}
-              ProxyCommand cloudflared access ssh --hostname %h
-              StrictHostKeyChecking no
+              IdentityFile ~/.ssh/deploy_key
+              StrictHostKeyChecking accept-new
           EOF
           chmod 600 ~/.ssh/config
 
       - name: Copy image to server
-        env:
-          SSHPASS: ${{ secrets.SSH_PI_PASSWORD }}
         run: |
-          echo "📤 Copying image to server via Cloudflare Tunnel..."
-          sshpass -e scp image.tar.gz ${{ secrets.SSH_PI_HOST }}:${{ env.SERVER_PATH }}/
+          echo "Copying image to server via Tailscale..."
+          scp image.tar.gz ${{ secrets.SERVER_PI_USER }}@${{ secrets.TAILSCALE_PI_HOST }}:${{ env.SERVER_PATH }}/
 
       - name: Deploy on server
-        env:
-          SSHPASS: ${{ secrets.SSH_PI_PASSWORD }}
         run: |
-          sshpass -e ssh ${{ secrets.SSH_PI_HOST }} << DEPLOY_SCRIPT
-            set -e
-            cd ${{ env.SERVER_PATH }}
-            
-            echo "📦 Loading Docker image..."
-            docker load < image.tar.gz
-            
-            echo "🔄 Restarting application..."
-            docker compose down app || true
-            docker compose up -d
-            
-            echo "🧹 Cleanup..."
-            rm -f image.tar.gz
-            docker image prune -f
-            
-            echo "✅ Deployment complete!"
-            docker compose ps
-          DEPLOY_SCRIPT
-
-      # ----------------------------------------
-      # Database migrations (optional)
-      # ----------------------------------------
-      - name: Setup Node.js
-        if: ${{ github.event.inputs.skip_migrations != 'true' }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Setup pnpm
-        if: ${{ github.event.inputs.skip_migrations != 'true' }}
-        uses: pnpm/action-setup@v2
-        with:
-          version: 9
-
-      - name: Install dependencies
-        if: ${{ github.event.inputs.skip_migrations != 'true' }}
-        run: pnpm install --frozen-lockfile
-
-      - name: Run migrations via SSH tunnel
-        if: ${{ github.event.inputs.skip_migrations != 'true' }}
-        env:
-          POSTGRES_PI_PASSWORD: ${{ secrets.POSTGRES_PI_PASSWORD }}
-          SSHPASS: ${{ secrets.SSH_PI_PASSWORD }}
-        run: |
-          echo "🔗 Opening SSH tunnel to PostgreSQL via Cloudflare..."
-          
-          # Start SSH tunnel in background (through Cloudflare Tunnel)
-          sshpass -e ssh -L 5432:localhost:5432 -N ${{ secrets.SSH_PI_HOST }} &
-          TUNNEL_PID=$!
-          sleep 5
-          
-          echo "🗃️ Running migrations..."
-          DATABASE_URI="postgresql://payload:${POSTGRES_PI_PASSWORD}@localhost:5432/payload" \
-            pnpm payload migrate
-          
-          echo "🔌 Closing tunnel..."
-          kill $TUNNEL_PID || true
-          
-          echo "✅ Migrations complete!"
-
-  # ============================================
-  # Job 4: Verify deployment
-  # ============================================
-  # verify:
-  #   name: ✅ Verify Deployment
-  #   needs: [deploy, migrate]
-  #   if: always() && needs.deploy.result == 'success'
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Wait for app to start
-  #       run: sleep 15
-
-  #     - name: Check website
-  #       run: |
-  #         SITE_URL="${{ secrets.SITE_URL }}"
-  #         if [ -z "$SITE_URL" ]; then
-  #           echo "⏭️ SITE_URL secret not set, skipping verification"
-  #           exit 0
-  #         fi
-          
-  #         echo "🔍 Checking website at $SITE_URL..."
-  #         HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL" || echo "000")
-          
-  #         if [ "$HTTP_STATUS" = "200" ]; then
-  #           echo "✅ Website is up! (HTTP $HTTP_STATUS)"
-  #         else
-  #           echo "⚠️ Website returned HTTP $HTTP_STATUS"
-  #         fi
-
-  #     - name: Check admin panel
-  #       run: |
-  #         SITE_URL="${{ secrets.SITE_URL }}"
-  #         if [ -z "$SITE_URL" ]; then
-  #           exit 0
-  #         fi
-          
-  #         echo "🔍 Checking admin panel..."
-  #         HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL/admin" || echo "000")
-          
-  #         if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "302" ]; then
-  #           echo "✅ Admin panel is accessible! (HTTP $HTTP_STATUS)"
-  #         else
-  #           echo "⚠️ Admin panel returned HTTP $HTTP_STATUS"
-  #         fi
+          ssh ${{ secrets.SERVER_PI_USER }}@${{ secrets.TAILSCALE_PI_HOST }} << EOF
+          set -e
+          cd ${{ env.SERVER_PATH }}
+          echo "Loading Docker image..."
+          docker load < image.tar.gz
+          echo "Restarting application..."
+          docker compose down app || true
+          docker compose up -d
+          echo "Cleanup..."
+          rm -f image.tar.gz
+          docker image prune -f
+          echo "Deployment complete!"
+          docker compose ps
+          EOF
