@@ -7,10 +7,10 @@
 # ============================================
 # REQUIRED SECRETS (GitHub → Settings → Secrets)
 # ============================================
-# Tailscale (one of):
-#   Federated identity (recommended): TS_OAUTH_CLIENT_ID + TS_AUDIENCE
-#   OAuth: TS_OAUTH_CLIENT_ID + TS_OAUTH_SECRET
-#   Auth key: TAILSCALE_AUTHKEY (reusable, ephemeral, tag identity)
+# Tailscale (OAuth API – create at https://tailscale.com/s/oauth-clients):
+#   TS_OAUTH_CLIENT_ID  - OAuth client ID
+#   TS_AUDIENCE         - Audience (e.g. your tailnet name or custom)
+#   Create tag "ci" in Admin → ACL/Tags, owner autogroup:admin. OIDC Subject: repo:OWNER/REPO:*
 #
 # RPi / SSH:
 #   TAILSCALE_PI_HOST    - RPi Tailscale hostname or IP (e.g. rpi-name or 100.x.x.x)
@@ -90,9 +90,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # Required for Tailscale federated/OAuth auth
+      id-token: write   # required for Tailscale OIDC
       contents: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -109,11 +108,6 @@ jobs:
           audience: ${{ secrets.TS_AUDIENCE }}
           tags: tag:ci
           ping: ${{ secrets.TAILSCALE_PI_HOST }}
-        # Alternative: auth key (reusable, ephemeral, tag identity)
-        # with:
-        #   authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-        #   tags: tag:ci
-        #   ping: ${{ secrets.TAILSCALE_PI_HOST }}
 
       - name: Setup SSH
         run: |
