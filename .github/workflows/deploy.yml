@@ -7,10 +7,7 @@
 # ============================================
 # REQUIRED SECRETS (GitHub → Settings → Secrets)
 # ============================================
-# Tailscale (one of):
-#   Federated identity (recommended): TS_OAUTH_CLIENT_ID + TS_AUDIENCE
-#   OAuth: TS_OAUTH_CLIENT_ID + TS_OAUTH_SECRET
-#   Auth key: TAILSCALE_AUTHKEY (reusable, ephemeral, tag identity)
+# Tailscale: TAILSCALE_AUTHKEY (reusable auth key with tag:ci, create in Tailscale Admin → Keys)
 #
 # RPi / SSH:
 #   TAILSCALE_PI_HOST    - RPi Tailscale hostname or IP (e.g. rpi-name or 100.x.x.x)
@@ -25,6 +22,8 @@ name: Deploy to RPi
 
 on:
   push:
+    branches:
+      - main # Deploy when pushing to main branch
     tags:
       - 'v*' # only run for tags like v1.0.0
   workflow_dispatch:
@@ -89,10 +88,6 @@ jobs:
     name: Deploy to RPi via Tailscale
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write # Required for Tailscale federated/OAuth auth
-      contents: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -105,15 +100,9 @@ jobs:
       - name: Connect to Tailscale
         uses: tailscale/github-action@v4
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          audience: ${{ secrets.TS_AUDIENCE }}
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
           tags: tag:ci
           ping: ${{ secrets.TAILSCALE_PI_HOST }}
-        # Alternative: auth key (reusable, ephemeral, tag identity)
-        # with:
-        #   authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-        #   tags: tag:ci
-        #   ping: ${{ secrets.TAILSCALE_PI_HOST }}
 
       - name: Setup SSH
         run: |
