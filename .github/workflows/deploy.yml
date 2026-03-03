@@ -16,6 +16,7 @@
 #
 # Frontend public env (build-time for Next.js):
 #   NEXT_PUBLIC_TURNSTILE_SITE_KEY - Cloudflare Turnstile site key
+#   NEXT_PUBLIC_SERVER_URL         - Canonical app URL (e.g. https://example.com)
 #
 # Migrations run at app startup via Payload prodMigrations (https://payloadcms.com/docs/database/migrations).
 # RPi: Install Tailscale, SSH enabled, SERVER_PATH with docker compose (app + postgres).
@@ -77,6 +78,7 @@ jobs:
           docker buildx build \
             --platform linux/arm64 \
             --build-arg NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }} \
+            --build-arg NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }} \
             --tag ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }} \
             --tag ${{ env.IMAGE_NAME }}:latest \
             --output type=docker,dest=image.tar \

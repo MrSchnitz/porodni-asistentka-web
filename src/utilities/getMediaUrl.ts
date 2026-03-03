@@ -1,5 +1,3 @@
-import { getServerSideURL } from '@/utilities/getURL'
-
 /**
  * Processes media resource URL to ensure proper formatting
  * @param url The original URL from the resource
@@ -13,13 +11,24 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
     cacheTag = encodeURIComponent(cacheTag)
   }
 
+  const withCache = (value: string) => (cacheTag ? `${value}?${cacheTag}` : value)
+
   // Check if URL already has http/https protocol
   if (url.startsWith('http://') || url.startsWith('https://')) {
-    return cacheTag ? `${url}?${cacheTag}` : url
+    return withCache(url)
   }
 
-  // Use server URL for media to ensure consistency with Next.js remotePatterns
-  // This prevents mismatches when users access via different domains (e.g., www vs non-www)
-  const baseUrl = getServerSideURL()
-  return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
+  // Keep relative media URLs relative to avoid host mismatches on hard refresh.
+  // In production, an incorrect NEXT_PUBLIC_SERVER_URL can otherwise produce broken image src.
+  if (url.startsWith('/')) {
+    return withCache(url)
+  }
+
+  // For non-leading slash paths, only prefix with a configured server URL.
+  // Never fallback to localhost here as it can leak into production markup.
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL
+  if (!baseUrl) return withCache(url)
+
+  const normalizedBase = baseUrl.startsWith('http') ? baseUrl : `https://${baseUrl}`
+  return withCache(`${normalizedBase}/${url.replace(/^\/+/, '')}`)
 }
