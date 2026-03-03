@@ -8,8 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { sendContactEmail, type ContactFormState } from '@/app/(frontend)/kontakt/actions'
 
-// Turnstile site key (public, safe to hardcode)
-const TURNSTILE_SITE_KEY = '0x4AAAAAACMuRHgADAH5xj6d'
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ''
 
 function SubmitButton({ pending, disabled }: { pending: boolean; disabled: boolean }) {
   return (

@@ -14,6 +14,9 @@
 #   SERVER_PI_USER       - SSH user (e.g. pi)
 #   SSH_PI_PRIVATE_KEY   - SSH private key (add public key to RPi ~/.ssh/authorized_keys)
 #
+# Frontend public env (build-time for Next.js):
+#   NEXT_PUBLIC_TURNSTILE_SITE_KEY - Cloudflare Turnstile site key
+#
 # Migrations run at app startup via Payload prodMigrations (https://payloadcms.com/docs/database/migrations).
 # RPi: Install Tailscale, SSH enabled, SERVER_PATH with docker compose (app + postgres).
 #
@@ -27,6 +30,11 @@ on:
     tags:
       - 'v*' # only run for tags like v1.0.0
   workflow_dispatch:
+    inputs:
+      deploy_ref:
+        description: 'Git ref to deploy (tag/branch/SHA). Leave empty for default.'
+        required: false
+        default: ''
 
 env:
   IMAGE_NAME: porodni-asistentka-web
@@ -45,6 +53,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.deploy_ref || github.ref }}
+          fetch-depth: 0
 
       - name: Set up QEMU (for ARM64 build)
         uses: docker/setup-qemu-action@v3
@@ -55,14 +66,17 @@ jobs:
       - name: Generate version
         id: version
         run: |
-          VERSION="v${{ github.run_number }}-${GITHUB_SHA::7}"
+          COMMIT_SHA="$(git rev-parse --short=7 HEAD)"
+          VERSION="v${{ github.run_number }}-$COMMIT_SHA"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Building version: $VERSION"
+          echo "Deploying ref: $(git rev-parse --abbrev-ref HEAD || true) @ $COMMIT_SHA"
 
       - name: Build Docker image (ARM64)
         run: |
           docker buildx build \
             --platform linux/arm64 \
+            --build-arg NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }} \
             --tag ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }} \
             --tag ${{ env.IMAGE_NAME }}:latest \
             --output type=docker,dest=image.tar \
@@ -91,6 +105,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.deploy_ref || github.ref }}
+          fetch-depth: 0
 
       - name: Download image artifact
         uses: actions/download-artifact@v4
