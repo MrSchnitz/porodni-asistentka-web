@@ -22,30 +22,65 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
+    // Keep uploaded files small by resizing originals and applying lossy compression.
+    resizeOptions: {
+      width: 2560,
+      withoutEnlargement: true,
+    },
+    formatOptions: {
+      format: 'webp',
+      options: {
+        quality: 80,
+      },
+    },
     imageSizes: [
       {
         name: 'thumbnail',
         width: 400,
         height: 300,
         position: 'centre',
+        formatOptions: {
+          format: 'webp',
+          options: {
+            quality: 80,
+          },
+        },
       },
       {
         name: 'card',
         width: 768,
         height: 512,
         position: 'centre',
+        formatOptions: {
+          format: 'webp',
+          options: {
+            quality: 80,
+          },
+        },
       },
       {
         name: 'tablet',
         width: 1024,
         height: undefined, // preserves aspect ratio
         position: 'centre',
+        formatOptions: {
+          format: 'webp',
+          options: {
+            quality: 80,
+          },
+        },
       },
       {
         name: 'desktop',
         width: 1920,
         height: undefined, // preserves aspect ratio
         position: 'centre',
+        formatOptions: {
+          format: 'webp',
+          options: {
+            quality: 80,
+          },
+        },
       },
     ],
     adminThumbnail: 'thumbnail',

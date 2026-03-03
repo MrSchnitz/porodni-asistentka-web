@@ -20,6 +20,16 @@ export function ImageCarousel({
 }: Props) {
   const images = rawImages.filter((img): img is number | string | MediaType => img != null)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const currentImage = images[currentIndex]
+  const optimizedCurrentImage =
+    typeof currentImage === 'object' && currentImage !== null
+      ? {
+          ...currentImage,
+          url: currentImage.sizes?.desktop?.url || currentImage.url,
+          width: currentImage.sizes?.desktop?.width || currentImage.width,
+          height: currentImage.sizes?.desktop?.height || currentImage.height,
+        }
+      : currentImage
 
   useEffect(() => {
     if (images.length <= 1) return
@@ -53,10 +63,13 @@ export function ImageCarousel({
           aria-label={`Obrázek ${currentIndex + 1} z ${images.length}`}
         >
           <Media
-            resource={images[currentIndex]}
+            resource={optimizedCurrentImage}
             fill
             imgClassName="object-cover"
+            size="(max-width: 1023px) 0px, 42vw"
+            quality={75}
             priority={currentIndex === 0}
+            loading={currentIndex === 0 ? 'eager' : 'lazy'}
           />
         </motion.div>
       </AnimatePresence>

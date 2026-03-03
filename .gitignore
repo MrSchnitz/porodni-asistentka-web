@@ -2,6 +2,7 @@
 .DS_Store
 # dependencies
 /node_modules
+.pnpm-store/
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -31,6 +32,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env.rpi
 
 # vercel
 .vercel

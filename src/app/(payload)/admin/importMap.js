@@ -33,9 +33,9 @@ import { default as default_80ae1cc59a7ec628b2a0c6a9224bfbe2 } from '@/collectio
 import { default as default_9d851ea4094e1e056681fe9a4b87a090 } from '@/collections/Services/components/LessonSelect/LessonSelect'
 import { default as default_a0d00998a14e887c00bd2a24f442948e } from '@/collections/Services/components/RowLabels/ScheduleRowLabel'
 import { default as default_97f4e200e923f0724456dc94adacc07d } from '@/collections/Services/components/RowLabels/PlanningRowLabel'
-import { FolderTableCell as FolderTableCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
-import { FolderField as FolderField_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
-import { FolderTypeField as FolderTypeField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
+import { FolderTableCell as FolderTableCell_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
+import { FolderField as FolderField_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
+import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
 import { default as default_e8afe77cabef088992ec87352539e18d } from '@/features/services/components/admin/ServiceSectionRowLabel'
 import { default as default_364174d5aef13606c6bb607fcde76322 } from '@/features/contact/components/admin/ContactInfoRowLabel'
 import { default as default_88f1e8d5feb2d7c90778319ade757992 } from '@/features/downloads/components/PasswordStatus'
@@ -45,7 +45,7 @@ import { default as default_534076e2c753ea5d539a54b05f456b1b } from '@/component
 import { default as default_a44df17d0fc3dcd873dae43dc3bf66bd } from '@/components/admin/Logo'
 import { default as default_89344134860f9bc63867ffefbf33f214 } from '@/components/admin/BeforeLogin'
 import { default as default_7fcf195037406fe0b64b31c9e9270aec } from '@/components/admin/DateInputProvider'
-import { CollectionCards as CollectionCards_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
+import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
   "@/components/admin/IconField#default": default_ef1a0a1df905d7e27b9ceed86573ae89,
@@ -83,9 +83,9 @@ export const importMap = {
   "@/collections/Services/components/LessonSelect/LessonSelect#default": default_9d851ea4094e1e056681fe9a4b87a090,
   "@/collections/Services/components/RowLabels/ScheduleRowLabel#default": default_a0d00998a14e887c00bd2a24f442948e,
   "@/collections/Services/components/RowLabels/PlanningRowLabel#default": default_97f4e200e923f0724456dc94adacc07d,
-  "@payloadcms/ui/rsc#FolderTableCell": FolderTableCell_ab83ff7e88da8d3530831f296ec4756a,
-  "@payloadcms/ui/rsc#FolderField": FolderField_ab83ff7e88da8d3530831f296ec4756a,
-  "@payloadcms/ui#FolderTypeField": FolderTypeField_3817bf644402e67bfe6577f60ef982de,
+  "@payloadcms/next/rsc#FolderTableCell": FolderTableCell_f9c02e79a4aed9a3924487c0cd4cafb1,
+  "@payloadcms/next/rsc#FolderField": FolderField_f9c02e79a4aed9a3924487c0cd4cafb1,
+  "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
   "@/features/services/components/admin/ServiceSectionRowLabel#default": default_e8afe77cabef088992ec87352539e18d,
   "@/features/contact/components/admin/ContactInfoRowLabel#default": default_364174d5aef13606c6bb607fcde76322,
   "@/features/downloads/components/PasswordStatus#default": default_88f1e8d5feb2d7c90778319ade757992,
@@ -95,5 +95,5 @@ export const importMap = {
   "@/components/admin/Logo#default": default_a44df17d0fc3dcd873dae43dc3bf66bd,
   "@/components/admin/BeforeLogin#default": default_89344134860f9bc63867ffefbf33f214,
   "@/components/admin/DateInputProvider#default": default_7fcf195037406fe0b64b31c9e9270aec,
-  "@payloadcms/ui/rsc#CollectionCards": CollectionCards_ab83ff7e88da8d3530831f296ec4756a
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
