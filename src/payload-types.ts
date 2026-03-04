@@ -299,8 +299,8 @@ export interface Service {
     fileIcon?: (string | null) | Media;
     lucideIcon?: string | null;
   };
-  card: {
-    description: {
+  card?: {
+    description?: {
       root: {
         type: string;
         children: {
@@ -314,16 +314,16 @@ export interface Service {
         version: number;
       };
       [k: string]: unknown;
-    };
+    } | null;
     additionalInfo?:
       | {
-          title: string;
-          value: string;
+          title?: string | null;
+          value?: string | null;
           id?: string | null;
         }[]
       | null;
   };
-  detail: {
+  detail?: {
     content?: {
       root: {
         type: string;
@@ -342,8 +342,8 @@ export interface Service {
     additionalInfo?:
       | {
           icon?: string | null;
-          title: string;
-          value: string;
+          title?: string | null;
+          value?: string | null;
           id?: string | null;
         }[]
       | null;

@@ -114,24 +114,26 @@ export const Services: CollectionConfig = {
                       name: 'card',
                       type: 'group',
                       label: '',
-                      required: true,
                       admin: {
                         hideGutter: true,
                       },
                       fields: [
-                        { name: 'description', type: 'richText', label: 'Popis', required: true },
-                        serviceAdditionalInfo({
-                          defaultValue: [
-                            {
-                              title: 'Cena',
-                              value: '',
-                            },
-                          ],
-                          fields: [
-                            { name: 'title', label: 'Název', type: 'text', required: true },
-                            { name: 'value', label: 'Popis', type: 'textarea', required: true },
-                          ],
-                        }),
+                        { name: 'description', type: 'richText', label: 'Popis' },
+                        serviceAdditionalInfo(
+                          {
+                            defaultValue: [
+                              {
+                                title: 'Cena',
+                                value: '',
+                              },
+                            ],
+                            fields: [
+                              { name: 'title', label: 'Název', type: 'text' },
+                              { name: 'value', label: 'Popis', type: 'textarea' },
+                            ],
+                          },
+                          false,
+                        ),
                       ],
                     },
                   ],
@@ -143,7 +145,6 @@ export const Services: CollectionConfig = {
                       name: 'detail',
                       type: 'group',
                       label: '',
-                      required: true,
                       admin: {
                         hideGutter: true,
                       },
@@ -153,25 +154,28 @@ export const Services: CollectionConfig = {
                           type: 'richText',
                           label: 'Popis služby',
                         },
-                        serviceAdditionalInfo({
-                          defaultValue: [
-                            {
-                              icon: 'clock',
-                              title: 'Délka',
-                              value: '',
-                            },
-                            {
-                              icon: 'coins',
-                              title: 'Cena',
-                              value: '',
-                            },
-                            {
-                              icon: 'map-pin',
-                              title: 'Místo',
-                              value: '',
-                            },
-                          ],
-                        }),
+                        serviceAdditionalInfo(
+                          {
+                            defaultValue: [
+                              {
+                                icon: 'clock',
+                                title: 'Délka',
+                                value: '',
+                              },
+                              {
+                                icon: 'coins',
+                                title: 'Cena',
+                                value: '',
+                              },
+                              {
+                                icon: 'map-pin',
+                                title: 'Místo',
+                                value: '',
+                              },
+                            ],
+                          },
+                          false,
+                        ),
                         { name: 'note', type: 'richText', label: 'Poznámka k službě' },
                         serviceBenefitsSection(),
                         servicePackagesSection(),
@@ -243,7 +247,7 @@ export const Services: CollectionConfig = {
                           value: '',
                         },
                         {
-                          icon: 'map-pin',
+                          icon: 'house',
                           title: 'Místo',
                           value: '',
                         },

@@ -1,7 +1,10 @@
 import { iconField } from '@/fields/iconField'
 import { ArrayField, Field } from 'payload'
 
-export const serviceAdditionalInfo = (options?: Partial<ArrayField>): Field => ({
+export const serviceAdditionalInfo = (
+  options?: Partial<ArrayField>,
+  required: boolean = true,
+): Field => ({
   name: 'additionalInfo',
   type: 'array',
   label: 'Informace',
@@ -14,8 +17,14 @@ export const serviceAdditionalInfo = (options?: Partial<ArrayField>): Field => (
   },
   fields: [
     iconField,
-    { name: 'title', admin: { className: 'mt-4' }, type: 'text', label: 'Název', required: true },
-    { name: 'value', type: 'text', label: 'Hodnota', required: true },
+    {
+      name: 'title',
+      admin: { className: 'mt-4' },
+      type: 'text',
+      label: 'Název',
+      required: required,
+    },
+    { name: 'value', type: 'text', label: 'Hodnota', required: required },
   ],
   ...options,
 })
