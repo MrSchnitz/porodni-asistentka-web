@@ -31,6 +31,7 @@ export const serviceScheduleItems: Field = {
     {
       name: 'notes',
       type: 'textarea',
+      label: 'Poznámka',
     },
     serviceStatus,
     serviceLimitedSpots,

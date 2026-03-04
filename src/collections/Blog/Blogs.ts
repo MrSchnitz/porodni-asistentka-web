@@ -26,7 +26,7 @@ export const Blogs: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
-      label: 'URL zkratka služby (Slug)',
+      label: 'URL zkratka článku (slug)',
       admin: {
         position: 'sidebar',
         placeholder: 'slug-z-nazvu',

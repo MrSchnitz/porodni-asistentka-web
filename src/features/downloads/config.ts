@@ -3,7 +3,7 @@ import { GlobalConfig } from 'payload'
 
 export const DownloadsPage: GlobalConfig = {
   slug: 'downloadsPage',
-  label: 'Stránka Ke stažení',
+  label: 'Stránka ke stažení',
   admin: {
     group: 'Stránky',
   },

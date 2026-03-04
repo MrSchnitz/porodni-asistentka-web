@@ -116,7 +116,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
           admin: {
             width: '50%',
           },
-          label: 'Popisek',
+          label: 'Text odkazu',
           required: true,
         },
       ],

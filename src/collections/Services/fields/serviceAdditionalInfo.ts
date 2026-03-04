@@ -14,8 +14,8 @@ export const serviceAdditionalInfo = (options?: Partial<ArrayField>): Field => (
   },
   fields: [
     iconField,
-    { name: 'title', admin: { className: 'mt-4' }, type: 'text', required: true },
-    { name: 'value', type: 'text', required: true },
+    { name: 'title', admin: { className: 'mt-4' }, type: 'text', label: 'Název', required: true },
+    { name: 'value', type: 'text', label: 'Hodnota', required: true },
   ],
   ...options,
 })

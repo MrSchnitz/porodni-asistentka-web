@@ -26,7 +26,7 @@ export const BlogPage: GlobalConfig = {
         {
           name: 'blogPost',
           type: 'relationship',
-          label: 'Blog',
+          label: 'Příspěvek',
           relationTo: 'blogs',
         },
       ],

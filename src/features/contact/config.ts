@@ -50,7 +50,7 @@ export const ContactPage: GlobalConfig = {
           options: [
             { label: 'Text', value: 'text' },
             { label: 'Formatovaný text', value: 'formattedText' },
-            { label: 'Email', value: 'email' },
+            { label: 'E-mail', value: 'email' },
             { label: 'Telefon', value: 'phone' },
             { label: 'Odkaz', value: 'link' },
           ],

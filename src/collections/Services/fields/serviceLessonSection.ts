@@ -34,8 +34,8 @@ export const serviceLessonSection = (options?: ServiceLessonSectionOptions): Gro
         },
       },
       fields: [
-        { name: 'title', type: 'text', required: true },
-        { name: 'description', type: 'richText' },
+        { name: 'title', type: 'text', label: 'Název lekce', required: true },
+        { name: 'description', type: 'richText', label: 'Popis lekce' },
       ],
     },
   ],

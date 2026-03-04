@@ -31,7 +31,7 @@ export const servicePackagesSection = (options?: Partial<GroupField>): Field => 
     {
       name: 'packages',
       type: 'array',
-      label: 'Jednolivé balíčky',
+      label: 'Jednotlivé balíčky',
       labels: {
         singular: 'Balíček',
         plural: 'Balíčky',
@@ -52,6 +52,7 @@ export const servicePackagesSection = (options?: Partial<GroupField>): Field => 
         {
           name: 'price',
           type: 'text',
+          label: 'Cena',
         },
         {
           name: 'includedOffers',

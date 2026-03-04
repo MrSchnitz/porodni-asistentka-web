@@ -67,11 +67,11 @@ export const HomePage: GlobalConfig = {
         },
         {
           name: 'ctaButtons',
-          label: 'Tlačítka pro přesměrování',
+          label: 'Tlačítka s odkazy',
           type: 'array',
           labels: {
-            singular: 'Tlačítko pro přesměrování',
-            plural: 'Tlačítka pro přesměrování',
+            singular: 'Tlačítko s odkazem',
+            plural: 'Tlačítka s odkazy',
           },
           fields: [link({ appearances: false })],
           maxRows: 3,
@@ -85,7 +85,7 @@ export const HomePage: GlobalConfig = {
       name: 'services',
       type: 'group',
       interfaceName: 'Services',
-      label: 'Sekce služby',
+      label: 'Sekce služeb',
       fields: [
         {
           name: 'title',
@@ -111,17 +111,17 @@ export const HomePage: GlobalConfig = {
             {
               name: 'item',
               type: 'relationship',
-              label: 'Vyberte zobrazené služby',
+              label: 'Vyberte služby k zobrazení',
               relationTo: ['services'],
             },
           ],
         },
         {
           name: 'ctaButton',
-          label: 'Tlačítko pro přesměrování',
+          label: 'Tlačítko s odkazem',
           labels: {
-            singular: 'Tlačítko pro přesměrování',
-            plural: 'Tlačítka pro přesměrování',
+            singular: 'Tlačítko s odkazem',
+            plural: 'Tlačítka s odkazy',
           },
           type: 'array',
           fields: [link({ appearances: false })],
@@ -136,7 +136,7 @@ export const HomePage: GlobalConfig = {
       name: 'reviews',
       type: 'group',
       interfaceName: 'Reviews',
-      label: 'Sekce recenze',
+      label: 'Sekce recenzí',
       fields: [
         {
           name: 'title',
@@ -161,7 +161,7 @@ export const HomePage: GlobalConfig = {
             {
               name: 'reference',
               type: 'relationship',
-              label: 'Vyberte zobrazené recenze',
+              label: 'Vyberte recenze k zobrazení',
               relationTo: ['reviews'],
             },
           ],

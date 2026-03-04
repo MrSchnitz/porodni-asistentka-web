@@ -82,7 +82,7 @@ export const Services: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
-      label: 'URL zkratka služby (Slug)',
+      label: 'URL zkratka služby (slug)',
       admin: {
         position: 'sidebar',
         placeholder: 'slug-z-nazvu',

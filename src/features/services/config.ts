@@ -29,7 +29,7 @@ export const ServicesPage: GlobalConfig = {
         {
           name: 'servicesSection',
           type: 'group',
-          label: 'Služby sekce',
+          label: 'Obsah sekce služeb',
           fields: [
             iconField,
             {
@@ -46,7 +46,7 @@ export const ServicesPage: GlobalConfig = {
               name: 'serviceSectionItems',
               dbName: 'items',
               type: 'array',
-              label: 'Vyberte služby pro zobrazení na stránce',
+              label: 'Služby k zobrazení na stránce',
               labels: {
                 singular: 'Služba',
                 plural: 'Služby',

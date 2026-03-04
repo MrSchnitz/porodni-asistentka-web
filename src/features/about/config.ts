@@ -66,7 +66,7 @@ export const AboutPage: GlobalConfig = {
     {
       name: 'ctaSection',
       type: 'group',
-      label: 'Sekce pro přesměrování',
+      label: 'Sekce s odkazy',
       fields: [
         {
           name: 'title',
@@ -81,11 +81,11 @@ export const AboutPage: GlobalConfig = {
         },
         {
           name: 'ctaButtons',
-          label: 'Tlačítka pro přesměrování',
+          label: 'Tlačítka s odkazy',
           type: 'array',
           labels: {
-            singular: 'Tlačítko pro přesměrování',
-            plural: 'Tlačítka pro přesměrování',
+            singular: 'Tlačítko s odkazem',
+            plural: 'Tlačítka s odkazy',
           },
           fields: [link({ appearances: false })],
           maxRows: 2,
