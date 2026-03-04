@@ -8,6 +8,7 @@ import { ZoomIn } from 'lucide-react'
 import { useState } from 'react'
 import { Props as MediaProps } from '@/components/Media/types'
 import { LightBox } from '@/components/Lightbox/LightBox'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 type Props = {
   announcements: NonNullable<Announcements>
@@ -38,7 +39,7 @@ export const ServiceAnnouncements = ({ announcements }: Props) => {
                   </span>
                 )}
               </div>
-              {announcement.description && (
+              {announcement.description && !isRichTextEmpty(announcement.description) && (
                 <RichText data={announcement.description} className="text-foreground/70 mb-3" />
               )}
               {announcement.image && (

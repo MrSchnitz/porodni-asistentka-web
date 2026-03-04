@@ -63,7 +63,7 @@ export function BlogPostDetailHeader({ post }: Props) {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <BackButton className="mb-6" />
-            {hasData(post.category) && (
+            {hasData(post?.category) && (
               <Badge className="block bg-primary text-foreground mb-4 w-fit">
                 {post.category.title}
               </Badge>

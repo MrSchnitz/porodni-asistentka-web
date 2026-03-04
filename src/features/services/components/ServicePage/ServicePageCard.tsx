@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Service } from '@/payload-types'
 import { ServiceIcon } from '../ServiceIcon'
 import Link from 'next/link'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 const InfoItem = ({ title, value }: { title: string; value: string }) => {
   return (
@@ -37,7 +38,9 @@ export const ServicePageCard = ({ pageName, data: { slug, icon, title, card } }:
               {title}
             </h3>
           </div>
-          {description && <RichText className="text-foreground flex-1" data={description} />}
+          {description && !isRichTextEmpty(description) && (
+            <RichText className="text-foreground flex-1" data={description} />
+          )}
 
           {isInfoAvailable && (
             <div className="mt-4 pt-4 border-t border-primary/20 space-y-2">

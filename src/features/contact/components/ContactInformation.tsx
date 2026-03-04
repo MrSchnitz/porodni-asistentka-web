@@ -2,9 +2,14 @@ import { Card, CardContent } from '@/components/ui/card'
 import { ContactPageInfo, ContactPageNote } from '@/features/_shared/types'
 import { DynamicIcon, IconName } from 'lucide-react/dynamic'
 import RichText from '@/components/RichText'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 const InfoContent = ({ info }: { info: ContactPageInfo }) => {
-  if (info.valueType === 'formattedText' && info.formattedValue) {
+  if (
+    info.valueType === 'formattedText' &&
+    info.formattedValue &&
+    !isRichTextEmpty(info.formattedValue)
+  ) {
     return <RichText className="text-base text-foreground/80" data={info.formattedValue} />
   }
 
@@ -79,7 +84,7 @@ export const ContactInformation = ({ contactInfo, note }: Props) => {
         ))}
       </div>
 
-      {note && (
+      {note && !isRichTextEmpty(note) && (
         <div className="bg-linear-to-br from-primary/20 to-secondary/20 rounded-2xl p-6 border border-primary/30">
           <RichText className="text-base text-foreground" data={note} />
         </div>

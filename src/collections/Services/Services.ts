@@ -100,7 +100,7 @@ export const Services: CollectionConfig = {
             {
               name: 'title',
               type: 'text',
-              label: 'Název',
+              label: 'Název služby',
               required: true,
             },
             iconImageField,
@@ -151,7 +151,7 @@ export const Services: CollectionConfig = {
                         {
                           name: 'content',
                           type: 'richText',
-                          label: 'Obsah',
+                          label: 'Popis služby',
                         },
                         serviceAdditionalInfo({
                           defaultValue: [
@@ -172,7 +172,7 @@ export const Services: CollectionConfig = {
                             },
                           ],
                         }),
-                        { name: 'note', type: 'richText', label: 'Poznámka' },
+                        { name: 'note', type: 'richText', label: 'Poznámka k službě' },
                         serviceBenefitsSection(),
                         servicePackagesSection(),
                         serviceAnnouncementsSection(),

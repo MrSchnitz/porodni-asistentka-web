@@ -8,6 +8,7 @@ import { Props as MediaProps } from '@/components/Media/types'
 import { LightBox } from '@/components/Lightbox/LightBox'
 import { formatServiceDateTime } from '@/utilities/formatServiceDateTime'
 import RichText from '@/components/RichText'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 type Props = {
   infoSection: WeeklyScheduledServicesInfoSection
@@ -63,7 +64,7 @@ export const WeeklyInfoSection = ({
                         </span>
                       )}
                     </div>
-                    {announcement.description && (
+                    {announcement.description && !isRichTextEmpty(announcement.description) && (
                       <RichText data={announcement.description} className="text-foreground/80" />
                     )}
                     {announcement.image && (

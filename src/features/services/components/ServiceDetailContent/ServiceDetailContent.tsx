@@ -10,6 +10,7 @@ import { ServiceAnnouncements } from './components/ServiceAnnouncements'
 import { cn } from '@/lib/utils'
 import { ServiceBenefitsSection } from './components/ServiceBenefitsSection'
 import { ServicePackagesSection } from './components/ServicePackagesSection'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 type Props = {
   service: Service
@@ -28,7 +29,9 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
   return (
     <div className="space-y-6">
       {/* Content */}
-      {content && <RichText className="text-base md:text-lg text-foreground/90" data={content} />}
+      {content && !isRichTextEmpty(content) && (
+        <RichText className="text-base md:text-lg text-foreground/90" data={content} />
+      )}
 
       {/* Benefits */}
       {benefitsSection?.enabled && <ServiceBenefitsSection benefitsSection={benefitsSection} />}
@@ -51,7 +54,7 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
       )}
 
       {/* Note */}
-      {note && (
+      {note && !isRichTextEmpty(note) && (
         <ServiceInfoItem
           className="bg-card"
           icon="notebook-pen"

@@ -39,7 +39,7 @@ export function ServicesPageContent({ data: { pageHeader, serviceSections } }: P
             showThreeColumns={showThreeColumns}
           >
             {servicesSection.serviceSectionItems.map(({ item, id }) => {
-              if (!hasData(item.value)) {
+              if (!hasData(item?.value)) {
                 return null
               }
 

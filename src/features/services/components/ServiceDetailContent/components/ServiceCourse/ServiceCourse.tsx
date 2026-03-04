@@ -4,6 +4,7 @@ import RichText from '@/components/RichText'
 import { ServiceLessons } from './ServiceLessons'
 import { ServiceCourseInfoItem } from './components/ServiceCourseInfoItem'
 import { Course } from '@/features/_shared/types'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 interface CourseScheduleProps {
   course: Course
@@ -19,7 +20,7 @@ export function ServiceCourse({
         <div className="mb-4">
           <h4 className="text-lg font-medium mb-4 text-foreground">{name}</h4>
 
-          {description && (
+          {description && !isRichTextEmpty(description) && (
             <div className="text-sm text-foreground/90 mb-3">
               <RichText data={description} />
             </div>

@@ -71,7 +71,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   const payload = await getPayload({ config })
 
-  const categoryId = hasData(blogPost.category)
+  const categoryId = hasData(blogPost?.category)
     ? typeof blogPost.category === 'object'
       ? blogPost.category.id
       : blogPost.category

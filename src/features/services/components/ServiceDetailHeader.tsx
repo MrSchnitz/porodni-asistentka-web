@@ -8,6 +8,7 @@ import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import RichText from '@/components/RichText'
 import { IconType } from '@/features/_shared/types'
 import { ServiceIcon } from './ServiceIcon'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 type Props = {
   title: string
@@ -44,13 +45,14 @@ function BackButton({ compact }: { compact?: boolean }) {
 function TitleWithIcon({ title, icon, description, compact }: HeaderContentProps) {
   const textSize = compact ? 'text-base sm:text-lg font-medium' : 'text-3xl'
   const Tag = compact ? 'span' : 'h1'
+  const hasDescription = !!description && !isRichTextEmpty(description)
 
   return (
     <div
       className={cn(
         'flex',
         compact ? 'gap-3' : 'gap-4',
-        description ? 'items-start' : 'items-center',
+        hasDescription ? 'items-start' : 'items-center',
       )}
     >
       {!compact && icon && <ServiceIcon icon={icon} />}
@@ -61,8 +63,8 @@ function TitleWithIcon({ title, icon, description, compact }: HeaderContentProps
         >
           {title}
         </Tag>
-        {description && (
-          <RichText className="text-base md:text-lg text-foreground/80" data={description} />
+        {hasDescription && (
+          <RichText className="text-base md:text-lg text-foreground/80" data={description!} />
         )}
       </div>
     </div>

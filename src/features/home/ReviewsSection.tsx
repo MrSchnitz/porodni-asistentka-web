@@ -49,7 +49,7 @@ export function ReviewsSection({ data: { title, subtitle, reviews } }: Props) {
           <Carousel opts={{ loop: true }} className="w-full">
             <CarouselContent>
               {reviews.map((review, index) => {
-                if (!hasData(review.reference?.value)) {
+                if (!hasData(review?.reference?.value)) {
                   return null
                 }
 

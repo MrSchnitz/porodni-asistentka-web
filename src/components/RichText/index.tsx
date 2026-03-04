@@ -2,6 +2,7 @@ import { type DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import { RichText as ConvertRichText } from '@payloadcms/richtext-lexical/react'
 import { cn } from '@/utilities/ui'
 import { getRichTextConverters } from './richTextConverters'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 type Props = {
   data: DefaultTypedEditorState
@@ -11,6 +12,11 @@ type Props = {
 
 export default function RichText(props: Props) {
   const { className, enableProse = true, enableGutter = true, ...rest } = props
+
+  if (isRichTextEmpty(rest.data)) {
+    return null
+  }
+
   return (
     <ConvertRichText
       className={cn(

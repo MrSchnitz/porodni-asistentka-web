@@ -8,6 +8,7 @@ import { cn } from '@/utilities/ui'
 import { format } from 'date-fns'
 import { Calendar, User } from 'lucide-react'
 import Link from 'next/link'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 type Props = {
   post: Blog
@@ -47,7 +48,7 @@ export function BlogPostCard({ post, compact = false }: Props) {
         </CardHeader>
 
         <CardContent className="space-y-4 flex flex-col">
-          {!compact && post.content && (
+          {!compact && post.content && !isRichTextEmpty(post.content) && (
             <RichText className="text-foreground/90 line-clamp-3" data={post.content} />
           )}
 
