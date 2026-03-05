@@ -168,7 +168,7 @@ export const Services: CollectionConfig = {
                                 value: '',
                               },
                               {
-                                icon: 'map-pin',
+                                icon: 'house',
                                 title: 'Místo',
                                 value: '',
                               },

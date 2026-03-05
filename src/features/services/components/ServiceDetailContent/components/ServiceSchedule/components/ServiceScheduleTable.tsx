@@ -12,12 +12,14 @@ import clsx from 'clsx'
 import { Calendar, Clock } from 'lucide-react'
 import { ScheduleItems } from '@/features/_shared/types'
 import { ServiceStatusBadge } from './ServiceStatusBadge'
+import { ServiceAvailableSpotsBadge } from './ServiceAvailableSpotsBadge'
 
 type Props = {
   scheduleItems: ScheduleItems
+  isEverythingCancelled?: boolean
 }
 
-export const ServiceScheduleTable = ({ scheduleItems }: Props) => {
+export const ServiceScheduleTable = ({ scheduleItems, isEverythingCancelled = false }: Props) => {
   return (
     <>
       {/* Desktop table */}
@@ -25,94 +27,128 @@ export const ServiceScheduleTable = ({ scheduleItems }: Props) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[180px]">Datum</TableHead>
-              <TableHead className="w-[150px]">Čas</TableHead>
+              <TableHead>Datum</TableHead>
+              <TableHead>Čas</TableHead>
               <TableHead>Obsah lekce</TableHead>
               <TableHead>Poznámky</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {scheduleItems.map(({ id, startDate, endDate, lesson, notes, status }) => {
-              const isCancelled = status === 'cancelled'
-              const { dateString, timeString } = formatServiceDateTime({
+            {scheduleItems.map(
+              ({
+                id,
                 startDate,
                 endDate,
-              })
+                lesson,
+                notes,
+                status,
+                hasLimitedSpots,
+                numberOfSpots,
+              }) => {
+                const isCancelled = isEverythingCancelled || status === 'cancelled'
+                const isScheduled = status === 'scheduled'
+                const showAvailableSpots =
+                  !isEverythingCancelled && isScheduled && hasLimitedSpots && numberOfSpots
+                const { dateString, timeString } = formatServiceDateTime({
+                  startDate,
+                  endDate,
+                })
 
-              return (
-                <TableRow key={id} className={clsx(isCancelled && 'line-through')}>
-                  <TableCell className="font-medium">{dateString}</TableCell>
-                  <TableCell>{timeString}</TableCell>
-                  <TableCell>{lesson}</TableCell>
-                  <TableCell>
-                    {isCancelled ? <ServiceStatusBadge status={status} /> : notes}
-                  </TableCell>
-                </TableRow>
-              )
-            })}
+                return (
+                  <TableRow key={id} className={clsx(isCancelled && 'line-through')}>
+                    <TableCell className="font-medium whitespace-nowrap">{dateString}</TableCell>
+                    <TableCell className="whitespace-nowrap">{timeString}</TableCell>
+                    <TableCell>{lesson}</TableCell>
+                    <TableCell>
+                      {isCancelled ? (
+                        <ServiceStatusBadge status={'cancelled'} />
+                      ) : (
+                        <div className="flex flex-col gap-1 items-start">
+                          <ServiceStatusBadge status={status} />
+                          {showAvailableSpots && numberOfSpots && (
+                            <ServiceAvailableSpotsBadge numberOfSpots={numberOfSpots} small />
+                          )}
+                          {notes}
+                        </div>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                )
+              },
+            )}
           </TableBody>
         </Table>
       </div>
 
       {/* Mobile cards */}
       <div className="md:hidden space-y-3">
-        {scheduleItems.map(({ id, startDate, endDate, notes, lesson, status }) => {
-          const isCancelled = status === 'cancelled'
-          const { dateString, timeString } = formatServiceDateTime({
-            startDate,
-            endDate,
-          })
+        {scheduleItems.map(
+          ({ id, startDate, endDate, notes, lesson, status, hasLimitedSpots, numberOfSpots }) => {
+            const isCancelled = isEverythingCancelled || status === 'cancelled'
+            const isScheduled = status === 'scheduled'
+            const showAvailableSpots =
+              !isEverythingCancelled && isScheduled && hasLimitedSpots && numberOfSpots
+            const { dateString, timeString } = formatServiceDateTime({
+              startDate,
+              endDate,
+            })
 
-          return (
-            <Card key={id} className="border border-primary/20">
-              <CardContent className="p-4">
-                <div className="space-y-2 text-sm">
-                  <div className="flex gap-1 items-start">
-                    <div className="space-y-2 flex-1">
-                      {/* Date */}
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-primary shrink-0" />
-                        <span
-                          className={clsx(
-                            'font-medium text-foreground',
-                            isCancelled && 'line-through',
-                          )}
-                        >
-                          {dateString}
-                        </span>
+            return (
+              <Card key={id} className="border border-primary/20">
+                <CardContent className="p-4">
+                  <div className="space-y-2 text-sm">
+                    <div className="flex gap-1 items-start">
+                      <div className="space-y-2 flex-1">
+                        {/* Date */}
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4 text-primary shrink-0" />
+                          <span
+                            className={clsx(
+                              'font-medium text-foreground',
+                              isCancelled && 'line-through',
+                            )}
+                          >
+                            {dateString}
+                          </span>
+                        </div>
+
+                        {/* Time */}
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-primary shrink-0" />
+                          <span
+                            className={clsx('text-foreground/80', isCancelled && 'line-through')}
+                          >
+                            {timeString}
+                          </span>
+                        </div>
                       </div>
+                      <ServiceStatusBadge status={isCancelled ? 'cancelled' : status} />
+                      {showAvailableSpots && numberOfSpots && (
+                        <ServiceAvailableSpotsBadge numberOfSpots={numberOfSpots} small />
+                      )}
+                    </div>
 
-                      {/* Time */}
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-primary shrink-0" />
+                    {/* Lesson content */}
+                    {lesson && (
+                      <div className="pt-2 border-t border-primary/20">
                         <span className={clsx('text-foreground/80', isCancelled && 'line-through')}>
-                          {timeString}
+                          {lesson}
                         </span>
                       </div>
-                    </div>
-                    <ServiceStatusBadge status={status} />
+                    )}
+
+                    {/* Notes */}
+                    {notes && (
+                      <div className="pt-2 border-t border-primary/20">
+                        <span className="text-foreground/80">{notes}</span>
+                      </div>
+                    )}
                   </div>
-
-                  {/* Lesson content */}
-                  {lesson && (
-                    <div className="pt-2 border-t border-primary/20">
-                      <span className={clsx('text-foreground/80', isCancelled && 'line-through')}>
-                        {lesson}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Notes */}
-                  {notes && (
-                    <div className="pt-2 border-t border-primary/20">
-                      <span className="text-foreground/80">{notes}</span>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          )
-        })}
+                </CardContent>
+              </Card>
+            )
+          },
+        )}
       </div>
     </>
   )

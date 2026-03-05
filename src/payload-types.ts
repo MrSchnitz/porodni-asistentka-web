@@ -110,6 +110,9 @@ export type Schedules =
        */
       courseIndex?: string | null;
       status?: ServiceStatus;
+      /**
+       * Pro zobrazení počtu míst musí být stav termínu "Naplánováno".
+       */
       hasLimitedSpots?: boolean | null;
       numberOfSpots?: number | null;
       scheduleItems?:
@@ -122,6 +125,9 @@ export type Schedules =
             lesson: string;
             notes?: string | null;
             status?: ServiceStatus;
+            /**
+             * Pro zobrazení počtu míst musí být stav termínu "Naplánováno".
+             */
             hasLimitedSpots?: boolean | null;
             numberOfSpots?: number | null;
             id?: string | null;

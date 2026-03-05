@@ -3,18 +3,19 @@ import { ServiceScheduleTable } from './components/ServiceScheduleTable'
 import { Schedule } from '@/features/_shared/types'
 import { ServiceAvailableSpotsBadge } from './components/ServiceAvailableSpotsBadge'
 import { ServiceStatusBadge } from './components/ServiceStatusBadge'
+import clsx from 'clsx'
 
 type Props = {
   schedule: Schedule
 }
 
 export const ServiceSchedule = ({ schedule }: Props) => {
-  const showAvailableSpots =
-    schedule.status === 'scheduled' && schedule.hasLimitedSpots && schedule.numberOfSpots
-  const showStatusBadge = schedule.status !== 'scheduled'
+  const isScheduled = schedule.status === 'scheduled'
+  const isCancelled = schedule.status === 'cancelled'
+  const showAvailableSpots = isScheduled && schedule.hasLimitedSpots && schedule.numberOfSpots
 
   return (
-    <Card className={`border-primary/20 ${schedule.status !== 'scheduled' ? 'opacity-60' : ''}`}>
+    <Card className={clsx('border-primary/20', isCancelled && 'opacity-60')}>
       <CardContent className="p-4">
         <div className="bg-muted rounded-t-lg p-4 -m-4 mb-3">
           <div className="flex items-start justify-between">
@@ -27,7 +28,7 @@ export const ServiceSchedule = ({ schedule }: Props) => {
               )}
             </div>
             <div className="text-right flex flex-col items-end gap-2">
-              {showStatusBadge && <ServiceStatusBadge status={schedule.status} />}
+              <ServiceStatusBadge status={schedule.status} />
               {showAvailableSpots && schedule.numberOfSpots && (
                 <ServiceAvailableSpotsBadge numberOfSpots={schedule.numberOfSpots} />
               )}
@@ -35,7 +36,12 @@ export const ServiceSchedule = ({ schedule }: Props) => {
           </div>
         </div>
 
-        {schedule.scheduleItems && <ServiceScheduleTable scheduleItems={schedule.scheduleItems} />}
+        {schedule.scheduleItems && (
+          <ServiceScheduleTable
+            scheduleItems={schedule.scheduleItems}
+            isEverythingCancelled={isCancelled}
+          />
+        )}
       </CardContent>
     </Card>
   )

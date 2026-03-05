@@ -11,6 +11,9 @@ export const serviceLimitedSpots: Field = {
       type: 'checkbox',
       label: 'Omezený počet míst',
       defaultValue: false,
+      admin: {
+        description: 'Pro zobrazení počtu míst musí být stav termínu "Naplánováno".',
+      },
     },
     {
       name: 'numberOfSpots',
