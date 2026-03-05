@@ -4,8 +4,8 @@ import { DynamicIcon, IconName } from 'lucide-react/dynamic'
 type Props = {
   className?: string
   icon?: string | null
-  title: string
-  value: string | React.ReactNode
+  title?: string | null
+  value?: string | React.ReactNode
 }
 
 export const ServiceInfoItem = ({ icon, title, value, className }: Props) => {

@@ -21,9 +21,7 @@ type Props = {
 }
 
 export const ServicePageCard = ({ pageName, data: { slug, icon, title, card } }: Props) => {
-  const { description, additionalInfo } = card
-
-  const isInfoAvailable = additionalInfo && additionalInfo.length > 0
+  const isInfoAvailable = card?.additionalInfo && card.additionalInfo.length > 0
 
   return (
     <Link href={`/${pageName}/${slug}`}>
@@ -38,14 +36,14 @@ export const ServicePageCard = ({ pageName, data: { slug, icon, title, card } }:
               {title}
             </h3>
           </div>
-          {description && !isRichTextEmpty(description) && (
-            <RichText className="text-foreground flex-1" data={description} />
+          {card?.description && !isRichTextEmpty(card.description) && (
+            <RichText className="text-foreground flex-1" data={card.description} />
           )}
 
           {isInfoAvailable && (
             <div className="mt-4 pt-4 border-t border-primary/20 space-y-2">
-              {additionalInfo.map((info) => (
-                <InfoItem key={info.id} title={info.title} value={info.value} />
+              {card?.additionalInfo?.map((info) => (
+                <InfoItem key={info.id} title={info.title ?? ''} value={info.value ?? ''} />
               ))}
             </div>
           )}

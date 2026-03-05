@@ -16,7 +16,7 @@ export type ScheduleItems = NonNullable<Schedule['scheduleItems']>
 
 export type ScheduleStatus = NonNullable<Schedules>[number]['status']
 
-export type AdditionalInfo = NonNullable<Service['detail']['additionalInfo']>[number]
+export type AdditionalInfo = NonNullable<NonNullable<Service['detail']>['additionalInfo']>[number]
 
 export type LessonsSection = NonNullable<Course['lessonsSection']>
 
@@ -30,9 +30,9 @@ export type WeeklyScheduledServicesInfoSection = NonNullable<
   WeeklyScheduledServicesPage['infoSection']
 >
 
-export type ServiceBenefitsSection = NonNullable<Service['detail']['benefitsSection']>
+export type ServiceBenefitsSection = NonNullable<NonNullable<Service['detail']>['benefitsSection']>
 
-export type ServicePackageSection = NonNullable<Service['detail']['packageSection']>
+export type ServicePackageSection = NonNullable<NonNullable<Service['detail']>['packageSection']>
 
 export type ImportantItemsSection = NonNullable<DownloadsPage['important']>
 

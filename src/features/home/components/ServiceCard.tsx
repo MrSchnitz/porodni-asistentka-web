@@ -2,6 +2,7 @@ import RichText from '@/components/RichText'
 import { Card, CardContent } from '@/components/ui/card'
 import { Service } from '@/payload-types'
 import { ServiceIcon } from '@/features/services/components/ServiceIcon'
+import { isRichTextEmpty } from '@/utilities/richText'
 
 type Props = {
   service: Service
@@ -23,9 +24,11 @@ export function ServiceCard({ service }: Props) {
             {service.title}
           </h3>
         </div>
-        <div className="text-foreground/70">
-          <RichText data={service.card.description} />
-        </div>
+        {service.card?.description && !isRichTextEmpty(service.card.description) && (
+          <div className="text-foreground/70">
+            <RichText data={service.card.description} />
+          </div>
+        )}
       </CardContent>
     </Card>
   )
