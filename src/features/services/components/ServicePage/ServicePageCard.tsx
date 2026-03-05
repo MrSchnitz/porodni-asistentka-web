@@ -9,7 +9,7 @@ import { isRichTextEmpty } from '@/utilities/richText'
 const InfoItem = ({ title, value }: { title: string; value: string }) => {
   return (
     <div className="flex justify-between items-center">
-      <span className="text-sm text-foreground/80">{title}:</span>
+      <span className="text-sm text-foreground/80">{title}</span>
       <span className="text-foreground">{value}</span>
     </div>
   )
