@@ -24,7 +24,7 @@ export const serviceAdditionalInfo = (
       label: 'Název',
       required: required,
     },
-    { name: 'value', type: 'text', label: 'Hodnota', required: required },
+    { name: 'value', type: 'text', label: 'Popis', required: required },
   ],
   ...options,
 })

@@ -1359,7 +1359,8 @@
           "name": "rating",
           "type": "numeric",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": 5
         },
         "content": {
           "name": "content",
@@ -5980,6 +5981,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "34300444-7097-4beb-b36c-92e30396285e",
+  "id": "51b86c96-5441-4d50-8310-ba01c8effd13",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

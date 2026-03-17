@@ -29,7 +29,7 @@ export const ContactPage: GlobalConfig = {
         {
           name: 'value',
           type: 'text',
-          label: 'Hodnota',
+          label: 'Popis',
           admin: {
             condition: (_, siblingData) => siblingData?.valueType !== 'formattedText',
           },
@@ -37,7 +37,7 @@ export const ContactPage: GlobalConfig = {
         {
           name: 'formattedValue',
           type: 'richText',
-          label: 'Hodnota',
+          label: 'Popis',
           admin: {
             condition: (_, siblingData) => siblingData?.valueType === 'formattedText',
           },
@@ -45,7 +45,7 @@ export const ContactPage: GlobalConfig = {
         {
           name: 'valueType',
           type: 'select',
-          label: 'Typ hodnoty',
+          label: 'Typ popisu',
           defaultValue: 'text',
           options: [
             { label: 'Text', value: 'text' },

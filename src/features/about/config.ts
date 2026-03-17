@@ -11,22 +11,28 @@ export const AboutPage: GlobalConfig = {
   fields: [
     pageHeader,
     {
-      name: 'image',
-      type: 'upload',
-      label: 'Obrázek',
-      relationTo: 'media',
-    },
-    {
-      name: 'title',
-      type: 'text',
-      label: 'Nadpis',
-      required: true,
-    },
-    {
-      name: 'content',
-      type: 'richText',
-      label: 'Obsah',
-      required: true,
+      type: 'group',
+      label: 'Obsah sekce o mně',
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          label: 'Obrázek',
+          relationTo: 'media',
+        },
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Nadpis',
+          required: true,
+        },
+        {
+          name: 'content',
+          type: 'richText',
+          label: 'Obsah',
+          required: true,
+        },
+      ],
     },
     {
       name: 'myValuesSection',
@@ -44,10 +50,10 @@ export const AboutPage: GlobalConfig = {
         {
           name: 'values',
           type: 'array',
-          label: 'Hodnoty',
+          label: 'Moje hodnoty',
           labels: {
-            singular: 'Hodnota',
-            plural: 'Hodnoty',
+            singular: 'Moje hodnota',
+            plural: 'Moje hodnoty',
           },
           admin: {
             initCollapsed: true,

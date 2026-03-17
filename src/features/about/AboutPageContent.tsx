@@ -20,7 +20,12 @@ export function AboutPageContent({ data }: Props) {
 
       <section className="py-20 bg-card flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+          <div
+            className={cn(
+              'grid grid-cols-1 gap-12 items-center max-w-6xl mx-auto',
+              data.image && 'lg:grid-cols-2',
+            )}
+          >
             <div>
               <h2
                 className="text-3xl sm:text-4xl mb-6 text-foreground"
@@ -45,7 +50,7 @@ export function AboutPageContent({ data }: Props) {
       </section>
 
       {data.myValuesSection && data.myValuesSection.showMyValues && (
-        <section className="py-20 bg-card">
+        <section className="pb-20 bg-card">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
               <h2

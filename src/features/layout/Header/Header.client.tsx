@@ -54,7 +54,10 @@ export function HeaderClient({
             </div>
           </Link>
           {/* Desktop Navigation */}
-          <nav aria-label="Hlavní navigace" className="hidden lg:flex items-center gap-4 xl:gap-8">
+          <nav
+            aria-label="Hlavní navigace"
+            className="hidden lg:flex items-center gap-2 lg:gap-4 xl:gap-8"
+          >
             {navItems?.map((item) => (
               <NavItem key={item.id} item={item.link} className="text-sm lg:text-base" />
             ))}

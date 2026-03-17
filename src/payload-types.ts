@@ -291,6 +291,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Pro možnost živého náhledu je potřeba službu nejdříve uložit
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
  */
@@ -519,11 +521,16 @@ export interface Download {
   focalY?: number | null;
 }
 /**
+ * Pro možnost živého náhledu je potřeba nejdříve recenzi uložit
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "reviews".
  */
 export interface Review {
   id: string;
+  /**
+   * Zadejte číselné hodnocení od 1 do 5 (počet hvězdiček)
+   */
   rating: number;
   content: {
     root: {

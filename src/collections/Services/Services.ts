@@ -20,6 +20,10 @@ export const Services: CollectionConfig = {
     defaultColumns: ['title'],
     useAsTitle: 'title',
     group: 'Obsah',
+    description: 'Pro možnost živého náhledu je potřeba službu nejdříve uložit',
+    pagination: {
+      defaultLimit: 30,
+    },
   },
   hooks: {
     beforeChange: [

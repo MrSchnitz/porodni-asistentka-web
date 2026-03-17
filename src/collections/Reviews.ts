@@ -9,6 +9,7 @@ export const Reviews: CollectionConfig = {
   admin: {
     useAsTitle: 'content',
     group: 'Obsah',
+    description: 'Pro možnost živého náhledu je potřeba nejdříve recenzi uložit',
   },
   fields: [
     {
@@ -16,6 +17,10 @@ export const Reviews: CollectionConfig = {
       label: 'Hodnocení',
       type: 'number',
       required: true,
+      admin: {
+        description: 'Zadejte číselné hodnocení od 1 do 5 (počet hvězdiček)',
+      },
+      defaultValue: 5,
       max: 5,
       min: 1,
     },
