@@ -85,7 +85,7 @@ export function DialogContent({ children, onClose }: DialogContentProps) {
     <div className="bg-card rounded-2xl shadow-2xl border border-primary/30">
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 p-2 rounded-full hover:bg-primary/10 transition-colors z-10"
+        className="absolute top-4 right-4 p-2 rounded-full hover:bg-primary/10 transition-colors z-10 cursor-pointer"
         aria-label="Zavřít dialog"
       >
         <X className="w-6 h-6 text-foreground" aria-hidden="true" />

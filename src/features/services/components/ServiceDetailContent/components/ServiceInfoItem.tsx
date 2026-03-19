@@ -17,11 +17,14 @@ export const ServiceInfoItem = ({ icon, title, value, className, inline = true }
         className,
       )}
     >
-      <div className="flex items-center gap-2 mb-1">
+      <div className="flex gap-2 mb-1">
         {icon && (
           <DynamicIcon
             name={icon as IconName}
-            className="w-4 h-4 text-primary"
+            className={cn(
+              'w-4 h-4 text-primary shrink-0',
+              inline ? 'self-baseline mt-1' : 'self-center',
+            )}
             aria-hidden="true"
           />
         )}
