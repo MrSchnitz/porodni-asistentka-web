@@ -30,7 +30,7 @@ export const ServicePageCard = ({ pageName, data: { slug, icon, title, card } }:
           <div className="flex items-center gap-4">
             {icon && <ServiceIcon icon={icon} className="mb-4" />}
             <h3
-              className="text-xl mb-3 text-foreground font-bold"
+              className="text-xl mb-3 text-foreground font-medium"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               {title}
