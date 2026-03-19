@@ -24,13 +24,13 @@ export const richTextTextState = {
       label: 'Courier New',
       css: { 'font-family': '"Courier New", monospace' },
     },
-    'comic-sans': {
-      label: 'Comic Sans MS',
-      css: { 'font-family': '"Comic Sans MS", cursive' },
-    },
     impact: {
       label: 'Impact',
       css: { 'font-family': 'Impact, fantasy' },
+    },
+    pacifico: {
+      label: 'Pacifico',
+      css: { 'font-family': '"Pacifico", cursive' },
     },
   },
   fontSize: {

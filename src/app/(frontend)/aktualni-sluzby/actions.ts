@@ -111,6 +111,7 @@ export async function getWeeklyScheduleItems(): Promise<{
           const dayName = dayIndexToName[dayIndex]
 
           const isWholeScheduleCancelled = schedule.status === 'cancelled'
+          const locationTitles = ['Místo', 'Místa', 'Místo konání', 'Location']
 
           weeklySchedule[dayName].push({
             serviceName: service.title,
@@ -121,7 +122,9 @@ export async function getWeeklyScheduleItems(): Promise<{
               endDate: scheduleItem.endDate,
             }).timeString,
             location:
-              service.detail?.additionalInfo?.find((info) => info.title === 'Místo')?.value ?? '',
+              service.detail?.additionalInfo?.find((info) =>
+                locationTitles.includes(info.title ?? ''),
+              )?.value ?? '',
             status: isWholeScheduleCancelled ? schedule.status : scheduleItem.status,
             notes: scheduleItem.notes ?? '',
             slug: service.slug,

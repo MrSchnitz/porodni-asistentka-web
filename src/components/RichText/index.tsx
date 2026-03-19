@@ -11,7 +11,7 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 export default function RichText(props: Props) {
-  const { className, enableProse = true, enableGutter = true, ...rest } = props
+  const { className, enableProse = true, enableGutter = false, ...rest } = props
 
   if (isRichTextEmpty(rest.data)) {
     return null

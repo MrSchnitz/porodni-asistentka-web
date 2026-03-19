@@ -1234,6 +1234,24 @@ export interface AboutPage {
     };
     [k: string]: unknown;
   };
+  myStory?: {
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
   myValuesSection?: {
     showMyValues?: boolean | null;
     title?: string | null;
@@ -1613,6 +1631,12 @@ export interface AboutPageSelect<T extends boolean = true> {
   image?: T;
   title?: T;
   content?: T;
+  myStory?:
+    | T
+    | {
+        title?: T;
+        content?: T;
+      };
   myValuesSection?:
     | T
     | {

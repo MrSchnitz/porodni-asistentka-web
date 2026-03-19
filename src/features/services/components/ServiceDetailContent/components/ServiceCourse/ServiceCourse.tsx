@@ -18,7 +18,7 @@ export function ServiceCourse({
       <CardContent className="p-4">
         {/* Course Overview */}
         <div className="mb-4">
-          <h4 className="text-lg font-medium mb-4 text-foreground">{name}</h4>
+          <h4 className="text-lg font-bold mb-4 text-foreground">{name}</h4>
 
           {description && !isRichTextEmpty(description) && (
             <div className="text-sm text-foreground/90 mb-3">

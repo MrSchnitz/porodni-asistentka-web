@@ -19,7 +19,7 @@ export const serviceScheduleItems: Field = {
     {
       name: 'lesson',
       type: 'text',
-      label: 'Obsah',
+      label: 'Náplň',
       required: true,
       admin: {
         description: 'Vyberte lekci nebo zadejte vlastní název',

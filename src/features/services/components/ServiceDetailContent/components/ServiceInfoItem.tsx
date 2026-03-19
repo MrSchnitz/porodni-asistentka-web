@@ -6,12 +6,18 @@ type Props = {
   icon?: string | null
   title?: string | null
   value?: string | React.ReactNode
+  inline?: boolean
 }
 
-export const ServiceInfoItem = ({ icon, title, value, className }: Props) => {
+export const ServiceInfoItem = ({ icon, title, value, className, inline = true }: Props) => {
   return (
-    <div className={cn('bg-background rounded-lg p-3 border border-primary/20', className)}>
-      <div className="flex items-center gap-2 text-foreground/90 mb-1">
+    <div
+      className={cn(
+        'bg-background rounded-lg p-3 border border-primary/20 text-foreground/90',
+        className,
+      )}
+    >
+      <div className="flex items-center gap-2 mb-1">
         {icon && (
           <DynamicIcon
             name={icon as IconName}
@@ -19,9 +25,16 @@ export const ServiceInfoItem = ({ icon, title, value, className }: Props) => {
             aria-hidden="true"
           />
         )}
-        <span className="text-sm font-medium">{title}</span>
+        {inline ? (
+          <span className="text-foreground/90">
+            <span className="text-base font-bold mr-1.5">{title}:</span>
+            <span className="text-base">{value}</span>
+          </span>
+        ) : (
+          <span className="text-base font-bold">{title}</span>
+        )}
       </div>
-      <span className="text-base">{value}</span>
+      {!inline && <span className="text-base">{value}</span>}
     </div>
   )
 }

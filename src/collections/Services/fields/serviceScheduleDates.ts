@@ -54,6 +54,10 @@ export const serviceScheduleDates: Field = {
           pickerAppearance: 'dayAndTime',
           displayFormat: 'd.M.yyyy HH:mm',
           timeFormat: 'HH:mm',
+          timeIntervals: 15,
+          overrides: {
+            popperPlacement: 'bottom-end',
+          },
         },
         components: {
           Field: '@/collections/Services/components/StartDateField/StartDateField',
@@ -76,6 +80,10 @@ export const serviceScheduleDates: Field = {
           pickerAppearance: 'dayAndTime',
           displayFormat: 'd.M.yyyy HH:mm',
           timeFormat: 'HH:mm',
+          timeIntervals: 15,
+          overrides: {
+            popperPlacement: 'bottom-end',
+          },
         },
       },
       validate: (value, { siblingData }) => {

@@ -35,6 +35,15 @@ export const AboutPage: GlobalConfig = {
       ],
     },
     {
+      name: 'myStory',
+      type: 'group',
+      label: 'Můj příběh',
+      fields: [
+        { name: 'title', type: 'text', label: 'Nadpis' },
+        { name: 'content', type: 'richText', label: 'Obsah' },
+      ],
+    },
+    {
       name: 'myValuesSection',
       type: 'group',
       label: 'Sekce s mými hodnotami',

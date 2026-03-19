@@ -11,6 +11,7 @@ import { isRichTextEmpty } from '@/utilities/richText'
 import { ChevronsDown, ChevronsUp } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/utilities/ui'
+import { DynamicIcon } from 'lucide-react/dynamic'
 
 const LessonTitle = ({
   title,
@@ -22,8 +23,8 @@ const LessonTitle = ({
   className?: string
 }) => {
   return (
-    <div className={cn('flex items-start gap-2', className)}>
-      {index && <span className="text-primary shrink-0 text-sm">{index}.</span>}
+    <div className={cn('flex items-baseline gap-2', className)}>
+      {index && <span className="text-primary shrink-0 text-base font-medium">{index}.</span>}
       <p className="text-sm font-medium">{title}</p>
     </div>
   )
@@ -57,7 +58,12 @@ export const ServiceLessons = ({
   return (
     <div className="bg-card rounded-lg p-4 border border-primary/20">
       <div className="flex items-center justify-between mb-2">
-        {title && <h5 className="text-md font-medium text-foreground">{title}</h5>}
+        {title && (
+          <div className="flex items-center gap-2">
+            <DynamicIcon name="presentation" className="w-5 h-5 text-primary" aria-hidden="true" />
+            <h5 className="text-lg font-bold text-foreground">{title}</h5>
+          </div>
+        )}
         {hasAnyDescription && (
           <Button
             variant="ghost"

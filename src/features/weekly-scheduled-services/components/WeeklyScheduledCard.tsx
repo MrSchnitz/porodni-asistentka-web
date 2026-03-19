@@ -18,7 +18,7 @@ const InfoItem = ({
   isCancelled: boolean
 }) => {
   return (
-    <div className="flex items-center gap-2 text-foreground/80">
+    <div className="flex items-center gap-2 text-foreground/90">
       {icon && <DynamicIcon name={icon} className="w-4 h-4 text-primary" aria-hidden="true" />}
       <span className={cn(isCancelled ? 'line-through' : '')}>{value}</span>
     </div>
@@ -54,20 +54,23 @@ export const WeeklyScheduleCard = ({
             <div className="space-y-1">
               <p
                 className={cn(
-                  'text-sm font-medium uppercase tracking-wide',
+                  'text-sm font-bold uppercase tracking-wide',
                   isCancelled ? 'text-foreground/40' : 'text-primary',
                 )}
               >
                 {serviceName}
               </p>
               <p
-                className={cn('text-sm', isCancelled ? 'text-foreground/50' : 'text-foreground/80')}
+                className={cn(
+                  'text-sm font-bold',
+                  isCancelled ? 'text-foreground/50' : 'text-foreground/90',
+                )}
               >
                 {tableName}
               </p>
               <h3
                 className={cn(
-                  'text-base',
+                  'text-base font-bold',
                   isCancelled ? 'text-foreground/50 line-through' : 'text-foreground',
                 )}
               >
@@ -85,8 +88,8 @@ export const WeeklyScheduleCard = ({
             )}
           >
             <InfoItem icon="clock" value={time} isCancelled={isCancelled} />
-            <InfoItem icon="map-pin" value={location} isCancelled={isCancelled} />
-            {notes && <p className="text-foreground/80 m-0">{notes}</p>}
+            {location && <InfoItem icon="map-pin" value={location} isCancelled={isCancelled} />}
+            {notes && <p className="text-foreground/90 m-0">{notes}</p>}
           </div>
 
           <div className="flex items-center justify-between pt-3 mt-3 border-t border-primary/30">

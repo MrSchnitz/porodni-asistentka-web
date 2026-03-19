@@ -29,7 +29,7 @@ export const ServiceScheduleTable = ({ scheduleItems, isEverythingCancelled = fa
             <TableRow>
               <TableHead>Datum</TableHead>
               <TableHead>Čas</TableHead>
-              <TableHead>Obsah lekce</TableHead>
+              <TableHead>Náplň</TableHead>
               <TableHead>Poznámky</TableHead>
             </TableRow>
           </TableHeader>
