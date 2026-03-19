@@ -30,7 +30,7 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
     <div className="space-y-6">
       {/* Content */}
       {content && !isRichTextEmpty(content) && (
-        <RichText className="text-base text-foreground/90" data={content} />
+        <RichText className="text-lg text-foreground/90" data={content} />
       )}
 
       {/* Benefits */}

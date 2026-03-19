@@ -2,12 +2,7 @@
 
 import RichText from '@/components/RichText'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogHeader,
-} from '@/components/ui/dialog'
+import { Dialog, DialogBody, DialogContent, DialogHeader } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
 import { Review } from '@/payload-types'
 import { Quote, Star } from 'lucide-react'

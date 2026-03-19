@@ -1,12 +1,22 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { ServicePackageSection as ServicePackageSectionType } from '@/features/_shared/types'
+import { cn } from '@/lib/utils'
 import { CheckCircle2 } from 'lucide-react'
 
 type Props = {
   packageSection: ServicePackageSectionType
 }
 
+const mdColsClass = {
+  1: 'md:grid-cols-1',
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-3',
+} as const
+
 export const ServicePackagesSection = ({ packageSection }: Props) => {
+  const count = packageSection.packages?.length ?? 0
+  const mdCols = Math.min(Math.max(count, 1), 3) as keyof typeof mdColsClass
+
   return (
     <div>
       <div className="text-center mb-6 space-y-2">
@@ -18,7 +28,7 @@ export const ServicePackagesSection = ({ packageSection }: Props) => {
         </h2>
         <p className="text-lg text-foreground/90 max-w-2xl mx-auto">{packageSection.description}</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className={cn('grid grid-cols-1 gap-6', mdColsClass[mdCols])}>
         {packageSection.packages?.map((pkg, idx) => (
           <Card key={idx} className="border-2 transition-all hover:shadow-lg border-primary/30">
             <CardContent className="p-6">

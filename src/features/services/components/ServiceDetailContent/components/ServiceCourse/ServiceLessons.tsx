@@ -69,7 +69,7 @@ export const ServiceLessons = ({
             variant="ghost"
             size="sm"
             onClick={() => (allExpanded ? handleCollapseAll() : handleExpandAll())}
-            className="text-primary hover:text-primary/80 hover:bg-primary/10 h-7 text-xs"
+            className="text-primary hover:text-primary/80 hover:bg-primary/10 h-7 text-sm"
           >
             {allExpanded ? (
               <>
@@ -107,7 +107,7 @@ export const ServiceLessons = ({
               {hasDescription && lesson.description && (
                 <AccordionContent>
                   <div className="text-sm leading-relaxed pl-6 border-l-2 border-primary/30">
-                    <RichText className="text-sm" data={lesson.description} />
+                    <RichText className="text-base" data={lesson.description} />
                   </div>
                 </AccordionContent>
               )}

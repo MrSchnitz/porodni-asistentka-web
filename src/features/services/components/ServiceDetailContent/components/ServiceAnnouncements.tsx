@@ -40,7 +40,7 @@ export const ServiceAnnouncements = ({ announcements }: Props) => {
                 )}
               </div>
               {announcement.description && !isRichTextEmpty(announcement.description) && (
-                <RichText data={announcement.description} className="text-foreground/70 mb-3" />
+                <RichText data={announcement.description} className="text-foreground/90 mb-3" />
               )}
               {announcement.image && (
                 <button
