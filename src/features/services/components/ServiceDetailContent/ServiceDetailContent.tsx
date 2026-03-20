@@ -26,18 +26,29 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
   const { content, additionalInfo, note, announcementsSection, benefitsSection, packageSection } =
     service.detail
 
+  const showContent = content && !isRichTextEmpty(content)
+  const showAdditionalInfo = additionalInfo && additionalInfo.length > 0
+  const showNote = note && !isRichTextEmpty(note)
+  const showBenefits = benefitsSection?.enabled
+  const showPackages = packageSection?.enabled
+  const showLessons = serviceType === 'lessons' && lessonsSection
+  const showCourses = serviceType === 'courses' && courses && courses.length > 0
+  const showSchedule = schedules && schedules.length > 0
+  const showAnnouncements =
+    announcementsSection?.enabled &&
+    announcementsSection.announcements &&
+    announcementsSection.announcements.length > 0
+
   return (
     <div className="space-y-6">
       {/* Content */}
-      {content && !isRichTextEmpty(content) && (
-        <RichText className="text-lg text-foreground/90" data={content} />
-      )}
+      {showContent && <RichText className="text-lg text-foreground/90" data={content} />}
 
       {/* Benefits */}
-      {benefitsSection?.enabled && <ServiceBenefitsSection benefitsSection={benefitsSection} />}
+      {showBenefits && <ServiceBenefitsSection benefitsSection={benefitsSection} />}
 
       {/* Info */}
-      {additionalInfo && additionalInfo.length > 0 && (
+      {showAdditionalInfo && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {additionalInfo.map((info, index) => {
             const isLastOdd = index === additionalInfo.length - 1 && additionalInfo.length % 2 !== 0
@@ -54,7 +65,7 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
       )}
 
       {/* Note */}
-      {note && !isRichTextEmpty(note) && (
+      {showNote && (
         <ServiceInfoItem
           className="bg-card"
           icon="notebook-pen"
@@ -65,43 +76,33 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
       )}
 
       {/* Packages */}
-      {packageSection?.enabled && <ServicePackagesSection packageSection={packageSection} />}
+      {showPackages && <ServicePackagesSection packageSection={packageSection} />}
 
       {/* Lessons */}
-      {serviceType === 'lessons' && lessonsSection && (
-        <ServiceLessons lessonsSection={lessonsSection} />
-      )}
+      {showLessons && <ServiceLessons lessonsSection={lessonsSection} />}
 
       {/* Announcements */}
-      {announcementsSection?.enabled &&
-        announcementsSection.announcements &&
-        announcementsSection.announcements.length > 0 && (
-          <ServiceContentSection icon="megaphone" title="Aktuality a oznámení">
-            <div className="space-y-4">
-              <ServiceAnnouncements announcements={announcementsSection.announcements} />
-            </div>
-          </ServiceContentSection>
-        )}
+      {showAnnouncements && (
+        <ServiceContentSection icon="megaphone" title="Aktuality a oznámení">
+          <ServiceAnnouncements announcements={announcementsSection?.announcements ?? []} />
+        </ServiceContentSection>
+      )}
 
       {/* Courses */}
-      {serviceType === 'courses' && courses && courses.length > 0 && (
+      {showCourses && (
         <ServiceContentSection icon="book-open" title="Kurzy">
-          <div className="space-y-4">
-            {courses.map((course) => (
-              <ServiceCourse key={course.id} course={course} />
-            ))}
-          </div>
+          {courses.map((course) => (
+            <ServiceCourse key={course.id} course={course} />
+          ))}
         </ServiceContentSection>
       )}
 
       {/* Schedule */}
-      {schedules && schedules.length > 0 && (
+      {showSchedule && (
         <ServiceContentSection icon="calendar" title="Aktuální termíny">
-          <div className="space-y-4">
-            {schedules.map((schedule) => (
-              <ServiceSchedule key={schedule.id} schedule={schedule} />
-            ))}
-          </div>
+          {schedules.map((schedule) => (
+            <ServiceSchedule key={schedule.id} schedule={schedule} />
+          ))}
         </ServiceContentSection>
       )}
     </div>

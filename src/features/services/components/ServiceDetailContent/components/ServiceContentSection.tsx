@@ -16,14 +16,14 @@ export const ServiceContentSection = ({
   withBackground,
 }: ContentSectionProps) => {
   const content = (
-    <>
+    <div className="space-y-4">
       <div className="flex items-center gap-2 mb-4">
         {icon && <DynamicIcon name={icon} className="w-5 h-5 text-primary" aria-hidden="true" />}
         <h3 className="text-xl font-medium text-foreground">{title}</h3>
       </div>
       {description && <p className="text-lg text-foreground/70 mb-4">{description}</p>}
       {children}
-    </>
+    </div>
   )
 
   if (withBackground) {

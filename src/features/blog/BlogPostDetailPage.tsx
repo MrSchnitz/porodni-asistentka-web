@@ -32,8 +32,8 @@ export function BlogPostDetailPage({ blogPost, relatedPosts }: Props) {
       <section className="py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <article className="max-w-3xl mx-auto">
-            <div className="prose prose-lg max-w-none prose-img:rounded-xl prose-img:overflow-hidden prose-img:shadow-lg">
-              <RichText data={blogPost.content} />
+            <div className="prose prose-lg max-w-none dark:prose-invert prose-p:leading-snug prose-li:leading-snug prose-headings:leading-snug prose-p:my-2 prose-headings:my-3 prose-img:rounded-xl prose-img:overflow-hidden prose-img:shadow-lg prose-code:rounded prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm before:prose-code:content-none after:prose-code:content-none">
+              <RichText enableProse={false} data={blogPost.content} />
             </div>
           </article>
         </div>

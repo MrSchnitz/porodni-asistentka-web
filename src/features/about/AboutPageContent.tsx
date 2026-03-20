@@ -26,7 +26,7 @@ export function AboutPageContent({
     <main className="min-h-dvh flex flex-col">
       <PageHeader data={pageHeader} />
 
-      <section className="py-20 bg-card flex-1">
+      <section className="py-10 md:py-20 bg-card flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className={cn(
@@ -58,7 +58,7 @@ export function AboutPageContent({
       </section>
 
       {showMyStory && (
-        <section className="pb-20 bg-card flex-1">
+        <section className="pb-10 md:pb-20 bg-card flex-1">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
               {myStory?.title && (
@@ -81,12 +81,12 @@ export function AboutPageContent({
       )}
 
       {showMyValues && (
-        <section className="pb-20 bg-card">
+        <section className="pb-10 md:pb-20 bg-card">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
               {myValuesSection?.title && (
                 <h2
-                  className="text-3xl sm:text-4xl mb-12 text-center text-foreground"
+                  className="text-3xl sm:text-4xl mb-8 md:mb-12 text-center text-foreground"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {myValuesSection.title}
@@ -112,7 +112,7 @@ export function AboutPageContent({
       )}
 
       {showCTA && (
-        <section className="py-20 bg-linear-to-br from-muted to-accent">
+        <section className="py-10 md:py-20 bg-linear-to-br from-muted to-accent">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <Card className="max-w-4xl mx-auto border-primary/30 bg-card shadow-xl">
               <CardContent className="p-8 sm:p-12 text-center">
@@ -123,7 +123,9 @@ export function AboutPageContent({
                   {ctaSection?.title}
                 </h2>
                 {ctaSection?.subtitle && (
-                  <p className="text-xl text-foreground/70 mb-8">{ctaSection.subtitle}</p>
+                  <p className="text-base md:text-lg text-foreground/70 mb-8">
+                    {ctaSection.subtitle}
+                  </p>
                 )}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   {ctaSection?.ctaButtons?.map((button, index) =>
@@ -133,6 +135,7 @@ export function AboutPageContent({
                           size="lg"
                           variant={index > 0 ? 'outline' : 'default'}
                           className={cn(
+                            'w-full md:w-auto',
                             index > 0
                               ? 'border-primary text-primary hover:bg-primary/10'
                               : 'bg-primary hover:bg-secondary text-foreground shadow-lg',

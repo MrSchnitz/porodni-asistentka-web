@@ -26,7 +26,7 @@ export const ServicePackagesSection = ({ packageSection }: Props) => {
         >
           {packageSection.title}
         </h2>
-        <p className="text-lg text-foreground/90 max-w-2xl mx-auto">{packageSection.description}</p>
+        <p className="text-lg text-foreground/90 mx-auto">{packageSection.description}</p>
       </div>
       <div className={cn('grid grid-cols-1 gap-6', mdColsClass[mdCols])}>
         {packageSection.packages?.map((pkg, idx) => (

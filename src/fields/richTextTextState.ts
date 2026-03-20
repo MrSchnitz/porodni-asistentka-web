@@ -1,5 +1,5 @@
 /**
- * Single source of truth for rich text TextStateFeature (font family, font size).
+ * Single source of truth for rich text TextStateFeature (font family, size, line height).
  * Used by the Lexical editor config and by the frontend RichText converter.
  */
 export const richTextTextState = {
@@ -46,5 +46,10 @@ export const richTextTextState = {
     '32px': { label: '32px', css: { 'font-size': '32px' } },
     '36px': { label: '36px', css: { 'font-size': '36px' } },
     '48px': { label: '48px', css: { 'font-size': '48px' } },
+  },
+  lineHeight: {
+    tight: { label: 'Řádkování: těsné', css: { 'line-height': '1.25' } },
+    normal: { label: 'Řádkování: normální', css: { 'line-height': '1.5' } },
+    relaxed: { label: 'Řádkování: vzdušné', css: { 'line-height': '2' } },
   },
 } as const

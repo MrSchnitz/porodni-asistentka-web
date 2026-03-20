@@ -6,9 +6,13 @@ import { cn } from '@/lib/utils'
 
 const NAVBAR_HEIGHT = 80 // h-20 = 80px
 
+export type StickyHeaderChildrenProps = {
+  showFixed: boolean
+}
+
 type Props = {
-  /** Content shown in normal document flow */
-  children: React.ReactNode
+  /** Content shown in normal document flow (render prop receives `showFixed` when sticky clone is visible) */
+  children: React.ReactNode | ((props: StickyHeaderChildrenProps) => React.ReactNode)
   /** Content shown in fixed header (defaults to children) */
   fixedContent?: React.ReactNode
   /** Class for the original wrapper */
@@ -54,13 +58,14 @@ export function StickyHeader({
     return () => observer.disconnect()
   }, [])
 
-  const content = fixedContent ?? children
+  const resolvedChildren = typeof children === 'function' ? children({ showFixed }) : children
+  const content = fixedContent ?? resolvedChildren
 
   return (
     <>
       {/* Original content in document flow */}
       <div ref={headerRef} className={className}>
-        {children}
+        {resolvedChildren}
       </div>
 
       {/* Fixed header that appears when original scrolls out */}

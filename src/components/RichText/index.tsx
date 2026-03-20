@@ -24,7 +24,7 @@ export default function RichText(props: Props) {
         {
           container: enableGutter,
           'max-w-none': !enableGutter,
-          'prose md:prose-md dark:prose-invert prose-code:rounded prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm before:prose-code:content-none after:prose-code:content-none':
+          'prose md:prose-md dark:prose-invert prose-p:leading-snug prose-li:leading-snug prose-headings:leading-snug prose-p:my-2 prose-headings:my-3 prose-code:rounded prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm before:prose-code:content-none after:prose-code:content-none':
             enableProse,
         },
         className,

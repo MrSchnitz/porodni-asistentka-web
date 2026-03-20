@@ -41,7 +41,7 @@ export function HeroSection({
               >
                 <Sparkles className="w-6 h-6 text-primary" aria-hidden="true" />
                 <span
-                  className="text-primary text-2xl"
+                  className="text-primary text-xl md:text-2xl"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {quote}
@@ -82,10 +82,12 @@ export function HeroSection({
                     <Button
                       size="lg"
                       variant={index > 0 ? 'outline' : 'default'}
-                      className={cn({
-                        'bg-primary hover:bg-secondary text-foreground px-8 shadow-lg': index === 0,
-                        'border-primary text-primary hover:bg-primary/10': index > 0,
-                      })}
+                      className={cn(
+                        'w-full md:w-auto',
+                        index === 0
+                          ? 'bg-primary hover:bg-secondary text-foreground px-8 shadow-lg'
+                          : 'border-primary text-primary hover:bg-primary/10',
+                      )}
                     >
                       {button.link.label}
                     </Button>
