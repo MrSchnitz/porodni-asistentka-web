@@ -1,14 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import {
-  startOfWeek,
-  endOfWeek,
-  parseISO,
-  getDay,
-  isWithinInterval,
-  addDays,
-  format,
-} from 'date-fns'
+import { endOfWeek, parseISO, getDay, isWithinInterval, addDays, subDays, format } from 'date-fns'
 import { formatServiceDateTime } from '@/utilities/formatServiceDateTime'
 import { ServiceStatus } from '@/payload-types'
 import { cs } from 'date-fns/locale'
@@ -55,8 +47,11 @@ export async function getWeeklyScheduleItems(): Promise<{
   const payload = await getPayload({ config })
 
   const now = new Date()
-  const weekStart = startOfWeek(now, { weekStartsOn: 1 }) // Monday as first day
-  const weekEnd = endOfWeek(now, { weekStartsOn: 1 })
+  // Mon–Fri: current work week. From Saturday (incl.) through Sunday: upcoming week.
+  const daysBackToSaturday = (getDay(now) + 1) % 7
+  const mostRecentSaturday = subDays(now, daysBackToSaturday)
+  const weekStart = addDays(mostRecentSaturday, 2)
+  const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 })
 
   const dayDates: Record<keyof WeeklyScheduleByDay, string> = {
     monday: format(weekStart, 'd.M.', { locale: cs }),
@@ -66,7 +61,7 @@ export async function getWeeklyScheduleItems(): Promise<{
     friday: format(addDays(weekStart, 4), 'd.M.', { locale: cs }),
   }
 
-  // Query only services that have schedule items within the current week
+  // Query only services that have schedule items within the displayed week
   const services = await payload.find({
     collection: 'services',
     limit: 0,
