@@ -129,11 +129,9 @@ export async function getWeeklyScheduleItems(): Promise<{
     }
   }
 
-  // Sort each day's items by start time
+  // Čas je z formatServiceDateTime jako „HH:mm“ (zero-padded) → řazení podle řetězce stačí
   for (const day of Object.keys(weeklySchedule) as (keyof WeeklyScheduleByDay)[]) {
-    weeklySchedule[day].sort((a, b) => {
-      return new Date(a.time).getTime() - new Date(b.time).getTime()
-    })
+    weeklySchedule[day].sort((a, b) => a.time.localeCompare(b.time))
   }
 
   return { weeklySchedule, dayDates }

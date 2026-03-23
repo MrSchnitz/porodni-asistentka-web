@@ -1,21 +1,38 @@
-import { format, isSameDay } from 'date-fns'
+import { parseISO } from 'date-fns'
+import { formatInTimeZone } from 'date-fns-tz'
+
+/** Payload ukládá datum jako ISO instant; na serveru bývá TZ=UTC, admin v prohlížeči ukazuje lokální čas. */
+const DISPLAY_TZ = 'Europe/Prague'
 
 type Props = {
   startDate: string | Date
   endDate?: string | Date
 }
 
-export function formatServiceDateTime({ startDate, endDate }: Props) {
-  const isSameDate = endDate ? isSameDay(startDate, endDate) : false
+function toDate(value: string | Date): Date {
+  return typeof value === 'string' ? parseISO(value) : value
+}
 
-  const completeFormattedStartDate = startDate ? format(startDate, 'd. M. yyyy HH:mm') : ''
-  const completeFormattedEndDate = endDate
-    ? format(endDate, isSameDate ? 'HH:mm' : 'd. M. yyyy HH:mm')
+export function formatServiceDateTime({ startDate, endDate }: Props) {
+  const start = startDate ? toDate(startDate) : null
+  const end = endDate ? toDate(endDate) : null
+
+  const isSameDate =
+    start && end
+      ? formatInTimeZone(start, DISPLAY_TZ, 'yyyy-MM-dd') ===
+        formatInTimeZone(end, DISPLAY_TZ, 'yyyy-MM-dd')
+      : false
+
+  const completeFormattedStartDate = start
+    ? formatInTimeZone(start, DISPLAY_TZ, 'd. M. yyyy HH:mm')
     : ''
-  const formattedStartDate = startDate ? format(startDate, 'd. M. yyyy') : ''
-  const formattedEndDate = endDate ? format(endDate, 'd. M. yyyy') : ''
-  const formattedStartTime = startDate ? format(startDate, 'HH:mm') : ''
-  const formattedEndTime = endDate ? format(endDate, 'HH:mm') : ''
+  const completeFormattedEndDate = end
+    ? formatInTimeZone(end, DISPLAY_TZ, isSameDate ? 'HH:mm' : 'd. M. yyyy HH:mm')
+    : ''
+  const formattedStartDate = start ? formatInTimeZone(start, DISPLAY_TZ, 'd. M. yyyy') : ''
+  const formattedEndDate = end ? formatInTimeZone(end, DISPLAY_TZ, 'd. M. yyyy') : ''
+  const formattedStartTime = start ? formatInTimeZone(start, DISPLAY_TZ, 'HH:mm') : ''
+  const formattedEndTime = end ? formatInTimeZone(end, DISPLAY_TZ, 'HH:mm') : ''
 
   const completeDateString = `${completeFormattedStartDate} ${completeFormattedEndDate ? ` - ${completeFormattedEndDate}` : ''}`
   const dateString = `${formattedStartDate} ${endDate && !isSameDate ? ` - ${formattedEndDate}` : ''}`
