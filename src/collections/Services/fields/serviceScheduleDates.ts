@@ -1,12 +1,10 @@
-import { parseISO, isValid, getMinutes, isAfter, set, getHours } from 'date-fns'
+import { parseISO, isValid, isAfter } from 'date-fns'
 import { Field } from 'payload'
 
-// Helper function for date and time validation
 const validateDateTimeRange = (
   startDate: string | Date | null | undefined,
   endDate: string | Date | null | undefined,
   errorMessage: string,
-  isTime: boolean = false,
 ): string | true => {
   if (!startDate || !endDate) return true
 
@@ -19,23 +17,6 @@ const validateDateTimeRange = (
   const end = parseDate(endDate)
 
   if (!start || !end) return true
-
-  if (isTime) {
-    // Normalize to same date for time-only comparison
-    const baseDate = new Date(2000, 0, 1)
-    const startDateNormalized = set(baseDate, {
-      hours: getHours(start),
-      minutes: getMinutes(start),
-    })
-    const endDateNormalized = set(baseDate, {
-      hours: getHours(end),
-      minutes: getMinutes(end),
-    })
-
-    if (!isAfter(endDateNormalized, startDateNormalized)) {
-      return errorMessage
-    }
-  }
 
   return isAfter(end, start) ? true : errorMessage
 }

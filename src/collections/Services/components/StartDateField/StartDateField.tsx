@@ -1,9 +1,10 @@
 'use client'
 
 import { DateTimeField, useField } from '@payloadcms/ui'
-import { parseISO, isValid, set, getHours, getMinutes } from 'date-fns'
+import { parseISO, isValid } from 'date-fns'
 import { DateFieldClientProps } from 'payload'
 import { useEffect, useRef } from 'react'
+import { replaceInstantDateKeepPragueTime } from '@/utilities/pragueTime'
 
 const StartDateField: React.FC<DateFieldClientProps> = (props) => {
   const { path } = props
@@ -25,14 +26,9 @@ const StartDateField: React.FC<DateFieldClientProps> = (props) => {
       const startDate = parseISO(value)
 
       if (isValid(startDate)) {
-        // Get time from endDate if exists, otherwise from startDate
         const timeSource = endDateValue ? parseISO(endDateValue) : startDate
-        const hours = isValid(timeSource) ? getHours(timeSource) : getHours(startDate)
-        const minutes = isValid(timeSource) ? getMinutes(timeSource) : getMinutes(startDate)
-
-        // Set only the date from startDate, keep the time
-        const newEndDate = set(startDate, { hours, minutes })
-        setEndDateValue(newEndDate.toISOString())
+        const validTimeSource = isValid(timeSource) ? timeSource : startDate
+        setEndDateValue(replaceInstantDateKeepPragueTime(startDate, validTimeSource).toISOString())
       }
     }
 

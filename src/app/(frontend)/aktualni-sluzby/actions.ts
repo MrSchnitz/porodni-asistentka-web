@@ -1,9 +1,14 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { endOfWeek, parseISO, getDay, isWithinInterval, addDays, subDays, format } from 'date-fns'
+import { parseISO, isWithinInterval } from 'date-fns'
 import { formatServiceDateTime } from '@/utilities/formatServiceDateTime'
+import {
+  addCalendarDaysYmd,
+  formatPragueCalendarDay,
+  getDisplayedWorkWeekRange,
+  isoWeekdayPrague,
+} from '@/utilities/pragueTime'
 import { ServiceStatus } from '@/payload-types'
-import { cs } from 'date-fns/locale'
 
 export type WeeklyScheduleItem = {
   serviceName: string
@@ -24,7 +29,7 @@ export type WeeklyScheduleByDay = {
   friday: WeeklyScheduleItem[]
 }
 
-const dayIndexToName: Record<number, keyof WeeklyScheduleByDay> = {
+const isoDayInPragueToName: Record<number, keyof WeeklyScheduleByDay> = {
   1: 'monday',
   2: 'tuesday',
   3: 'wednesday',
@@ -46,22 +51,16 @@ export async function getWeeklyScheduleItems(): Promise<{
 }> {
   const payload = await getPayload({ config })
 
-  const now = new Date()
-  // Mon–Fri: current work week. From Saturday (incl.) through Sunday: upcoming week.
-  const daysBackToSaturday = (getDay(now) + 1) % 7
-  const mostRecentSaturday = subDays(now, daysBackToSaturday)
-  const weekStart = addDays(mostRecentSaturday, 2)
-  const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 })
+  const { weekStart, weekEnd, mondayYmd } = getDisplayedWorkWeekRange(new Date())
 
   const dayDates: Record<keyof WeeklyScheduleByDay, string> = {
-    monday: format(weekStart, 'd.M.', { locale: cs }),
-    tuesday: format(addDays(weekStart, 1), 'd.M.', { locale: cs }),
-    wednesday: format(addDays(weekStart, 2), 'd.M.', { locale: cs }),
-    thursday: format(addDays(weekStart, 3), 'd.M.', { locale: cs }),
-    friday: format(addDays(weekStart, 4), 'd.M.', { locale: cs }),
+    monday: formatPragueCalendarDay(mondayYmd),
+    tuesday: formatPragueCalendarDay(addCalendarDaysYmd(mondayYmd, 1)),
+    wednesday: formatPragueCalendarDay(addCalendarDaysYmd(mondayYmd, 2)),
+    thursday: formatPragueCalendarDay(addCalendarDaysYmd(mondayYmd, 3)),
+    friday: formatPragueCalendarDay(addCalendarDaysYmd(mondayYmd, 4)),
   }
 
-  // Query only services that have schedule items within the displayed week
   const services = await payload.find({
     collection: 'services',
     limit: 0,
@@ -90,8 +89,6 @@ export async function getWeeklyScheduleItems(): Promise<{
     friday: [],
   }
 
-  // Still need to filter individual items since DB query returns services
-  // that have at least one matching item, but may include other items too
   for (const service of services.docs) {
     if (!service.schedules) continue
 
@@ -102,8 +99,8 @@ export async function getWeeklyScheduleItems(): Promise<{
         const startDate = parseISO(scheduleItem.startDate)
 
         if (isWithinInterval(startDate, { start: weekStart, end: weekEnd })) {
-          const dayIndex = getDay(startDate)
-          const dayName = dayIndexToName[dayIndex]
+          const dayName = isoDayInPragueToName[isoWeekdayPrague(startDate)]
+          if (!dayName) continue
 
           const isWholeScheduleCancelled = schedule.status === 'cancelled'
           const locationTitles = ['Místo', 'Místa', 'Místo konání', 'Location']
@@ -129,7 +126,6 @@ export async function getWeeklyScheduleItems(): Promise<{
     }
   }
 
-  // Čas je z formatServiceDateTime jako „HH:mm“ (zero-padded) → řazení podle řetězce stačí
   for (const day of Object.keys(weeklySchedule) as (keyof WeeklyScheduleByDay)[]) {
     weeklySchedule[day].sort((a, b) => a.time.localeCompare(b.time))
   }

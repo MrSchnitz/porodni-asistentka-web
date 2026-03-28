@@ -1,8 +1,6 @@
 import { parseISO } from 'date-fns'
 import { formatInTimeZone } from 'date-fns-tz'
-
-/** Payload ukládá datum jako ISO instant; na serveru bývá TZ=UTC, admin v prohlížeči ukazuje lokální čas. */
-const DISPLAY_TZ = 'Europe/Prague'
+import { PRAGUE_TZ } from '@/utilities/pragueTime'
 
 type Props = {
   startDate: string | Date
@@ -19,20 +17,20 @@ export function formatServiceDateTime({ startDate, endDate }: Props) {
 
   const isSameDate =
     start && end
-      ? formatInTimeZone(start, DISPLAY_TZ, 'yyyy-MM-dd') ===
-        formatInTimeZone(end, DISPLAY_TZ, 'yyyy-MM-dd')
+      ? formatInTimeZone(start, PRAGUE_TZ, 'yyyy-MM-dd') ===
+        formatInTimeZone(end, PRAGUE_TZ, 'yyyy-MM-dd')
       : false
 
   const completeFormattedStartDate = start
-    ? formatInTimeZone(start, DISPLAY_TZ, 'd. M. yyyy HH:mm')
+    ? formatInTimeZone(start, PRAGUE_TZ, 'd. M. yyyy HH:mm')
     : ''
   const completeFormattedEndDate = end
-    ? formatInTimeZone(end, DISPLAY_TZ, isSameDate ? 'HH:mm' : 'd. M. yyyy HH:mm')
+    ? formatInTimeZone(end, PRAGUE_TZ, isSameDate ? 'HH:mm' : 'd. M. yyyy HH:mm')
     : ''
-  const formattedStartDate = start ? formatInTimeZone(start, DISPLAY_TZ, 'd. M. yyyy') : ''
-  const formattedEndDate = end ? formatInTimeZone(end, DISPLAY_TZ, 'd. M. yyyy') : ''
-  const formattedStartTime = start ? formatInTimeZone(start, DISPLAY_TZ, 'HH:mm') : ''
-  const formattedEndTime = end ? formatInTimeZone(end, DISPLAY_TZ, 'HH:mm') : ''
+  const formattedStartDate = start ? formatInTimeZone(start, PRAGUE_TZ, 'd. M. yyyy') : ''
+  const formattedEndDate = end ? formatInTimeZone(end, PRAGUE_TZ, 'd. M. yyyy') : ''
+  const formattedStartTime = start ? formatInTimeZone(start, PRAGUE_TZ, 'HH:mm') : ''
+  const formattedEndTime = end ? formatInTimeZone(end, PRAGUE_TZ, 'HH:mm') : ''
 
   const completeDateString = `${completeFormattedStartDate} ${completeFormattedEndDate ? ` - ${completeFormattedEndDate}` : ''}`
   const dateString = `${formattedStartDate} ${endDate && !isSameDate ? ` - ${formattedEndDate}` : ''}`
