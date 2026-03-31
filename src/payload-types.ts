@@ -245,6 +245,7 @@ export interface Config {
     aboutPage: AboutPage;
     contactPage: ContactPage;
     downloadsPage: DownloadsPage;
+    lecturesPage: LecturesPage;
     blogPage: BlogPage;
     header: Header;
     footer: Footer;
@@ -257,6 +258,7 @@ export interface Config {
     aboutPage: AboutPageSelect<false> | AboutPageSelect<true>;
     contactPage: ContactPageSelect<false> | ContactPageSelect<true>;
     downloadsPage: DownloadsPageSelect<false> | DownloadsPageSelect<true>;
+    lecturesPage: LecturesPageSelect<false> | LecturesPageSelect<true>;
     blogPage: BlogPageSelect<false> | BlogPageSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
@@ -1111,7 +1113,9 @@ export interface Hero {
 export interface Link {
   type?: ('reference' | 'custom') | null;
   newTab?: boolean | null;
-  reference?: ('/' | '/aktualni-sluzby' | '/sluzby' | '/o-mne' | '/kontakt' | '/ke-stazeni' | '/blog') | null;
+  reference?:
+    | ('/' | '/aktualni-sluzby' | '/sluzby' | '/o-mne' | '/kontakt' | '/ke-stazeni' | '/blog' | '/prednasky')
+    | null;
   url?: string | null;
   label: string;
 }
@@ -1352,6 +1356,54 @@ export interface DownloadsPage {
         }[]
       | null;
   };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lecturesPage".
+ */
+export interface LecturesPage {
+  id: string;
+  pageHeader: PageHeader;
+  lectures?:
+    | {
+        title: string;
+        description?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        startDate: string;
+        endDate: string;
+        status?: ServiceStatus;
+        /**
+         * Pro zobrazení počtu míst musí být stav termínu "Naplánováno".
+         */
+        hasLimitedSpots?: boolean | null;
+        numberOfSpots?: number | null;
+        infoItems?:
+          | {
+              preset?: ('Místo' | 'Cena' | 'Délka') | null;
+              icon?: string | null;
+              title?: string | null;
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1711,6 +1763,37 @@ export interface DownloadsPageSelect<T extends boolean = true> {
               item?: T;
               id?: T;
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lecturesPage_select".
+ */
+export interface LecturesPageSelect<T extends boolean = true> {
+  pageHeader?: T | PageHeaderSelect<T>;
+  lectures?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        startDate?: T;
+        endDate?: T;
+        status?: T;
+        hasLimitedSpots?: T;
+        numberOfSpots?: T;
+        infoItems?:
+          | T
+          | {
+              preset?: T;
+              icon?: T;
+              title?: T;
+              value?: T;
+              id?: T;
+            };
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -17,10 +17,10 @@ const eslintConfig = [
       'unused-imports': unusedImports,
     },
     rules: {
-      // Vypnout původní no-unused-vars pravidla
+      // Disable the original no-unused-vars rules
       '@typescript-eslint/no-unused-vars': 'off',
 
-      // Použít unused-imports plugin pro automatické odstraňování
+      // Use the unused-imports plugin for automatic cleanup
       'unused-imports/no-unused-imports': 'warn',
       'unused-imports/no-unused-vars': [
         'warn',

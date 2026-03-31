@@ -27,6 +27,7 @@ import { DownloadsPage } from './features/downloads/config'
 import { BlogCategories } from './collections/Blog/BlogCategories'
 import { Blogs } from './collections/Blog/Blogs'
 import { BlogPage } from './features/blog/config'
+import { LecturesPage } from './features/lectures/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -38,6 +39,7 @@ const pagesGlobalsConfig: GlobalConfig[] = [
   AboutPage,
   ContactPage,
   DownloadsPage,
+  LecturesPage,
   BlogPage,
 ]
 
@@ -87,6 +89,7 @@ export default buildConfig({
         'contactPage',
         'downloadsPage',
         'blogPage',
+        'lecturesPage',
         'header',
         'footer',
         'announcement',

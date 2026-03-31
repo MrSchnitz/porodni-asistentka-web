@@ -35,4 +35,8 @@ export const PAGE_ROUTES = {
     label: 'Blog',
     path: '/blog',
   },
+  lecturesPage: {
+    label: 'Přednášky',
+    path: '/prednasky',
+  },
 } satisfies PageRoute

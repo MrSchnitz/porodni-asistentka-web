@@ -21,6 +21,12 @@ export function formatServiceDateTime({ startDate, endDate }: Props) {
         formatInTimeZone(end, PRAGUE_TZ, 'yyyy-MM-dd')
       : false
 
+  const isSameDateTime =
+    start && end
+      ? formatInTimeZone(start, PRAGUE_TZ, 'yyyy-MM-dd HH:mm') ===
+        formatInTimeZone(end, PRAGUE_TZ, 'yyyy-MM-dd HH:mm')
+      : false
+
   const completeFormattedStartDate = start
     ? formatInTimeZone(start, PRAGUE_TZ, 'd. M. yyyy HH:mm')
     : ''
@@ -32,9 +38,13 @@ export function formatServiceDateTime({ startDate, endDate }: Props) {
   const formattedStartTime = start ? formatInTimeZone(start, PRAGUE_TZ, 'HH:mm') : ''
   const formattedEndTime = end ? formatInTimeZone(end, PRAGUE_TZ, 'HH:mm') : ''
 
-  const completeDateString = `${completeFormattedStartDate} ${completeFormattedEndDate ? ` - ${completeFormattedEndDate}` : ''}`
+  const completeDateString = `${completeFormattedStartDate} ${
+    completeFormattedEndDate && !isSameDateTime ? ` - ${completeFormattedEndDate}` : ''
+  }`.trimEnd()
   const dateString = `${formattedStartDate} ${endDate && !isSameDate ? ` - ${formattedEndDate}` : ''}`
-  const timeString = `${formattedStartTime} ${endDate ? ` - ${formattedEndTime}` : ''}`
+  const timeString = `${formattedStartTime} ${
+    endDate && !isSameDateTime ? ` - ${formattedEndTime}` : ''
+  }`.trimEnd()
 
   return { completeDateString, dateString, timeString }
 }

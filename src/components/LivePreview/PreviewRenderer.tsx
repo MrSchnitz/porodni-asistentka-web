@@ -25,11 +25,13 @@ import type {
   Footer,
   Header,
   HomePage,
+  LecturesPage,
   Review,
   Service,
   ServicesPage as ServicesPageType,
   WeeklyScheduledServicesPage,
 } from '@/payload-types'
+import { LecturesPageContent } from '@/features/lectures/LecturesPageContent'
 
 type PreviewRendererProps =
   | { global: 'homePage'; initialData: HomePage; depth: number }
@@ -46,6 +48,7 @@ type PreviewRendererProps =
       dayNames: Record<keyof WeeklyScheduleByDay, string>
     }
   | { global: 'blogPage'; initialData: BlogPage; depth: number }
+  | { global: 'lecturesPage'; initialData: LecturesPage; depth: number }
   | { global: 'header'; initialData: Header; depth: number }
   | { global: 'footer'; initialData: Footer; depth: number }
   | { global: 'announcement'; initialData: Announcement; depth: number }
@@ -129,6 +132,10 @@ export function PreviewRenderer(props: PreviewRendererProps) {
     }
     case 'blogPage':
       return wrap<BlogPage>(initialData as BlogPage, (data) => <BlogPageContent data={data} />)
+    case 'lecturesPage':
+      return wrap<LecturesPage>(initialData as LecturesPage, (data) => (
+        <LecturesPageContent data={data} />
+      ))
     case 'header':
       return wrap<Header>(initialData as Header, (data) => <HeaderClient data={data} />)
     case 'footer':

@@ -23,6 +23,7 @@ const PREVIEW_GLOBALS: Partial<Record<GlobalSlug, { depth: number }>> = {
   contactPage: { depth: 1 },
   downloadsPage: { depth: 1 },
   blogPage: { depth: 2 },
+  lecturesPage: { depth: 2 },
   header: { depth: 1 },
   footer: { depth: 2 },
   announcement: { depth: 1 },

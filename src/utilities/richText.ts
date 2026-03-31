@@ -62,7 +62,7 @@ function countWords(text: string): number {
 
 /**
  * Get human-readable read time from Lexical rich text content.
- * Returns e.g. "1 min čtení" or "5 min čtení".
+ * Returns localized "X min read" style text.
  */
 export function getReadTimeFromRichText(data: unknown): string {
   const text = extractTextFromRichText(data)

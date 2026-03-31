@@ -39,6 +39,7 @@ import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } f
 import { default as default_e8afe77cabef088992ec87352539e18d } from '@/features/services/components/admin/ServiceSectionRowLabel'
 import { default as default_364174d5aef13606c6bb607fcde76322 } from '@/features/contact/components/admin/ContactInfoRowLabel'
 import { default as default_88f1e8d5feb2d7c90778319ade757992 } from '@/features/downloads/components/PasswordStatus'
+import { default as default_23e4ca04a5af9f9afa29683569dbf470 } from '@/components/admin/AdditionalInfoPresetSelect'
 import { default as default_a33bbd4a4961fa25cae882137b030d7d } from '@/features/blog/components/BlogPostRowLabel/BlogPostRowLabel'
 import { NavItemRowLabel as NavItemRowLabel_56004ae4d230041dfc082b09c6e07978 } from '@/features/layout/Header/components/admin/NavItemRowLabel'
 import { default as default_534076e2c753ea5d539a54b05f456b1b } from '@/components/admin/Icon'
@@ -89,6 +90,7 @@ export const importMap = {
   "@/features/services/components/admin/ServiceSectionRowLabel#default": default_e8afe77cabef088992ec87352539e18d,
   "@/features/contact/components/admin/ContactInfoRowLabel#default": default_364174d5aef13606c6bb607fcde76322,
   "@/features/downloads/components/PasswordStatus#default": default_88f1e8d5feb2d7c90778319ade757992,
+  "@/components/admin/AdditionalInfoPresetSelect#default": default_23e4ca04a5af9f9afa29683569dbf470,
   "@/features/blog/components/BlogPostRowLabel/BlogPostRowLabel#default": default_a33bbd4a4961fa25cae882137b030d7d,
   "@/features/layout/Header/components/admin/NavItemRowLabel#NavItemRowLabel": NavItemRowLabel_56004ae4d230041dfc082b09c6e07978,
   "@/components/admin/Icon#default": default_534076e2c753ea5d539a54b05f456b1b,

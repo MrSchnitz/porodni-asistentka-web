@@ -102,6 +102,8 @@ const config: Config = {
         spacing: 'var(--spacing)',
       },
       fontSize: {
+        'xsss': ['8px', { lineHeight: '10px' }],
+        'xss': ['10px', { lineHeight: '12px' }],
         xs: ['var(--text-xs)', { lineHeight: 'var(--text-xs--line-height)' }],
         sm: ['var(--text-sm)', { lineHeight: 'var(--text-sm--line-height)' }],
         base: ['var(--text-base)', { lineHeight: 'var(--text-base--line-height)' }],
