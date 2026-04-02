@@ -1,4 +1,6 @@
 import {
+  CalendarItems,
+  CalendarSchedules,
   ContactPage,
   Courses,
   DownloadsPage,
@@ -11,6 +13,10 @@ import {
 export type Course = NonNullable<Courses>[number]
 
 export type Schedule = NonNullable<Schedules>[number]
+
+export type CalendarSchedule = NonNullable<CalendarSchedules>[number]
+
+export type CalendarItem = NonNullable<CalendarItems>[number]
 
 export type ScheduleItems = NonNullable<Schedule['scheduleItems']>
 

@@ -5,7 +5,7 @@ import { RowLabelProps, useRowLabel } from '@payloadcms/ui'
 
 type Info = AdditionalInfo
 
-const InfoRowLabel: React.FC<RowLabelProps> = () => {
+const AdditionalInfoRowLabel: React.FC<RowLabelProps> = () => {
   const { data, rowNumber } = useRowLabel<Info>()
 
   if (!data?.title) {
@@ -15,4 +15,4 @@ const InfoRowLabel: React.FC<RowLabelProps> = () => {
   return <div>{data?.title}</div>
 }
 
-export default InfoRowLabel
+export default AdditionalInfoRowLabel

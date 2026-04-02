@@ -5,12 +5,18 @@ export type LimitedSpotsGroupOptions = {
   limitedSpotsHint?: string
 }
 
+export type LimitedSpotsGroupParams = {
+  options?: LimitedSpotsGroupOptions
+}
+
 const defaultLimitedSpotsHint = 'Pro zobrazení počtu míst musí být stav termínu "Naplánováno".'
 
 /**
  * Group: limited spots + count (same as in service schedule tables).
  */
-export function createLimitedSpotsGroup(options?: LimitedSpotsGroupOptions): Field {
+export function createLimitedSpotsGroup({ options }: LimitedSpotsGroupParams = {}): Field {
+  const hint = options?.limitedSpotsHint ?? defaultLimitedSpotsHint
+
   return {
     type: 'group',
     admin: {
@@ -23,7 +29,7 @@ export function createLimitedSpotsGroup(options?: LimitedSpotsGroupOptions): Fie
         label: 'Omezený počet míst',
         defaultValue: false,
         admin: {
-          description: options?.limitedSpotsHint ?? defaultLimitedSpotsHint,
+          description: hint,
         },
       },
       {

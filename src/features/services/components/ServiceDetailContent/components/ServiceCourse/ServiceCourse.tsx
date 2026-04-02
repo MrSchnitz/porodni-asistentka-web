@@ -5,6 +5,7 @@ import { ServiceLessons } from './ServiceLessons'
 import { ServiceCourseInfoItem } from './components/ServiceCourseInfoItem'
 import { Course } from '@/features/_shared/types'
 import { isRichTextEmpty } from '@/utilities/richText'
+import { IconName } from '@/components/ui/icon-picker'
 
 interface CourseScheduleProps {
   course: Course
@@ -29,7 +30,12 @@ export function ServiceCourse({
           {additionalInfo && additionalInfo.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {additionalInfo.map((info) => (
-                <ServiceCourseInfoItem key={info.id} {...info} />
+                <ServiceCourseInfoItem
+                  key={info.id}
+                  icon={info.icon as IconName | null}
+                  title={info.title ?? ''}
+                  value={info.value ?? ''}
+                />
               ))}
             </div>
           )}

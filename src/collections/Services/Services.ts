@@ -1,14 +1,23 @@
-import { serviceLimitedSpots } from '@/collections/Services/fields/serviceLimitedSpots'
-import { serviceStatus } from '@/collections/Services/fields/serviceStatus'
+import { additionalInfo } from '@/fields/additionalInfo'
+import { eventScheduleStatusField } from '@/fields/eventScheduleStatus'
+import { createLimitedSpotsGroup } from '@/fields/limitedSpotsGroup'
 import { CollectionConfig } from 'payload'
 import { serviceScheduleItems } from './fields/serviceScheduleItems'
 import { serviceLessonSection } from './fields/serviceLessonSection'
-import { serviceAdditionalInfo } from './fields/serviceAdditionalInfo'
 import { serviceAnnouncementsSection } from './fields/serviceAnnouncementsSection'
 import { iconImageField } from '@/fields/iconField'
 import { servicePackagesSection } from './fields/servicePackagesSection'
 import { serviceBenefitsSection } from './fields/serviceBenefitsSection'
 import { generateSlug } from '@/utilities/generateSlug'
+import { AdditionalInfo } from '@/features/_shared/types'
+import { createCalendarItemsField } from '@/fields/calendarItems'
+import { link } from '@/fields/link'
+
+const defaultServiceInfoItems: AdditionalInfo[] = [
+  { icon: 'clock', title: 'Délka', value: '' },
+  { icon: 'coins', title: 'Cena', value: '' },
+  { icon: 'house', title: 'Místo', value: '' },
+]
 
 export const Services: CollectionConfig = {
   slug: 'services',
@@ -123,8 +132,8 @@ export const Services: CollectionConfig = {
                       },
                       fields: [
                         { name: 'description', type: 'richText', label: 'Popis' },
-                        serviceAdditionalInfo(
-                          {
+                        additionalInfo({
+                          options: {
                             defaultValue: [
                               {
                                 title: 'Cena',
@@ -136,8 +145,8 @@ export const Services: CollectionConfig = {
                               { name: 'value', label: 'Popis', type: 'textarea' },
                             ],
                           },
-                          false,
-                        ),
+                          presets: defaultServiceInfoItems,
+                        }),
                       ],
                     },
                   ],
@@ -158,8 +167,8 @@ export const Services: CollectionConfig = {
                           type: 'richText',
                           label: 'Popis služby',
                         },
-                        serviceAdditionalInfo(
-                          {
+                        additionalInfo({
+                          options: {
                             defaultValue: [
                               {
                                 icon: 'clock',
@@ -178,12 +187,26 @@ export const Services: CollectionConfig = {
                               },
                             ],
                           },
-                          false,
-                        ),
+                          presets: defaultServiceInfoItems,
+                        }),
                         { name: 'note', type: 'richText', label: 'Poznámka k službě' },
                         serviceBenefitsSection(),
                         servicePackagesSection(),
                         serviceAnnouncementsSection(),
+                        {
+                          name: 'ctaButtons',
+                          label: 'Tlačítka s odkazy navíc',
+                          type: 'array',
+                          labels: {
+                            singular: 'Tlačítko s odkazem',
+                            plural: 'Tlačítka s odkazy',
+                          },
+                          fields: [link({ appearances: false })],
+                          maxRows: 3,
+                          admin: {
+                            initCollapsed: true,
+                          },
+                        },
                       ],
                     },
                   ],
@@ -237,25 +260,12 @@ export const Services: CollectionConfig = {
                       type: 'richText',
                       label: 'Popis',
                     },
-                    serviceAdditionalInfo({
-                      maxRows: 3,
-                      defaultValue: [
-                        {
-                          icon: 'clock',
-                          title: 'Délka',
-                          value: '',
-                        },
-                        {
-                          icon: 'coins',
-                          title: 'Cena',
-                          value: '',
-                        },
-                        {
-                          icon: 'house',
-                          title: 'Místo',
-                          value: '',
-                        },
-                      ],
+                    additionalInfo({
+                      options: {
+                        maxRows: 3,
+                        defaultValue: defaultServiceInfoItems,
+                      },
+                      presets: defaultServiceInfoItems,
                     }),
                   ],
                 },
@@ -272,7 +282,7 @@ export const Services: CollectionConfig = {
               interfaceName: 'schedules',
               type: 'array',
               label: 'Tabulky termínů',
-              labels: { singular: 'Tabulka', plural: 'Tabulky' },
+              labels: { singular: 'Tabulka termínů', plural: 'Tabulky termínů' },
               admin: {
                 initCollapsed: true,
                 components: {
@@ -291,7 +301,7 @@ export const Services: CollectionConfig = {
                 {
                   name: 'description',
                   type: 'textarea',
-                  label: 'Popis',
+                  label: 'Popis tabulky',
                 },
                 {
                   name: 'courseIndex',
@@ -304,9 +314,56 @@ export const Services: CollectionConfig = {
                     },
                   },
                 },
-                serviceStatus,
-                serviceLimitedSpots,
+                eventScheduleStatusField,
+                createLimitedSpotsGroup(),
                 serviceScheduleItems,
+              ],
+            },
+            {
+              name: 'calendarSchedules',
+              interfaceName: 'calendarSchedules',
+              dbName: 'cld_schedules',
+              type: 'array',
+              label: 'Kalendářové termíny',
+              labels: { singular: 'Kalendářový termín', plural: 'Kalendářové termíny' },
+              admin: {
+                initCollapsed: true,
+                components: {
+                  RowLabel: '@/collections/Services/components/RowLabels/PlanningRowLabel',
+                },
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  label: 'Název tabulky kalendářových termínů',
+                  admin: {
+                    placeholder: 'např. Termíny kurzu, Konzultace...',
+                  },
+                },
+                {
+                  name: 'description',
+                  type: 'textarea',
+                  label: 'Popis tabulky kalendářových termínů',
+                },
+                {
+                  name: 'courseIndex',
+                  type: 'text',
+                  label: 'Kurz (volitelné)',
+                  admin: {
+                    description: 'Vyberte kurz - v termínech pak můžete vybírat lekce',
+                    components: {
+                      Field: '@/collections/Services/components/CourseSelect/CourseSelect',
+                    },
+                  },
+                },
+                eventScheduleStatusField,
+                createLimitedSpotsGroup(),
+                createCalendarItemsField({
+                  name: 'calendarItems',
+                  label: 'Kalendrove termíny',
+                  labels: { singular: 'Kalendrovy termín', plural: 'Kalendrove termíny' },
+                }),
               ],
             },
           ],

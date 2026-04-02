@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 import { ServiceBenefitsSection } from './components/ServiceBenefitsSection'
 import { ServicePackagesSection } from './components/ServicePackagesSection'
 import { isRichTextEmpty } from '@/utilities/richText'
+import { ServiceCalendarSchedule } from './components/ServiceSchedule/ServiceCalendarSchedule'
 
 type Props = {
   service: Service
@@ -22,7 +23,7 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
     return null
   }
 
-  const { serviceType, lessonsSection, courses, schedules } = service
+  const { serviceType, lessonsSection, courses, schedules, calendarSchedules } = service
   const { content, additionalInfo, note, announcementsSection, benefitsSection, packageSection } =
     service.detail
 
@@ -33,7 +34,8 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
   const showPackages = packageSection?.enabled
   const showLessons = serviceType === 'lessons' && lessonsSection
   const showCourses = serviceType === 'courses' && courses && courses.length > 0
-  const showSchedule = schedules && schedules.length > 0
+  const showSchedule =
+    (schedules && schedules.length > 0) || (calendarSchedules && calendarSchedules.length > 0)
   const showAnnouncements =
     announcementsSection?.enabled &&
     announcementsSection.announcements &&
@@ -100,8 +102,14 @@ export function ServiceDetailContent({ service, isPageDetail = false }: Props) {
       {/* Schedule */}
       {showSchedule && (
         <ServiceContentSection icon="calendar" title="Aktuální termíny">
-          {schedules.map((schedule) => (
+          {schedules?.map((schedule) => (
             <ServiceSchedule key={schedule.id} schedule={schedule} />
+          ))}
+          {calendarSchedules?.map((calendarSchedule) => (
+            <ServiceCalendarSchedule
+              key={calendarSchedule.id}
+              calendarSchedule={calendarSchedule}
+            />
           ))}
         </ServiceContentSection>
       )}

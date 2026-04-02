@@ -94,7 +94,7 @@ export const ServiceScheduleTable = ({ scheduleItems, isEverythingCancelled = fa
             })
 
             return (
-              <Card key={id} className="border border-primary/20">
+              <Card key={id} className="border border-primary/30">
                 <CardContent className="p-4">
                   <div className="space-y-2 text-sm">
                     <div className="flex gap-1 items-start">
@@ -130,7 +130,7 @@ export const ServiceScheduleTable = ({ scheduleItems, isEverythingCancelled = fa
 
                     {/* Lesson content */}
                     {lesson && (
-                      <div className="pt-2 border-t border-primary/20">
+                      <div className="pt-2 border-t border-primary/30">
                         <span className={clsx('text-foreground/80', isCancelled && 'line-through')}>
                           {lesson}
                         </span>
@@ -139,7 +139,7 @@ export const ServiceScheduleTable = ({ scheduleItems, isEverythingCancelled = fa
 
                     {/* Notes */}
                     {notes && (
-                      <div className="pt-2 border-t border-primary/20">
+                      <div className="pt-2 border-t border-primary/30">
                         <span className="text-foreground/80">{notes}</span>
                       </div>
                     )}

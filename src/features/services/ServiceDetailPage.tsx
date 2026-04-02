@@ -1,9 +1,7 @@
 import { Service } from '@/payload-types'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { ServiceDetailContent } from './components/ServiceDetailContent/ServiceDetailContent'
+import { ServiceDetailCtaButtons } from './components/ServiceDetailCtaButtons'
 import { ServiceDetailHeader } from './components/ServiceDetailHeader'
-import { PAGE_ROUTES } from '@/features/_shared/pageRoutes'
 import { notFound } from 'next/navigation'
 
 type Props = {
@@ -21,14 +19,7 @@ export function ServiceDetailPage({ service }: Props) {
       <section className="pb-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <ServiceDetailContent service={service} isPageDetail />
-          <Link href={PAGE_ROUTES.contactPage.path}>
-            <Button
-              size="lg"
-              className="w-full mt-6 bg-primary/60 hover:bg-secondary/60 text-foreground"
-            >
-              Kontaktovat
-            </Button>
-          </Link>
+          <ServiceDetailCtaButtons ctaButtons={service.detail?.ctaButtons} />
         </div>
       </section>
     </main>

@@ -82,9 +82,10 @@ export type Courses =
       } | null;
       additionalInfo?:
         | {
+            preset?: ('Délka' | 'Cena' | 'Místo') | null;
             icon?: string | null;
-            title: string;
-            value: string;
+            title?: string | null;
+            value?: string | null;
             id?: string | null;
           }[]
         | null;
@@ -141,6 +142,88 @@ export type Schedules =
  * via the `definition` "serviceStatus".
  */
 export type ServiceStatus = ('scheduled' | 'inProgress' | 'booked' | 'cancelled') | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendarSchedules".
+ */
+export type CalendarSchedules =
+  | {
+      title?: string | null;
+      description?: string | null;
+      /**
+       * Vyberte kurz - v termínech pak můžete vybírat lekce
+       */
+      courseIndex?: string | null;
+      status?: ServiceStatus;
+      /**
+       * Pro zobrazení počtu míst musí být stav termínu "Naplánováno".
+       */
+      hasLimitedSpots?: boolean | null;
+      numberOfSpots?: number | null;
+      calendarItems?: CalendarItems;
+      id?: string | null;
+    }[]
+  | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendarItems".
+ */
+export type CalendarItems =
+  | {
+      title: string;
+      description?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      startDate: string;
+      endDate: string;
+      status?: ServiceStatus;
+      /**
+       * Pro zobrazení počtu míst musí být stav termínu "Naplánováno".
+       */
+      hasLimitedSpots?: boolean | null;
+      numberOfSpots?: number | null;
+      additionalInfo?:
+        | {
+            preset?: ('Místo' | 'Délka' | 'Cena') | null;
+            icon?: string | null;
+            title?: string | null;
+            value?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+      /**
+       * Volitelné. Pokud nevyplníte, v modalu se zobrazí výzva ke kontaktu na stránce Kontakt.
+       */
+      signUpDetails?: {
+        root: {
+          type: string;
+          children: {
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      id?: string | null;
+    }[]
+  | null;
 /**
  * Supported timezones in IANA format.
  *
@@ -351,6 +434,7 @@ export interface Service {
     } | null;
     additionalInfo?:
       | {
+          preset?: ('Délka' | 'Cena' | 'Místo') | null;
           icon?: string | null;
           title?: string | null;
           value?: string | null;
@@ -404,6 +488,12 @@ export interface Service {
       enabled?: boolean | null;
       announcements?: Announcements;
     };
+    ctaButtons?:
+      | {
+          link: Link;
+          id?: string | null;
+        }[]
+      | null;
   };
   serviceType?: ('courses' | 'lessons') | null;
   lessonsSection?: {
@@ -414,6 +504,7 @@ export interface Service {
   };
   courses?: Courses;
   schedules?: Schedules;
+  calendarSchedules?: CalendarSchedules;
   updatedAt: string;
   createdAt: string;
 }
@@ -521,6 +612,19 @@ export interface Download {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "link".
+ */
+export interface Link {
+  type?: ('reference' | 'custom') | null;
+  newTab?: boolean | null;
+  reference?:
+    | ('/' | '/aktualni-sluzby' | '/sluzby' | '/o-mne' | '/kontakt' | '/ke-stazeni' | '/blog' | '/prednasky')
+    | null;
+  url?: string | null;
+  label: string;
 }
 /**
  * Pro možnost živého náhledu je potřeba nejdříve recenzi uložit
@@ -751,6 +855,7 @@ export interface ServicesSelect<T extends boolean = true> {
         additionalInfo?:
           | T
           | {
+              preset?: T;
               icon?: T;
               title?: T;
               value?: T;
@@ -795,6 +900,12 @@ export interface ServicesSelect<T extends boolean = true> {
               enabled?: T;
               announcements?: T | AnnouncementsSelect<T>;
             };
+        ctaButtons?:
+          | T
+          | {
+              link?: T | LinkSelect<T>;
+              id?: T;
+            };
       };
   serviceType?: T;
   lessonsSection?:
@@ -807,6 +918,7 @@ export interface ServicesSelect<T extends boolean = true> {
       };
   courses?: T | CoursesSelect<T>;
   schedules?: T | SchedulesSelect<T>;
+  calendarSchedules?: T | CalendarSchedulesSelect<T>;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -820,6 +932,17 @@ export interface AnnouncementsSelect<T extends boolean = true> {
   date?: T;
   image?: T;
   id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "link_select".
+ */
+export interface LinkSelect<T extends boolean = true> {
+  type?: T;
+  newTab?: T;
+  reference?: T;
+  url?: T;
+  label?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -840,6 +963,7 @@ export interface CoursesSelect<T extends boolean = true> {
   additionalInfo?:
     | T
     | {
+        preset?: T;
         icon?: T;
         title?: T;
         value?: T;
@@ -878,6 +1002,44 @@ export interface SchedulesSelect<T extends boolean = true> {
         numberOfSpots?: T;
         id?: T;
       };
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendarSchedules_select".
+ */
+export interface CalendarSchedulesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  courseIndex?: T;
+  status?: T;
+  hasLimitedSpots?: T;
+  numberOfSpots?: T;
+  calendarItems?: T | CalendarItemsSelect<T>;
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "calendarItems_select".
+ */
+export interface CalendarItemsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  startDate?: T;
+  endDate?: T;
+  status?: T;
+  hasLimitedSpots?: T;
+  numberOfSpots?: T;
+  additionalInfo?:
+    | T
+    | {
+        preset?: T;
+        icon?: T;
+        title?: T;
+        value?: T;
+        id?: T;
+      };
+  signUpDetails?: T;
   id?: T;
 }
 /**
@@ -1105,19 +1267,6 @@ export interface Hero {
         id?: string | null;
       }[]
     | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "link".
- */
-export interface Link {
-  type?: ('reference' | 'custom') | null;
-  newTab?: boolean | null;
-  reference?:
-    | ('/' | '/aktualni-sluzby' | '/sluzby' | '/o-mne' | '/kontakt' | '/ke-stazeni' | '/blog' | '/prednasky')
-    | null;
-  url?: string | null;
-  label: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1366,44 +1515,7 @@ export interface DownloadsPage {
 export interface LecturesPage {
   id: string;
   pageHeader: PageHeader;
-  lectures?:
-    | {
-        title: string;
-        description?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        startDate: string;
-        endDate: string;
-        status?: ServiceStatus;
-        /**
-         * Pro zobrazení počtu míst musí být stav termínu "Naplánováno".
-         */
-        hasLimitedSpots?: boolean | null;
-        numberOfSpots?: number | null;
-        infoItems?:
-          | {
-              preset?: ('Místo' | 'Cena' | 'Délka') | null;
-              icon?: string | null;
-              title?: string | null;
-              value?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
+  calendarItems?: CalendarItems;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1570,17 +1682,6 @@ export interface HeroSelect<T extends boolean = true> {
         link?: T | LinkSelect<T>;
         id?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "link_select".
- */
-export interface LinkSelect<T extends boolean = true> {
-  type?: T;
-  newTab?: T;
-  reference?: T;
-  url?: T;
-  label?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1774,27 +1875,7 @@ export interface DownloadsPageSelect<T extends boolean = true> {
  */
 export interface LecturesPageSelect<T extends boolean = true> {
   pageHeader?: T | PageHeaderSelect<T>;
-  lectures?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        startDate?: T;
-        endDate?: T;
-        status?: T;
-        hasLimitedSpots?: T;
-        numberOfSpots?: T;
-        infoItems?:
-          | T
-          | {
-              preset?: T;
-              icon?: T;
-              title?: T;
-              value?: T;
-              id?: T;
-            };
-        id?: T;
-      };
+  calendarItems?: T | CalendarItemsSelect<T>;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

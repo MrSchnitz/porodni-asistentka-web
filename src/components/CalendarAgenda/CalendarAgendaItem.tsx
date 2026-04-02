@@ -1,38 +1,34 @@
 import RichText from '@/components/RichText'
 import { cn } from '@/lib/utils'
-import type { ServiceStatus } from '@/payload-types'
 import { formatServiceDateTime } from '@/utilities/formatServiceDateTime'
 import { isRichTextEmpty } from '@/utilities/richText'
-import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import { parseISO } from 'date-fns'
 import { formatInTimeZone } from 'date-fns-tz'
-import { AdditionalInfo } from '@/features/_shared/types'
-import { CalendarAgendaStatusBadge } from '@/features/lectures/components/CalendarAgendaStatusBadge'
-import { CalendarAgendaInfoItem } from '@/features/lectures/components/CalendarAgendaInfoItem'
+import { CalendarItem } from '@/features/_shared/types'
+import { CalendarAgendaStatusBadge } from '@/components/CalendarAgenda/components/CalendarAgendaStatusBadge'
+import { CalendarAgendaInfoItem } from '@/components/CalendarAgenda/components/CalendarAgendaInfoItem'
 import { IconName } from '@/components/ui/icon-picker'
+import { CalendarAgendaSignUpButton } from './CalendarAgendaSignUpButton'
 
 const DISPLAY_TZ = 'Europe/Prague'
 
 type Props = {
-  title: string
-  startDate: string
-  endDate: string
-  description?: DefaultTypedEditorState | null
-  infoItems?: AdditionalInfo[] | null
-  status?: ServiceStatus
-  hasLimitedSpots?: boolean | null
-  numberOfSpots?: number | null
+  calendarItem: CalendarItem
+  isInsideTable?: boolean
 }
 
 export const CalendarAgendaItem = ({
-  title,
-  startDate,
-  endDate,
-  description,
-  infoItems,
-  status,
-  hasLimitedSpots,
-  numberOfSpots,
+  calendarItem: {
+    title,
+    startDate,
+    endDate,
+    description,
+    additionalInfo,
+    status,
+    hasLimitedSpots,
+    numberOfSpots,
+  },
+  isInsideTable = false,
 }: Props) => {
   const start = startDate ? parseISO(startDate) : null
   const dayNum = start ? formatInTimeZone(start, DISPLAY_TZ, 'd. M.') : ''
@@ -45,15 +41,35 @@ export const CalendarAgendaItem = ({
   return (
     <div
       className={cn(
-        'border border-primary/20 rounded-lg overflow-hidden bg-background max-w-4xl',
+        'border-primary/30 overflow-hidden bg-background',
         isCancelled && 'opacity-70',
+        isInsideTable ? 'border-t' : 'border rounded-lg max-w-4xl',
       )}
     >
       <div className="flex">
         {/* Date and time */}
-        <div className="bg-primary/10 border-r border-primary/20 p-2 md:p-3 flex flex-col items-center justify-center w-[80px] md:w-[100px] shrink-0">
-          <div className="text-xl md:text-2xl font-bold text-foreground">{dayNum}</div>
-          <div className="text-sm md:text-base font-bold text-foreground/90">{time}</div>
+        <div
+          className={cn(
+            'bg-primary/10 border-r border-primary/20 p-2 md:p-3 flex flex-col items-center justify-center w-[80px] md:w-[100px] shrink-0',
+            isInsideTable && 'p-1 md:p-2',
+          )}
+        >
+          <div
+            className={cn(
+              'font-bold text-foreground',
+              isInsideTable ? 'text-base md:text-base' : 'text-xl md:text-2xl',
+            )}
+          >
+            {dayNum}
+          </div>
+          <div
+            className={cn(
+              'font-bold text-foreground/90',
+              isInsideTable ? 'text-xs md:text-xs' : 'text-sm md:text-base',
+            )}
+          >
+            {time}
+          </div>
           <div className="mt-1">
             <CalendarAgendaStatusBadge
               status={!isScheduled ? status : null}
@@ -63,11 +79,12 @@ export const CalendarAgendaItem = ({
         </div>
 
         {/* Title and description */}
-        <div className="flex-1 p-3">
+        <div className={cn('flex-1 p-3', isInsideTable && 'p-2 bg-card')}>
           <h3
             className={cn(
               'flex mb-2 text-base md:text-lg font-bold text-foreground leading-tight',
               isCancelled && 'line-through text-foreground/60',
+              isInsideTable && 'mb-0 text-sm md:text-sm',
             )}
           >
             {title}
@@ -78,6 +95,7 @@ export const CalendarAgendaItem = ({
               className={cn(
                 'text-xs md:text-sm text-foreground mb-3',
                 isCancelled && 'opacity-60 line-through',
+                isInsideTable && 'mb-0 [&>p]:mt-0.5 [&>p]:mb-1',
               )}
               data={description}
             />
@@ -92,9 +110,9 @@ export const CalendarAgendaItem = ({
                 isCancelled={isCancelled}
               />
             )}
-            {infoItems &&
-              infoItems.length > 0 &&
-              infoItems.map((item) => (
+            {additionalInfo &&
+              additionalInfo.length > 0 &&
+              additionalInfo.map((item) => (
                 <CalendarAgendaInfoItem
                   key={item.id}
                   icon={item.icon as IconName | null}
@@ -104,6 +122,10 @@ export const CalendarAgendaItem = ({
                 />
               ))}
           </div>
+
+          {!isInsideTable && isScheduled && !isCancelled && (
+            <CalendarAgendaSignUpButton className="mt-2" eventTitle={title} />
+          )}
         </div>
       </div>
     </div>

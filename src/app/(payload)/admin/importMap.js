@@ -24,12 +24,13 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { default as default_8479dd81eebc7b77e5a6fbc945497c77 } from '@/collections/Services/components/RowLabels/InfoRowLabel'
+import { default as default_d291f085f225a142f174eab7b05fc6f3 } from '@/components/admin/AdditionalInfoRowLabel'
+import { default as default_23e4ca04a5af9f9afa29683569dbf470 } from '@/components/admin/AdditionalInfoPresetSelect'
 import { default as default_158dbb56dc406867b31217ed34fb28bb } from '@/components/admin/TextRowLabel'
 import { default as default_8e96060ce66d2c0d1a73d857ecde10bb } from '@/collections/Services/components/RowLabels/LessonRowLabel'
 import { default as default_20a15819bf544ccd121e32023e63363f } from '@/collections/Services/components/RowLabels/CourseRowLabel'
 import { default as default_eb7be762210eec7fcd9aff30f20b34f4 } from '@/collections/Services/components/CourseSelect/CourseSelect'
-import { default as default_80ae1cc59a7ec628b2a0c6a9224bfbe2 } from '@/collections/Services/components/StartDateField/StartDateField'
+import { default as default_2d6fe0a74c4976ad39415cd1d82e74f4 } from '@/components/admin/StartDateField'
 import { default as default_9d851ea4094e1e056681fe9a4b87a090 } from '@/collections/Services/components/LessonSelect/LessonSelect'
 import { default as default_a0d00998a14e887c00bd2a24f442948e } from '@/collections/Services/components/RowLabels/ScheduleRowLabel'
 import { default as default_97f4e200e923f0724456dc94adacc07d } from '@/collections/Services/components/RowLabels/PlanningRowLabel'
@@ -39,7 +40,6 @@ import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } f
 import { default as default_e8afe77cabef088992ec87352539e18d } from '@/features/services/components/admin/ServiceSectionRowLabel'
 import { default as default_364174d5aef13606c6bb607fcde76322 } from '@/features/contact/components/admin/ContactInfoRowLabel'
 import { default as default_88f1e8d5feb2d7c90778319ade757992 } from '@/features/downloads/components/PasswordStatus'
-import { default as default_23e4ca04a5af9f9afa29683569dbf470 } from '@/components/admin/AdditionalInfoPresetSelect'
 import { default as default_a33bbd4a4961fa25cae882137b030d7d } from '@/features/blog/components/BlogPostRowLabel/BlogPostRowLabel'
 import { NavItemRowLabel as NavItemRowLabel_56004ae4d230041dfc082b09c6e07978 } from '@/features/layout/Header/components/admin/NavItemRowLabel'
 import { default as default_534076e2c753ea5d539a54b05f456b1b } from '@/components/admin/Icon'
@@ -75,12 +75,13 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "@/collections/Services/components/RowLabels/InfoRowLabel#default": default_8479dd81eebc7b77e5a6fbc945497c77,
+  "@/components/admin/AdditionalInfoRowLabel#default": default_d291f085f225a142f174eab7b05fc6f3,
+  "@/components/admin/AdditionalInfoPresetSelect#default": default_23e4ca04a5af9f9afa29683569dbf470,
   "@/components/admin/TextRowLabel#default": default_158dbb56dc406867b31217ed34fb28bb,
   "@/collections/Services/components/RowLabels/LessonRowLabel#default": default_8e96060ce66d2c0d1a73d857ecde10bb,
   "@/collections/Services/components/RowLabels/CourseRowLabel#default": default_20a15819bf544ccd121e32023e63363f,
   "@/collections/Services/components/CourseSelect/CourseSelect#default": default_eb7be762210eec7fcd9aff30f20b34f4,
-  "@/collections/Services/components/StartDateField/StartDateField#default": default_80ae1cc59a7ec628b2a0c6a9224bfbe2,
+  "@/components/admin/StartDateField#default": default_2d6fe0a74c4976ad39415cd1d82e74f4,
   "@/collections/Services/components/LessonSelect/LessonSelect#default": default_9d851ea4094e1e056681fe9a4b87a090,
   "@/collections/Services/components/RowLabels/ScheduleRowLabel#default": default_a0d00998a14e887c00bd2a24f442948e,
   "@/collections/Services/components/RowLabels/PlanningRowLabel#default": default_97f4e200e923f0724456dc94adacc07d,
@@ -90,7 +91,6 @@ export const importMap = {
   "@/features/services/components/admin/ServiceSectionRowLabel#default": default_e8afe77cabef088992ec87352539e18d,
   "@/features/contact/components/admin/ContactInfoRowLabel#default": default_364174d5aef13606c6bb607fcde76322,
   "@/features/downloads/components/PasswordStatus#default": default_88f1e8d5feb2d7c90778319ade757992,
-  "@/components/admin/AdditionalInfoPresetSelect#default": default_23e4ca04a5af9f9afa29683569dbf470,
   "@/features/blog/components/BlogPostRowLabel/BlogPostRowLabel#default": default_a33bbd4a4961fa25cae882137b030d7d,
   "@/features/layout/Header/components/admin/NavItemRowLabel#NavItemRowLabel": NavItemRowLabel_56004ae4d230041dfc082b09c6e07978,
   "@/components/admin/Icon#default": default_534076e2c753ea5d539a54b05f456b1b,

@@ -64,7 +64,7 @@ export const scheduleDateTimeRange: Field = {
         width: '50%',
         date: datePickerAdmin,
         components: {
-          Field: '@/collections/Services/components/StartDateField/StartDateField',
+          Field: '@/components/admin/StartDateField',
         },
       },
       validate: (value, { siblingData }) => {

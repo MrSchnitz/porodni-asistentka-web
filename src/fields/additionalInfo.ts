@@ -2,11 +2,18 @@ import { AdditionalInfo } from '@/features/_shared/types'
 import { iconField } from '@/fields/iconField'
 import type { ArrayField, Field } from 'payload'
 
-export const additionalInfo = (
-  options?: Partial<ArrayField>,
-  required: boolean = true,
-  presets?: AdditionalInfo[],
-): Field => ({
+export type AdditionalInfoFieldParams = {
+  options?: Partial<ArrayField>
+  /** When true (default), title and value subfields are required. */
+  required?: boolean
+  presets?: AdditionalInfo[]
+}
+
+export const additionalInfo = ({
+  options,
+  required = false,
+  presets,
+}: AdditionalInfoFieldParams): Field => ({
   name: 'additionalInfo',
   type: 'array',
   label: 'Informace',
@@ -14,7 +21,7 @@ export const additionalInfo = (
   admin: {
     initCollapsed: true,
     components: {
-      RowLabel: '@/collections/Services/components/RowLabels/InfoRowLabel',
+      RowLabel: '@/components/admin/AdditionalInfoRowLabel',
     },
   },
   fields: [
@@ -41,10 +48,10 @@ export const additionalInfo = (
       name: 'title',
       admin: { className: 'mt-4' },
       type: 'text',
-      label: 'Název',
-      required: required,
+      label: 'Název informace',
+      required,
     },
-    { name: 'value', type: 'text', label: 'Popis', required: required },
+    { name: 'value', type: 'text', label: 'Popis informace', required },
   ],
-  ...options,
+  ...(options ?? {}),
 })

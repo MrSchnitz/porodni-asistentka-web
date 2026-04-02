@@ -14,9 +14,10 @@ export const ServiceSchedule = ({ schedule }: Props) => {
   const isCancelled = schedule.status === 'cancelled'
   const showAvailableSpots = isScheduled && schedule.hasLimitedSpots && schedule.numberOfSpots
   const showHeader = schedule.title || schedule.description || showAvailableSpots || !isScheduled
+  const showScheduleItems = schedule.scheduleItems && schedule.scheduleItems.length > 0
 
   return (
-    <Card className={clsx('border-primary/20', isCancelled && 'opacity-60')}>
+    <Card className={clsx('border-primary/30', isCancelled && 'opacity-60')}>
       <CardContent className="p-4">
         {showHeader && (
           <div className="bg-muted rounded-t-lg p-4 -m-4 mb-3">
@@ -39,9 +40,9 @@ export const ServiceSchedule = ({ schedule }: Props) => {
           </div>
         )}
 
-        {schedule.scheduleItems && (
+        {showScheduleItems && (
           <ServiceScheduleTable
-            scheduleItems={schedule.scheduleItems}
+            scheduleItems={schedule.scheduleItems ?? []}
             isEverythingCancelled={isCancelled}
           />
         )}

@@ -1,7 +1,7 @@
 import { Field } from 'payload'
-import { serviceStatus } from './serviceStatus'
-import { serviceLimitedSpots } from './serviceLimitedSpots'
-import { serviceScheduleDates } from './serviceScheduleDates'
+import { eventScheduleStatusField } from '@/fields/eventScheduleStatus'
+import { createLimitedSpotsGroup } from '@/fields/limitedSpotsGroup'
+import { scheduleDateTimeRange } from '@/fields/scheduleDateTimeRange'
 
 export const serviceScheduleItems: Field = {
   name: 'scheduleItems',
@@ -15,7 +15,7 @@ export const serviceScheduleItems: Field = {
     },
   },
   fields: [
-    serviceScheduleDates,
+    scheduleDateTimeRange,
     {
       name: 'lesson',
       type: 'text',
@@ -33,7 +33,7 @@ export const serviceScheduleItems: Field = {
       type: 'textarea',
       label: 'Poznámka',
     },
-    serviceStatus,
-    serviceLimitedSpots,
+    eventScheduleStatusField,
+    createLimitedSpotsGroup(),
   ],
 }
